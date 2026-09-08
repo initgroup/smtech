@@ -34,9 +34,9 @@ test('entrypoint loads only local required assets and independent custom JavaScr
   assert(html.includes("connect-src 'self'"));assert(html.includes("form-action 'none'"));
 });
 
-test('handoff contains 12 unique screen fragments and matching generated source copies', () => {
+test('handoff contains 13 unique screen fragments and matching generated source copies', () => {
   const target=path.join(base,'handoff'),m=JSON.parse(fs.readFileSync(path.join(target,'manifest.json'),'utf8'));
-  assert.equal(m.screens.length,12);
+  assert.equal(m.screens.length,13);
   for(const file of m.files)assert.equal(hash(path.join(target,file.path)),file.sha256,file.path);
   for(const {screen} of m.screens){const html=fs.readFileSync(path.join(target,'fragments',screen+'.html'),'utf8');assert(html.includes('class="rms-enhance"'));const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(x=>x[1]);assert.equal(new Set(ids).size,ids.length,screen+' duplicate IDs');for(const match of html.matchAll(/<label[^>]+for="([^"]+)"/g))assert(ids.includes(match[1]),screen+' missing labelled input');}
   for(const name of ['core.js','views.js','app.js'])assert.equal(hash(path.join(target,'static/js/rms-enhance',name)),hash(path.join(web,'static/js/rms-enhance',name)));

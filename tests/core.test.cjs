@@ -36,7 +36,7 @@ function fixture(initial) {
   let raw = initial === undefined ? null : initial;
   let fail = false;
   const storage = {
-    getItem(key) { assert.equal(key, core.storageKey); return raw; },
+    getItem(key) { if(key==='rms.prototype.v1')return null;assert.equal(key, core.storageKey); return raw; },
     setItem(key, value) {
       assert.equal(key, core.storageKey);
       if (fail) throw new Error('Simulated storage quota exceeded');

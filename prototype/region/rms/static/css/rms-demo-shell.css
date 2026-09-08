@@ -1,9 +1,14 @@
 /* Local demo host only. Do not copy this shell stylesheet into the production JSP. */
+.rms-demo .rms-demo-storage{flex:1 1 520px;min-width:0;margin:0;line-height:1.7;color:#56516f;overflow-wrap:anywhere}
+.rms-demo .rms-demo-toolbar #rms-reset{color:#993728;border-color:#dab3aa}
+.rms-demo .rms-demo-toolbar a.rms-source-download{display:inline-flex;align-items:center;padding:7px 12px;border:1px solid #075a9e;border-radius:4px;background:#0068ad;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 2px 4px #173e6026}
+.rms-demo .rms-demo-toolbar a.rms-source-download:hover{background:#004e85}
 .rms-demo{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .rms-demo .rms-demo-brand img{width:185px;height:auto;max-width:100%;display:block}
 .rms-demo #footer.rms-demo-footer{line-height:1.6}
-body.rms-demo{margin:0;background:#f5f7fa;color:#233449;font-family:"Noto Sans KR","Malgun Gothic",sans-serif;font-size:14px;line-height:1.55;letter-spacing:-.3px}
-.rms-demo #wrap{min-width:0;width:100%;padding:0}
+body.rms-demo{margin:0;min-width:0;overflow-x:auto;background:#f5f7fa;color:#233449;font-family:"Noto Sans KR","Malgun Gothic",sans-serif;font-size:14px;line-height:1.55;letter-spacing:-.3px}
+.rms-demo #wrap{min-width:0;width:100%;max-width:100%;padding:0;box-sizing:border-box}
+.rms-demo #wrap>*,.rms-demo .rms-demo-header>*{min-width:0}
 .rms-demo #header.rms-demo-header{height:auto;min-height:86px;box-sizing:border-box;background:#fff;border:0;border-bottom:1px solid #dce2e9;border-radius:0;padding:14px max(28px,calc((100vw - 1440px)/2));display:flex;align-items:center;justify-content:space-between;gap:28px;position:relative}
 .rms-demo .rms-demo-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#243b53;white-space:nowrap}
 .rms-demo .rms-demo-brand strong{font-family:Arial,sans-serif;font-size:42px;color:#0866a8;font-weight:800;line-height:1;letter-spacing:-3px}
@@ -11,20 +16,33 @@ body.rms-demo{margin:0;background:#f5f7fa;color:#233449;font-family:"Noto Sans K
 .rms-demo .rms-demo-nav{display:flex;gap:40px;align-items:center}
 .rms-demo .rms-demo-nav a{font-size:17px;font-weight:700;color:#1e344a;text-decoration:none;padding:13px 0}
 .rms-demo .rms-demo-nav a[aria-current]{color:#0068ad;border-bottom:3px solid #0068ad}
-.rms-demo .rms-demo-user{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:13px}
+.rms-demo .rms-demo-user{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;overflow-wrap:anywhere}
 .rms-demo .rms-demo-user button,.rms-demo .rms-demo-toolbar button{border:1px solid #bdcbd8;border-radius:3px;padding:6px 11px;background:white;color:#28415a;font:inherit;cursor:pointer}
-.rms-demo .rms-demo-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px max(28px,calc((100vw - 1440px)/2));background:#edf3f8;border-bottom:1px solid #dce6ee;font-size:12px;color:#486078;flex-wrap:wrap}
-.rms-demo .rms-demo-toolbar>div{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.rms-demo .rms-demo-toolbar b{background:#315a79;color:#fff;padding:3px 7px;border-radius:3px;margin-right:8px;font-size:12px}
-.rms-demo .rms-demo-toolbar select{font:inherit;padding:5px;border:1px solid #c5d2de;background:#fff;border-radius:3px;color:#263e55}
-.rms-demo .rms-demo-toolbar a{color:#315a79;text-decoration:underline;text-underline-offset:3px}
-.rms-demo .rms-demo-import{cursor:pointer;border:1px solid #bdcbd8;border-radius:3px;background:white;padding:6px 11px}
+.rms-demo .rms-demo-toolbar{box-sizing:border-box;padding:13px max(28px,calc((100vw - 1440px)/2)) 12px;background:#eeebf8;border-top:4px solid #6b58a5;border-bottom:1px solid #cdc4e5;font-size:12px;color:#51466e}
+.rms-demo .rms-demo-toolbar-content{display:grid;gap:11px;min-width:0}
+.rms-demo .rms-demo-toolbar-intro,.rms-demo .rms-demo-controls,.rms-demo .rms-demo-role,.rms-demo .rms-demo-context{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;min-width:0}
+.rms-demo .rms-demo-toolbar-intro>span{flex:1 1 360px;min-width:0;overflow-wrap:anywhere}
+.rms-demo .rms-demo-toolbar-intro>a{margin-left:auto;font-weight:700}
+.rms-demo .rms-demo-toolbar-intro>b{flex-shrink:0;background:#64518d;color:#fff;padding:4px 8px;border-radius:3px;font-size:12px}
+.rms-demo .rms-demo-controls>*,.rms-demo .rms-demo-role>*{box-sizing:border-box;max-width:100%}
+.rms-demo .rms-demo-role{gap:7px}
+.rms-demo .rms-demo-role label{font-weight:700}
+.rms-demo .rms-demo-toolbar select{min-width:0;max-width:100%;min-height:34px;font:inherit;padding:5px;border:1px solid #c5bed5;background:#fff;border-radius:3px;color:#263e55}
+.rms-demo .rms-demo-toolbar button,.rms-demo .rms-demo-import{min-height:34px;line-height:1.5;overflow-wrap:anywhere}
+.rms-demo .rms-demo-toolbar a{color:#54447d;text-decoration:underline;text-underline-offset:3px}
+.rms-demo .rms-demo-context{padding-top:9px;border-top:1px solid #d7d0e8;align-items:flex-start}
+.rms-demo #rms-demo-sfr{flex:0 1 540px;min-width:0;max-width:100%;margin-left:auto}
+.rms-demo #rms-demo-sfr .rms-sfr{margin:0;text-align:right;font-size:12px;color:#51466e}
+.rms-demo #rms-demo-sfr .rms-sfr>div{margin-top:5px}
+.rms-demo #rms-demo-sfr .rms-sfr-highlight{background:#fff7d9;border-color:#ccb665;color:#6d5100}
+.rms-demo .rms-demo-import{display:inline-flex;align-items:center;cursor:pointer;border:1px solid #bdcbd8;border-radius:3px;background:white;padding:6px 11px}
 .rms-demo .rms-demo-import input{position:absolute;width:1px;height:1px;opacity:0}
 .rms-demo .rms-demo-import:focus-within{outline:3px solid #e39822;outline-offset:2px}
-.rms-demo #body{padding:30px max(28px,calc((100vw - 1440px)/2)) 50px;min-height:calc(100vh - 244px);width:auto;box-sizing:border-box}
+.rms-demo #body{padding:30px max(28px,calc((100vw - 1440px)/2)) 50px;min-height:calc(100vh - 320px);min-width:0;width:auto;max-width:100%;box-sizing:border-box}
 .rms-demo #footer.rms-demo-footer{height:auto;min-height:72px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px max(28px,calc((100vw - 1440px)/2));border-top:1px solid #dce2e9;background:white;color:#718094;font-size:12px;clear:both}
 .rms-demo-skip{position:fixed;left:20px;top:-80px;z-index:2000;padding:12px 20px;background:#0b4675;color:#fff!important}
 .rms-demo-skip:focus{top:10px}
 .rms-demo :focus-visible{outline:3px solid #d78b16;outline-offset:3px}
 @media(max-width:1080px){.rms-demo .rms-demo-nav{gap:18px}.rms-demo #header.rms-demo-header{gap:15px;flex-wrap:wrap}.rms-demo .rms-demo-user{margin-left:auto}.rms-demo .rms-demo-nav a{font-size:15px}}
-@media(max-width:700px){.rms-demo #header.rms-demo-header{padding:16px}.rms-demo .rms-demo-nav{order:3;width:100%;justify-content:space-between;gap:8px}.rms-demo .rms-demo-nav a{font-size:14px}.rms-demo .rms-demo-brand strong{font-size:35px}.rms-demo .rms-demo-toolbar{padding:10px 16px}.rms-demo #body{padding:20px 16px 35px}.rms-demo #footer.rms-demo-footer{padding:20px 16px;display:block}.rms-demo-footer span{display:block;margin-top:7px}}
+@media(max-width:700px){.rms-demo #header.rms-demo-header{padding:16px}.rms-demo .rms-demo-nav{order:3;width:100%;justify-content:space-between;gap:8px;flex-wrap:wrap}.rms-demo .rms-demo-nav a{font-size:14px}.rms-demo .rms-demo-brand strong{font-size:35px}.rms-demo .rms-demo-toolbar{padding:10px 16px}.rms-demo .rms-demo-toolbar-intro>span{flex-basis:100%;order:3}.rms-demo .rms-demo-controls{gap:8px}.rms-demo .rms-demo-role{flex-basis:100%}.rms-demo .rms-demo-context{gap:10px}.rms-demo #rms-demo-sfr{flex-basis:100%;margin-left:0}.rms-demo #rms-demo-sfr .rms-sfr{text-align:left}.rms-demo #rms-demo-sfr .rms-sfr>div{justify-content:flex-start}.rms-demo #body{padding:20px 16px 35px}.rms-demo #footer.rms-demo-footer{padding:20px 16px;display:block}.rms-demo-footer span{display:block;margin-top:7px}}
+@media(max-width:420px){.rms-demo #header.rms-demo-header,.rms-demo .rms-demo-toolbar{padding-left:12px;padding-right:12px}.rms-demo .rms-demo-brand img{width:160px}.rms-demo .rms-demo-user{flex-basis:100%;margin-left:0;gap:7px}.rms-demo .rms-demo-nav{gap:6px}.rms-demo .rms-demo-nav a{font-size:13px;padding:9px 0;white-space:normal}.rms-demo .rms-demo-controls>button,.rms-demo .rms-demo-controls>.rms-demo-import,.rms-demo .rms-demo-controls>a.rms-source-download{font-size:11px;padding:7px 9px}.rms-demo #body{padding:18px 12px 30px}.rms-demo #footer.rms-demo-footer{padding:18px 12px}}

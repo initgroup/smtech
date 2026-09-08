@@ -1,4 +1,5 @@
 /* Generates publisher handoff fragments from the exact templates used in the demo. */
+require('./sync_sfr.cjs');
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
@@ -18,7 +19,7 @@ const pages = [
   ['doctor-detail', 'tp', () => views.doctorDetail('D001')], ['matches', 'tp', () => views.matches()],
   ['statistics', 'tp', () => views.stats()], ['documents-company', 'company', () => views.documents('A001')],
   ['documents-manager', 'tp', () => views.documents('A001')], ['faq', 'visitor', () => views.faq(false)],
-  ['questions', 'visitor', () => views.faq(true)], ['classifications', 'admin', () => views.manage()],
+  ['questions', 'visitor', () => views.faq(true)], ['guide', 'visitor', () => views.guide()], ['classifications', 'admin', () => views.manage()],
   ['home-settings', 'admin', () => views.manage('home')], ['document-settings', 'admin', () => views.manage('documents')]
 ];
 for (const [name, role, render] of pages) {

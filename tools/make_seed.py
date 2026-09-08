@@ -25,6 +25,25 @@ for i,n in enumerate(names):
 docNames=['사업자등록증명서','폐업사실증명서','휴업사실증명서','표준재무제표증명서','국세 납세증명서','지방세 납세증명서','부가가치세 과세표준증명','중소기업확인서','4대 사회보험료 완납 증명서']
 specs=[dict(id=f'F{i+1:02}',name=n,provider=['국세청','국세청','국세청','국세청','국세청','지방자치단체','국세청','중소벤처기업부','국민건강보험공단'][i],active=True) for i,n in enumerate(docNames)]
 programs=[dict(id='B001',title='2026년 지역기업 성장사다리 지원사업',region='충남',start='2026-09-01',end='2026-09-30',category='사업화 지원',requiredDocs=['F01','F04','F05','F06','F08']),dict(id='B002',title='2026년 스마트공정 전환 기술지원사업',region='대전',start='2026-09-03',end='2026-09-18',category='기술 지원',requiredDocs=['F01','F04','F05','F06','F07','F08','F09']),dict(id='B003',title='지역 바이오기업 품질·인증 지원사업',region='충북',start='2026-09-02',end='2026-09-25',category='품질·인증',requiredDocs=['F01','F05','F06','F08'])]
+notice_profiles = [
+    dict(industry='지역 주력산업 · 기계·소재', project='지역기업 단계별 성장 및 사업화 역량 강화', support=[('성장단계 중소기업','시제품 제작 지원','제품 설계 보완, 시제품 제작 및 성능 검증',25000000),('시장진입 중소기업','사업화 역량 강화','시장 조사, 제품 홍보물 제작 및 판로 상담',10000000)], eligibility='충남에 본사 또는 공장을 둔 지역 주력산업 중소기업\n제품 고도화 및 신규 시장 진출 계획을 보유한 기업', scope='시제품 제작, 시험·평가 및 제품 사업화 활동을 지원합니다.\n선정기업별 세부 지원내용과 기업부담금은 평가 및 협약에서 확정합니다.'),
+    dict(industry='제조업 · 스마트공정', project='중소 제조기업 스마트공정 전환 및 생산성 향상', support=[('제조 중소기업','공정 진단·개선','현장 공정 분석, 데이터 수집 및 생산환경 개선',30000000),('공정 전환 준비기업','기술닥터 현장 지원','전문가 방문 진단 및 전환 로드맵 수립',5000000)], eligibility='대전에 사업장을 둔 제조 중소기업\n생산성·품질 개선 과제와 현장 적용 계획을 보유한 기업', scope='현장 진단부터 개선계획 수립과 시범 적용까지 연계 지원합니다.\n단순 설비 구매만을 목적으로 하는 과제는 지원대상에서 제외합니다.'),
+    dict(industry='바이오 · 의료기기', project='지역 바이오기업 품질 고도화 및 인증 대응', support=[('바이오·의료 중소기업','시험·인증 지원','제품 시험분석, 품질 검증 및 인증 대응',20000000),('인증 준비 중소기업','품질체계 컨설팅','품질 문서 정비 및 전문가 사전 검토',8000000)], eligibility='충북에 사업장을 둔 바이오·의료 관련 중소기업\n시험평가 또는 인증 획득 계획을 보유한 기업', scope='품질 검증, 시험분석, 인증 관련 기술 컨설팅을 지원합니다.\n공인 시험기관 이용 비용과 전문가 자문 범위는 협약에서 확정합니다.')
+]
+for i, (program, profile) in enumerate(zip(programs, notice_profiles), 1):
+    institution=f"가상 {program['region']}테크노파크"
+    program.update(projectName=profile['project'], projectNumber=f'DEMO-S2026{i:03}', businessYear='2026', noticeNumber=f"2026-{program['region']}-가상기업지원-{i:03}", deadlineTime='18:00', industry=profile['industry'], institution=institution, publishedDate=f'2026-08-{20+i:02}',
+        intro=f"{institution}는 지역 중소기업의 경쟁력 강화를 위해 「{program['title']}」 참여기업을 모집합니다. 사업 내용과 지원요건을 확인한 후 접수기간 내 신청해 주세요. 아래 사업·기관·담당자 및 금액은 기능 검토를 위한 가상 기초자료입니다.",
+        supportPrograms=[dict(target=f"{program['region']} {target}",name=name,description=description,amount=amount) for target,name,description,amount in profile['support']],
+        contentSections=[
+            dict(heading='사업개요',body=f"사업명: {program['title']}\n과제명: {profile['project']}\n지원목적: 지역기업의 기술 경쟁력 강화와 지속 가능한 성장 지원\n접수기간: {program['start']} ~ {program['end']} 18:00\n지원기간: 협약 체결일부터 2026년 12월까지 (세부 일정 협의)"),
+            dict(heading='지원대상 및 내용',body=f"신청자격\n{profile['eligibility']}\n\n지원내용\n{profile['scope']}\n\n지원제외\n접수 마감일 현재 휴·폐업, 국세·지방세 체납, 동일 내용 중복지원을 확인합니다.\n정부지원금은 프로그램별 표를 참고하며 부가가치세 및 기업부담금은 별도입니다."),
+            dict(heading='신청방법 및 제출서류',body='RMS 온라인 신청: 사업 선택 → 신청기업 정보 → 접수서류 확인 → 제출 및 보완\n사업연도 2026년을 선택하고 기업정보를 확인합니다.\n필수 접수서류는 아래 목록에서 확인하고 조회 또는 파일 첨부 후 최종 제출합니다.\n마감일 18:00까지 최종 제출이 완료되어야 합니다. 임시저장은 접수완료가 아닙니다.'),
+            dict(heading='선정절차 및 유의사항',body='접수 → 요건 검토 → 선정평가 → 협약 체결 → 과제 수행 → 결과보고 및 확인\n평가에서는 지원 필요성, 수행계획의 구체성 및 기대효과를 종합 검토합니다.\n선정 결과 및 보완 요청은 RMS 신청내역에서 확인합니다.\n공고문의 가상 첨부 예시는 다운로드와 JSON 이동을 검증하기 위한 자료이며 실제 사업신청에 사용할 수 없습니다.')
+        ], contacts=[dict(institution=institution,name='가상 사업담당자',phone='000-000-0000',email=f'notice{i}@example.invalid',duty='지원내용 · 신청자격 안내'),dict(institution='가상 RMS 운영지원',name='가상 시스템담당자',phone='000-000-0001',email='rms-demo@example.invalid',duty='온라인 신청 · 서류제출 안내')])
+    notice_text='[가상 시연용 공고문]\n'+program['title']+'\n\n'+program['intro']+'\n\n'+'\n\n'.join(section['heading']+'\n'+section['body'] for section in program['contentSections'])
+    files=[('NOTICE','공고문',notice_text),('FORM','신청서식','[가상 시연용 신청서식]\n사업명: '+program['title']+'\n기업명:\n대표자:\n사업장 주소:\n신청 프로그램:\n수행계획:\n기대효과:\n\n실제 접수용 서식이 아닌 다운로드 기능 확인용 텍스트입니다.'),('MANUAL','신청안내','[가상 RMS 신청안내]\n1. 사업 선택\n2. 신청기업 정보 저장\n3. 필수 접수서류 조회 또는 첨부\n4. 최종 제출\n\n시연내용 JSON 내보내기는 저장된 사이트 전체 자료와 공고 첨부 텍스트를 함께 보관합니다. 다른 PC에서 JSON 불러오기로 복원할 수 있습니다.')]
+    program['attachments']=[dict(id=file_id,name=f"{program['id']}-{label}-시연예시.txt",mimeType='text/plain',content=content,size=len(content.encode('utf-8'))) for file_id,label,content in files]
 apps=[]
 for i in range(3):
     apps.append(dict(id=f'A00{i+1}',programId=programs[i%2]['id'],companyId='CO001' if i<2 else 'CO002',companyName='가상 한빛정밀' if i<2 else '가상 새봄바이오',region='충남',representative='가상 대표자',address='충남 천안시 가상산업로 100',inputAddress='충남 천안시 가상산업로 99',consent=False,consentAt=None,submission='작성중',docs=[dict(specId=s['id'],status='미제출',queriedAt=None,reason='',file=None,history=[]) for s in specs]))

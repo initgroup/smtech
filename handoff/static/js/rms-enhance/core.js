@@ -6,7 +6,7 @@
   else root.RMSCore = api;
 }(typeof window !== 'undefined' ? window : this, function () {
   'use strict';
-  var KEY = 'rms.prototype.v1';
+  var KEY = 'smtech.rms.prototype.v1', LEGACY_KEY = 'rms.prototype.v1';
   var clone = function (x) { return JSON.parse(JSON.stringify(x)); };
   var now = function () { return new Date().toISOString(); };
   var roles = ['visitor', 'company', 'tp', 'admin'];
@@ -21,6 +21,45 @@
       safeTree(value[k], depth + 1);
     });
   }
+  var programFields = ['title','region','start','end','category','requiredDocs','projectName','projectNumber','businessYear','noticeNumber','deadlineTime','industry','intro','contentSections','institution','publishedDate','supportPrograms','contacts','attachments'];
+  var programRowFields = {supportPrograms:['target','name','description','amount'],contentSections:['heading','body'],contacts:['institution','name','phone','email','duty'],attachments:['id','name','mimeType','content','size']};
+  function utf8Size(text) { return encodeURIComponent(text).replace(/%[A-F\d]{2}/gi,'x').length; }
+  function normalizeProgram(input) {
+    var p=clone(input), region=p.region||'지역', category=p.category||'기업지원', year=String(p.start||'2026').slice(0,4);
+    var institution='가상 '+region+'테크노파크';
+    var defaults={projectName:p.title,projectNumber:'DEMO-'+p.id,businessYear:year,noticeNumber:year+'-'+region+'-시연-'+p.id,deadlineTime:'18:00',industry:category,intro:region+' 지역 중소기업의 성장과 경쟁력 강화를 위한 '+category+' 참여기업을 모집합니다. 본 공고의 사업·기관·담당자 및 지원금액은 기능 검토를 위한 가상 기초자료입니다.',institution:institution,publishedDate:p.start,
+      supportPrograms:[{target:region+' 소재 중소기업',name:category,description:'기업 현황 진단, 맞춤형 개선계획 수립 및 전문가 연계 지원',amount:25000000}],
+      contentSections:[{heading:'사업개요',body:'사업명: '+p.title+'\n지원목적: 지역기업의 기술 경쟁력과 사업화 역량 강화\n접수기간: '+p.start+' ~ '+p.end+'\n지원기간: 협약 체결일부터 사업연도 말까지 (세부 일정 협의)'},{heading:'지원대상 및 내용',body:'지원대상: '+region+'에 사업장을 둔 중소기업\n지원내용: '+category+'에 필요한 진단·개선·검증 프로그램\n기업별 지원규모와 기업부담금은 평가 및 협약에서 확정합니다.\n국세·지방세 체납, 휴·폐업, 동일 과제 중복지원 여부를 확인합니다.'},{heading:'신청방법 및 선정절차',body:'RMS에서 사업을 선택하고 신청기업 정보와 필수 접수서류를 확인한 후 제출합니다.\n접수 → 요건 검토 → 선정평가 → 협약 체결 → 과제 수행 → 결과 확인\n접수 마감일의 마감시각까지 최종 제출해야 합니다.'}],
+      contacts:[{institution:institution,name:'가상 공고 담당자',phone:'000-000-0000',email:'demo@example.invalid',duty:'사업신청 및 지원내용 안내'}],
+      attachments:[{id:'NOTICE',name:p.id+'-공고문-시연예시.txt',mimeType:'text/plain',content:'[가상 시연용 공고문]\n'+p.title+'\n접수기간: '+p.start+' ~ '+p.end+'\n이 파일은 공고 첨부 다운로드 기능을 확인하는 텍스트 예시입니다. 실제 신청용 공고문이 아닙니다.'}]
+    };
+    Object.keys(defaults).forEach(function(k){if(p[k]===undefined)p[k]=defaults[k];});
+    if(Array.isArray(p.attachments))p.attachments.forEach(function(a){if(a&&typeof a.content==='string')a.size=utf8Size(a.content);});
+    return p;
+  }
+  function validDate(value) {
+    return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&Number.isFinite(Date.parse(value+'T00:00:00Z'))&&new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;
+  }
+  function programStatus(program, referenceDate) {
+    var day=referenceDate||new Date().toISOString().slice(0,10);
+    assert(validDate(day)&&validDate(program.start)&&validDate(program.end),'공고 기준 날짜 오류');
+    return {label:day<program.start?'접수예정':day>program.end?'접수마감':'모집중',state:day<program.start?'upcoming':day>program.end?'closed':'open',daysLeft:Math.round((Date.parse(program.end+'T00:00:00Z')-Date.parse(day+'T00:00:00Z'))/86400000)};
+  }
+  function validateProgram(p, data) {
+    clean(p.title,300);clean(p.region,30);clean(p.category,100);
+    ['projectName','projectNumber','noticeNumber','industry','institution'].forEach(function(k){clean(p[k],300);});
+    clean(p.intro,5000);
+    assert(typeof p.businessYear==='string'&&/^\d{4}$/.test(p.businessYear),'사업연도는 네 자리 숫자로 입력하세요.');
+    assert(validDate(p.start)&&validDate(p.end)&&p.start<=p.end&&validDate(p.publishedDate),'공고 접수기간과 공고일을 확인하세요.');
+    assert(typeof p.deadlineTime==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(p.deadlineTime),'접수 마감시각은 HH:mm 형식으로 입력하세요.');
+    assert(Array.isArray(p.requiredDocs)&&new Set(p.requiredDocs).size===p.requiredDocs.length&&p.requiredDocs.every(function(id){return data.documentTypes.some(function(d){return d.id===id;});}),'사업별 필수서류 오류');
+    ['supportPrograms','contentSections','contacts','attachments'].forEach(function(k){assert(Array.isArray(p[k])&&p[k].length<=30,'공고 '+k+' 항목은 30개 이하로 입력하세요.');p[k].forEach(function(row){assert(row&&typeof row==='object'&&!Array.isArray(row),'공고 '+k+' 항목 형식 오류');});});
+    p.supportPrograms.forEach(function(r){clean(r.target,500);clean(r.name,300);clean(r.description,2000);assert(Number.isSafeInteger(r.amount)&&r.amount>=0&&r.amount<=1000000000000,'정부지원금은 0 이상 1조 원 이하 정수로 입력하세요.');});
+    p.contentSections.forEach(function(r){clean(r.heading,200);clean(r.body,10000);});
+    p.contacts.forEach(function(r){['institution','name','phone','duty'].forEach(function(k){clean(r[k],300);});clean(r.email,254);assert(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(r.email),'담당자 이메일 형식을 확인하세요.');});
+    var ids=new Set();
+    p.attachments.forEach(function(a){clean(a.id,80);assert(!ids.has(a.id),'공고 첨부파일 ID가 중복되었습니다.');ids.add(a.id);clean(a.name,255);assert(/\.txt$/i.test(a.name)&&!/[\\/\x00-\x1f]/.test(a.name)&&a.mimeType==='text/plain','공고 첨부 예시는 경로 없는 .txt 파일만 지원합니다.');clean(a.content,20000);assert(Number.isSafeInteger(a.size)&&a.size===utf8Size(a.content),'공고 첨부파일 크기 오류');});
+  }
   function validate(data) {
     safeTree(data, 0);
     assert(data && data.schemaVersion === 1, '지원하지 않는 JSON 형식입니다. schemaVersion 1 파일을 선택하세요.');
@@ -29,6 +68,8 @@
       var ids = new Set();
       data[k].forEach(function (row) { assert(row && typeof row === 'object' && !Array.isArray(row), k + ' 항목 형식 오류'); if (k !== 'audit') { clean(row.id, 80); assert(!ids.has(row.id), '중복 ID: ' + row.id); ids.add(row.id); } });
     });
+    // Upgrade only absent notice fields; imported collections remain authoritative.
+    data.programs=data.programs.map(normalizeProgram);
     var codeIds = new Set(data.classifications.map(function(c) { return c.id; }));
     data.classifications.forEach(function(c) { clean(c.name, 100); assert(['industry','technology','consultation','institution','region','reason','work'].indexOf(c.kind)>=0,'분류 종류 오류'); assert(typeof c.active==='boolean' && typeof c.visible==='boolean','분류 사용/노출 값 오류'); assert(typeof c.parentId==='string' && (!c.parentId || codeIds.has(c.parentId)), '상위 분류 오류'); var seen=new Set([c.id]), p=c; while(p.parentId){p=data.classifications.find(function(x){return x.id===p.parentId;});assert(p && p.kind===c.kind && !seen.has(p.id),'분류 순환/종류 오류');seen.add(p.id);} });
     data.doctors.forEach(function(d) { ['name','organization','owner','institution','industry','year','degree','career','certificates','acquiredTechnology','userId'].forEach(function(k){clean(d[k],2000);}); ['technologies','supportRegions','consultations','reasons','history'].forEach(function(k){assert(Array.isArray(d[k]),'기술닥터 '+k+' 형식 오류');}); assert(d.technologies.length && d.supportRegions.length,'기술·지역을 선택하세요.'); assert(typeof d.available==='boolean' && !isNaN(Date.parse(d.updatedAt)),'기술닥터 상태·날짜 오류'); [d.institution,d.industry].concat(d.technologies,d.consultations,d.reasons).forEach(function(id){assert(codeIds.has(id),'미등록 분류: '+id);}); });
@@ -40,7 +81,7 @@
     assert(new Set(data.doctors.map(function(d){return d.userId;})).size===data.doctors.length,'SMTECH 사용자 중복등록입니다.');
     data.users.forEach(function(u){clean(u.name,100);clean(u.organization,300);});
     data.documentTypes.forEach(function(d){clean(d.name,100);clean(d.provider,100);assert(typeof d.active==='boolean','서류 사용값 오류');});
-    data.programs.forEach(function(p){clean(p.title,300);clean(p.region,30);clean(p.category,100);assert(Array.isArray(p.requiredDocs) && p.requiredDocs.every(function(id){return data.documentTypes.some(function(d){return d.id===id;});}),'사업별 필수서류 오류');assert(!isNaN(Date.parse(p.start))&&!isNaN(Date.parse(p.end)),'공고 기간 오류');});
+    data.programs.forEach(function(p){validateProgram(p,data);});
     data.applications.forEach(function(a){['companyId','companyName','region','representative','address','inputAddress'].forEach(function(k){clean(a[k],500);}); assert(data.programs.some(function(p){return p.id===a.programId;}),'존재하지 않는 사업');assert(typeof a.consent==='boolean' && Array.isArray(a.docs),'신청서 형식 오류');assert(['작성중','임시저장','제출완료'].indexOf(a.submission)>=0,'신청 상태 오류');assert(a.docs.length===data.documentTypes.length && new Set(a.docs.map(function(d){return d.specId;})).size===a.docs.length,'서류 목록 오류');a.docs.forEach(function(d){assert(data.documentTypes.some(function(t){return t.id===d.specId;}) && statuses.indexOf(d.status)>=0 && Array.isArray(d.history),'서류 상태 오류');assert(typeof d.reason==='string','서류 사유 오류'); if(d.file){clean(d.file.name,255);assert(Number.isFinite(d.file.size)&&d.file.size>=0,'파일 크기 오류');}});});
     data.applications.forEach(function(a){
       a.docs.forEach(function(d){
@@ -60,10 +101,43 @@
     assert(Number.isInteger(data.settings.staleMonths)&&data.settings.staleMonths>0&&data.settings.staleMonths<=60,'현행화 기준 오류');
     return data;
   }
+  function validatePresentation(value) {
+    safeTree(value,0);
+    assert(value && roles.includes(value.role),'시연 역할 형식 오류');
+    assert(typeof value.route==='string' && /^(home|doctors|doctor\/[A-Za-z0-9_-]+|matches|stats|documents(?:\/[A-Za-z0-9_-]+(?:\/[1-4])?)?|faq|questions|manage(?:\/(?:home|documents))?|guide(?:\/SFR-\d{2})?)$/.test(value.route),'시연 화면 경로 오류');
+    var source=value.ui;assert(source && typeof source==='object' && !Array.isArray(source),'시연 화면 설정 오류');
+    var result={role:value.role,route:value.route,ui:{}};
+    ['faqQuery','faqWork','docStatus','codeKind','appId'].forEach(function(k){assert(typeof source[k]==='string' && source[k].length<=500,'시연 검색조건 오류');result.ui[k]=source[k];});
+    assert(Array.isArray(source.selected)&&source.selected.length<=3&&source.selected.every(function(id){return typeof id==='string'&&id.length<=80;}),'비교 선택 오류');result.ui.selected=source.selected.slice();
+    [['doctorFilters',['q','region','owner','industry','technology','institution','year','available','stale','sort']],['statsFilters',['region','technology','industry','start','end']]].forEach(function(pair){var f=source[pair[0]];assert(f&&typeof f==='object'&&!Array.isArray(f),'검색조건 형식 오류');var next={};Object.keys(f).forEach(function(k){var valid=['available','stale'].includes(k)?typeof f[k]==='boolean':typeof f[k]==='string'&&f[k].length<=500;assert(pair[1].includes(k)&&valid,'검색조건 값 오류');next[k]=f[k];});result.ui[pair[0]]=next;});
+    return result;
+  }
+  function parseBackup(text) {
+    assert(typeof text==='string'&&text.length<=5*1024*1024,'JSON은 5MB 이하로 선택하세요.');
+    var value=JSON.parse(text);safeTree(value,0);
+    if(value&&value.format==='smtech-demo'){
+      assert(value.version===1,'지원하지 않는 시연 백업 버전입니다.');
+      return {data:validate(value.data),presentation:validatePresentation(value.presentation)};
+    }
+    return {data:validate(value),presentation:null};
+  }
   function createStore(seed, storage) {
     validate(seed);
     var state = clone(seed), session = {role:'visitor', region:'충남', companyId:'CO001'}, loadWarning='';
-    if (storage) { try { var saved=storage.getItem(KEY); if(saved) state=validate(JSON.parse(saved)); } catch(e) { loadWarning='저장 데이터를 읽지 못해 가상 초기자료를 불러왔습니다. ' + e.message; } }
+    if (storage) {
+      try {
+        var saved=storage.getItem(KEY);
+        if(saved!==null){state=validate(JSON.parse(saved));}
+        else {
+          var legacy=storage.getItem(LEGACY_KEY);
+          if(legacy){
+            state=validate(JSON.parse(legacy));
+            try {storage.setItem(KEY,JSON.stringify(state));if(storage.removeItem)storage.removeItem(LEGACY_KEY);}
+            catch(error){loadWarning='기존 시연 자료를 열었지만 저장 키를 옮기지 못했습니다. JSON으로 내보내 보관해 주세요. '+error.message;}
+          }
+        }
+      } catch(error) { loadWarning='저장 데이터를 읽지 못해 가상 초기자료를 불러왔습니다. ' + error.message; }
+    }
     function update(action, fn) { var next=clone(state); var result=fn(next); next.audit.unshift({at:now(),role:session.role,action:action});next.audit=next.audit.slice(0,300);validate(next);if(storage) storage.setItem(KEY,JSON.stringify(next));state=next;return result; }
     function signed() { assert(session.role!=='visitor','사용자 역할에서 지원기업 또는 관리기관으로 전환해 주세요.'); }
     function manager() { assert(['tp','admin'].indexOf(session.role)>=0,'관리기관 또는 관리자만 처리할 수 있습니다.'); }
@@ -92,6 +166,8 @@
       getState:function(){return clone(state);}, getSession:function(){return clone(session);},loadWarning:loadWarning,label:label,isStale:isStale,
       setRole:function(role){assert(roles.indexOf(role)>=0,'역할 오류');session.role=role;},
       searchDoctors:searchDoctors,
+      programStatus:function(program){var p=typeof program==='string'?state.programs.find(function(row){return row.id===program;}):program;assert(p,'사업공고를 찾을 수 없습니다.');return programStatus(p,state.demoDate);},
+      saveProgram:function(input){return update('사업공고 정보 저장',function(s){admin();safeTree(input,0);assert(input&&typeof input==='object'&&!Array.isArray(input),'공고 입력 형식을 확인하세요.');var old=input.id?s.programs.find(function(p){return p.id===input.id;}):null;assert(!input.id||old,'수정할 공고를 찾을 수 없습니다.');var id=old?old.id:'B'+Date.now();while(!old&&s.programs.some(function(p){return p.id===id;}))id+='1';var p={id:id};programFields.forEach(function(k){if(input[k]!==undefined)p[k]=clone(input[k]);else if(old)p[k]=clone(old[k]);});p=normalizeProgram(p);validateProgram(p,s);Object.keys(programRowFields).forEach(function(k){p[k]=p[k].map(function(row){var selected={};programRowFields[k].forEach(function(field){selected[field]=row[field];});return selected;});});if(old)s.programs[s.programs.indexOf(old)]=p;else s.programs.push(p);return p.id;});},
       visibleQuestions:function(){return state.questions.filter(function(q){return q.public&&q.mainVisible&&state.classifications.some(function(c){return c.id===q.work&&c.kind==='work'&&c.active&&c.visible;});}).sort(function(a,b){return b.date.localeCompare(a.date);});},
       publicQuestions:function(){return state.questions.filter(function(q){return q.public&&state.classifications.some(function(c){return c.id===q.work&&c.kind==='work'&&c.active&&c.visible;});}).sort(function(a,b){return b.date.localeCompare(a.date);});},
       searchFaqs:function(query,work){var q=(query||'').trim().toLowerCase();var allowed=state.classifications.filter(function(c){return c.kind==='work'&&c.active&&c.visible;}).map(function(c){return c.id;});var all=state.faqs.filter(function(f){return f.published&&allowed.indexOf(f.work)>=0&&(!work||f.work===work);});var direct=all.filter(function(f){return [f.title,f.answer].concat(f.keywords).join(' ').toLowerCase().indexOf(q)>=0;});if(direct.length||!q)return {items:direct,related:false};var tokens=q.split(/\s+/).filter(Boolean);var related=all.map(function(f){var text=[f.title,f.answer].concat(f.keywords).join(' ').toLowerCase();var score=tokens.reduce(function(n,t){return n+(text.indexOf(t)>=0?3:0);},0);for(var i=0;i<q.length-1;i++){if(text.indexOf(q.slice(i,i+2))>=0)score++;}return {item:f,score:score};}).filter(function(x){return x.score>0;}).sort(function(a,b){return b.score-a.score;}).slice(0,4).map(function(x){return x.item;});return {items:related,related:true};},
@@ -115,9 +191,10 @@
       updateSettings:function(settings){return update('메인화면 배치 설정',function(s){admin();s.settings=clone(settings);});},
       saveDocumentType:function(input){return update('증빙서류 대상 설정',function(s){admin();var d=s.documentTypes.find(function(x){return x.id===input.id;});if(d){d.name=clean(input.name,100);d.provider=clean(input.provider,100);d.active=!!input.active;}else{var id='F'+Date.now();s.documentTypes.push({id:id,name:clean(input.name,100),provider:clean(input.provider,100),active:true});s.applications.forEach(function(a){a.docs.push({specId:id,status:'미제출',queriedAt:null,reason:'',file:null,history:[]});});}});},
       exportJson:function(){return JSON.stringify(state,null,2);},
-      importJson:function(text){assert(text.length<=5*1024*1024,'JSON은 5MB 이하로 선택하세요.');var next=validate(JSON.parse(text));if(storage)storage.setItem(KEY,JSON.stringify(next));state=clone(next);},
+      exportBackup:function(presentation){return JSON.stringify({format:'smtech-demo',version:1,exportedAt:now(),data:state,presentation:validatePresentation(presentation)},null,2);},
+      importJson:function(text){var parsed=parseBackup(text),next=parsed.data;if(storage)storage.setItem(KEY,JSON.stringify(next));state=clone(next);return parsed.presentation;},
       reset:function(){if(storage)storage.setItem(KEY,JSON.stringify(seed));state=clone(seed);session.role='visitor';}
     };
   }
-  return {createStore:createStore,validate:validate,storageKey:KEY};
+  return {createStore:createStore,validate:validate,storageKey:KEY,parseBackup:parseBackup,normalizeProgram:normalizeProgram,programStatus:programStatus};
 }));

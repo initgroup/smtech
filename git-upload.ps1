@@ -50,12 +50,27 @@ if ($Push) {
     if ($LASTEXITCODE -ne 0) { throw 'Supply -RemoteUrl for the first push.' }
 }
 
+# Resolve the packager; build only after source files have been staged.
+$sourcePackager = Join-Path $PSScriptRoot 'tools/package_source.py'
+if (Test-Path -LiteralPath $sourcePackager) {
+    $projectPython = Join-Path $PSScriptRoot '.venv/Scripts/python.exe'
+    if (-not (Test-Path -LiteralPath $projectPython)) { $projectPython = 'python' }
+}
+
 # Remove private files and generated delivery archives from the index only.
 Invoke-Git -GitArgs @('rm', '-r', '--cached', '--ignore-unmatch', '--', ':(glob)local/**', ':(glob)**/local/**', ':(glob)deliverables/**')
 Invoke-Git -GitArgs @('add', '--all')
 $trackedLocal = @(& git ls-files -- ':(glob)local/**' ':(glob)**/local/**' ':(glob)deliverables/**')
 if ($LASTEXITCODE -ne 0) { throw 'Cannot verify excluded files.' }
 if ($trackedLocal.Count -gt 0) { throw 'Excluded local or deliverables files are still tracked. Aborting.' }
+
+if (Test-Path -LiteralPath $sourcePackager) {
+    & $projectPython $sourcePackager --index
+    if ($LASTEXITCODE -ne 0) { throw 'Cannot build the ZIP from staged Git source.' }
+    Invoke-Git -GitArgs @('add', '--', 'prototype/region/rms/downloads/smtech-source.zip')
+    & $projectPython $sourcePackager --verify-index
+    if ($LASTEXITCODE -ne 0) { throw 'Source ZIP differs from staged Git files. Commit stopped.' }
+}
 
 & git diff --cached --quiet
 $diffExit = $LASTEXITCODE
@@ -92,6 +107,11 @@ if ($diffExit -eq 1) {
     Write-Host 'No changes to commit.'
 } else {
     throw 'Cannot inspect staged changes.'
+}
+
+if (Test-Path -LiteralPath $sourcePackager) {
+    & $projectPython $sourcePackager --verify-ref HEAD
+    if ($LASTEXITCODE -ne 0) { throw 'Source ZIP differs from committed Git files. Push stopped.' }
 }
 
 if ($Push) {

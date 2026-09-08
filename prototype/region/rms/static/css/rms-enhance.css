@@ -1,4 +1,36 @@
 /* Add AFTER ui.css and uiCustom.css. Every rule stays inside .rms-enhance. */
+.rms-enhance .rms-pagecontext{max-width:480px;text-align:right}
+.rms-enhance .rms-sfr{margin-bottom:10px;font-size:12px;color:#52697e}
+.rms-enhance .rms-sfr>div{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;margin-top:6px}
+.rms-enhance .rms-sfr .rms-sfr-highlight{display:inline-block;border:1px solid #78b4dd;border-radius:4px;background:#e5f3ff;color:#00548f;padding:3px 8px;font-weight:700}
+.rms-enhance .rms-requirements .rms-table{table-layout:fixed;min-width:980px;white-space:normal}
+.rms-enhance .rms-requirements .rms-table th:first-child{width:14%}
+.rms-enhance .rms-requirements .rms-table th:nth-child(2){width:39%}
+.rms-enhance .rms-requirements .rms-table td,.rms-enhance .rms-requirements .rms-table th{text-align:left;vertical-align:top;white-space:normal;overflow-wrap:anywhere}
+.rms-enhance .rms-sfr-definition{font-weight:600;margin-bottom:12px}
+.rms-enhance ul.rms-sfr-details{list-style:none;padding:0;margin:0}
+.rms-enhance .rms-sfr-details li{list-style:none;margin-bottom:9px;line-height:1.8}
+.rms-enhance .rms-sfr-followup{display:block;margin-top:16px;color:#805200}
+.rms-enhance .rms-sfr-selected{background:#fff6d9;outline:2px solid #d69a20;outline-offset:-2px;scroll-margin-top:20px}
+.rms-enhance .rms-sfr-coverage{min-width:0;font-size:13px;line-height:1.85}
+.rms-enhance .rms-sfr-coverage h3{font-size:15px;margin:20px 0 10px}
+.rms-enhance .rms-sfr-coverage>h3:first-child{margin-top:0}
+.rms-enhance ul.rms-sfr-menus{padding:12px;margin:0 0 18px;background:#f0f6fc;border:1px solid #d2e3f2;border-radius:5px;list-style:none}
+.rms-enhance .rms-sfr-menus li{display:flex;gap:9px;align-items:baseline;margin:0 0 12px;list-style:none}
+.rms-enhance .rms-sfr-menus li:last-child{margin-bottom:0}
+.rms-enhance .rms-sfr-menus li>div{min-width:0}
+.rms-enhance .rms-sfr-bullet{flex:none;color:#0872b5;font-size:8px}
+.rms-enhance .rms-sfr-menus a{display:inline-block;color:#005b97;font-weight:700;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere;padding:2px 0}
+.rms-enhance .rms-sfr-menus a:focus-visible{outline:3px solid #d78b16;outline-offset:3px}
+.rms-enhance .rms-sfr-menus small{display:block;font-size:11px;color:#596e80;margin-top:3px}
+.rms-enhance .rms-sfr-summary{padding:10px 12px;border-left:3px solid #2582b9;background:#f6f9fc}
+.rms-enhance .rms-sfr-implementation section{margin-top:15px}
+.rms-enhance .rms-sfr-implementation h4{font-size:13px;color:#214e71;margin:0 0 5px}
+.rms-enhance .rms-sfr-implementation p{margin:0}
+.rms-enhance .rms-sfr-plan-note{font-size:12px;color:#805200;margin-bottom:9px}
+.rms-enhance ul.rms-sfr-plans{padding-left:19px;margin:0;list-style:disc}
+.rms-enhance .rms-sfr-plans li{list-style:disc;margin:0 0 12px}
+@media(max-width:740px){.rms-enhance .rms-pagehead{flex-wrap:wrap}.rms-enhance .rms-pagecontext{max-width:100%;text-align:left}.rms-enhance .rms-sfr>div{justify-content:flex-start}}
 .rms-enhance .rms-table caption{visibility:visible;font-size:14px;line-height:1.5}
 .rms-enhance .rms-searchbar>.rms-field{flex:1;min-width:0}
 .rms-enhance{--rms-blue:#0068ad;--rms-navy:#173e60;--rms-line:#d9e1e9;--rms-ink:#22364a;--rms-muted:#64768a;color:var(--rms-ink);font-family:"Noto Sans KR","Malgun Gothic",sans-serif;font-size:14px;line-height:1.65;letter-spacing:-.3px;text-align:left}
@@ -49,3 +81,85 @@
 @media(prefers-reduced-motion:reduce){.rms-enhance *{scroll-behavior:auto}}
 
 .rms-enhance .rms-steps li{padding:0}.rms-enhance .rms-steps button{display:block;width:100%;min-height:48px;padding:11px 10px;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer}.rms-enhance .rms-steps button:hover{background:#eaf3fa}.rms-enhance .rms-steps button:focus-visible{outline:2px solid var(--rms-blue);outline-offset:-3px}.rms-enhance #rms-company-form fieldset{border:0;padding:0;margin:0;min-width:0}
+
+.rms-enhance .rms-sfr-layer{position:fixed;z-index:900;display:flex;flex-direction:column;box-sizing:border-box;min-width:0;min-height:0;background:#fff;border:2px solid #2879ae;border-radius:8px;box-shadow:0 8px 36px #173e6040;overflow:hidden}
+.rms-enhance .rms-sfr-layerhead{display:flex;flex:none;align-items:stretch;background:#e8f3fb;border-bottom:1px solid #bdd6e8}
+.rms-enhance .rms-sfr-layerhead button{border:0;background:transparent;color:#173e60;padding:12px;text-align:left}
+.rms-enhance .rms-sfr-layerhead [data-sfr-move]{flex:1;min-width:0;cursor:move;touch-action:none;user-select:none;font-weight:700}
+.rms-enhance .rms-sfr-layerhead small{display:block;font-size:11px;font-weight:400;margin-top:5px;color:#536c80}
+.rms-enhance .rms-sfr-layerhead [data-sfr-close]{align-self:flex-start;font-size:25px;line-height:1}
+.rms-enhance .rms-sfr-layerbody{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:18px;overflow-wrap:anywhere}
+.rms-enhance .rms-sfr-layerbody h3{margin:12px 0 8px}
+.rms-enhance .rms-sfr-layerfoot{flex:none;padding:9px 27px 12px 12px;background:#f3f7fa;font-size:11px;line-height:1.5;color:#587085}
+.rms-enhance .rms-sfr-layer [data-sfr-resize]{position:absolute;border:0;padding:0;background:transparent;touch-action:none;color:#2879ae}
+.rms-enhance .rms-sfr-resize-x{right:0;top:55px;bottom:22px;width:8px;cursor:ew-resize}
+.rms-enhance .rms-sfr-resize-y{left:0;right:22px;bottom:0;height:8px;cursor:ns-resize}
+.rms-enhance .rms-sfr-resize-both{right:0;bottom:0;width:24px;height:24px;cursor:nwse-resize}
+
+/* Keep narrow screens usable without hiding overflowing content. */
+.rms-enhance{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.rms-enhance fieldset{min-width:0}
+.rms-enhance .rms-pagehead>*,.rms-enhance .rms-panelhead>*,.rms-enhance .rms-homegrid>*,.rms-enhance .rms-two>*,.rms-enhance .rms-searchbar>*,.rms-enhance .rms-sortable>*{min-width:0}
+.rms-enhance .rms-two,.rms-enhance .rms-profile{grid-template-columns:repeat(2,minmax(0,1fr))}
+.rms-enhance .rms-profile>div{min-width:0;grid-template-columns:130px minmax(0,1fr)}
+.rms-enhance .rms-panelhead,.rms-enhance .rms-tablefoot{flex-wrap:wrap}
+.rms-enhance .rms-tablewrap{min-width:0;max-width:100%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.rms-enhance .rms-tablewrap .rms-table{overflow-wrap:normal}
+.rms-enhance .rms-steps li{min-width:0;flex:1 1 0}
+.rms-enhance .rms-bar{grid-template-columns:minmax(0,80px) minmax(0,1fr) 40px}
+.rms-enhance .rms-checkrow,.rms-enhance .rms-checkboxes label{min-width:0}
+.rms-enhance .rms-consent>div,.rms-enhance .rms-consent>span{min-width:0}
+
+/* Native dialogs keep their title visible while the full contents scroll. */
+.rms-enhance .rms-dialog{max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);max-width:calc(100vw - 24px);min-width:0;overflow:hidden}
+.rms-enhance .rms-dialog[open]{display:flex;flex-direction:column}
+.rms-enhance .rms-dialoghead{flex:none;min-width:0}
+.rms-enhance .rms-dialoghead h2{min-width:0;overflow-wrap:anywhere}
+.rms-enhance .rms-dialoghead [data-dialog-move]{flex:1;cursor:move;touch-action:none;user-select:none}
+.rms-enhance .rms-dialoghead button{flex:none;cursor:pointer}
+.rms-enhance .rms-dialogbody{flex:1;min-height:0;max-height:none;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.rms-enhance .rms-dialogbody .rms-profile>div{grid-template-columns:110px minmax(0,1fr)}
+.rms-enhance .rms-dialog-program{width:min(1180px,calc(100vw - 24px))}
+.rms-enhance .rms-program-info{margin-top:18px}
+.rms-enhance .rms-program-tablewrap{min-width:0;max-width:100%;margin:22px 0}
+.rms-enhance .rms-program-tablewrap h3{margin-bottom:12px}
+.rms-enhance .rms-program-tablewrap .rms-table td{overflow-wrap:anywhere;white-space:normal}
+.rms-enhance .rms-program-content{padding:20px;border:1px solid var(--rms-line);background:#fbfcfe;border-radius:4px}
+.rms-enhance .rms-program-sections+.rms-program-sections{margin-top:26px}
+.rms-enhance .rms-program-sections h3{padding-left:10px;border-left:3px solid var(--rms-blue);margin-bottom:10px}
+.rms-enhance .rms-program-text{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9}
+.rms-enhance .rms-program-editor-row{padding:16px;margin:12px 0;border:1px solid var(--rms-line);border-radius:4px;background:#f7f9fc;min-width:0}
+.rms-enhance .rms-program-editor-row>.rms-btn{margin-top:12px}
+
+@media(max-width:740px){
+  .rms-enhance .rms-two,.rms-enhance .rms-profile{grid-template-columns:minmax(0,1fr)}
+  .rms-enhance .rms-searchbar>.rms-field{flex:1 1 180px}
+  .rms-enhance .rms-sortable{flex-wrap:wrap}
+  .rms-enhance .rms-sortable>.rms-actions{margin-left:auto}
+  .rms-enhance .rms-dialoghead{padding:15px 17px;gap:10px}
+  .rms-enhance .rms-dialoghead h2{font-size:16px}
+  .rms-enhance .rms-program-content{padding:16px}
+  .rms-enhance .rms-program-info dt,.rms-enhance .rms-program-info dd{padding:11px}
+}
+@media(max-width:420px){
+  .rms-enhance .rms-panel,.rms-enhance .rms-filter,.rms-enhance .rms-guidecard{padding:13px}
+  .rms-enhance .rms-profile>div,.rms-enhance .rms-dialogbody .rms-profile>div{grid-template-columns:85px minmax(0,1fr)}
+  .rms-enhance .rms-profile dt,.rms-enhance .rms-profile dd{padding:10px}
+  .rms-enhance .rms-searchbar select{width:100%;flex-basis:100%}
+  .rms-enhance .rms-searchbar input{min-width:0;flex-basis:100%}
+  .rms-enhance .rms-searchbar>.rms-field{flex-basis:100%}
+  .rms-enhance .rms-btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;padding-left:12px;padding-right:12px}
+  .rms-enhance .rms-table .rms-btn{white-space:nowrap}
+  .rms-enhance .rms-steps button{padding:9px 4px;font-size:11px}
+  .rms-enhance .rms-quick{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rms-enhance .rms-metric{padding:10px}
+  .rms-enhance .rms-consent{padding:13px;gap:8px}
+  .rms-enhance .rms-checkrow{flex-wrap:wrap}
+  .rms-enhance .rms-dialog{max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px)}
+  .rms-enhance .rms-dialog-program{width:calc(100vw - 16px)}
+  .rms-enhance .rms-dialoghead,.rms-enhance .rms-dialogbody{padding:12px}
+  .rms-enhance .rms-program-content,.rms-enhance .rms-program-editor-row{padding:12px}
+  .rms-enhance .rms-sfr-layerbody{padding:12px}
+  .rms-enhance .rms-sfr-layerhead button{padding:10px}
+  .rms-enhance .rms-loading{padding:40px 16px}
+}
