@@ -1,0 +1,275 @@
+<!-- Publisher fragment generated from RMSViews. Synthetic data; attach your controller handlers to data-action. -->
+<section class="rms-enhance" data-rms-screen="documents-manager">
+<div class="rms-pagehead">
+<div>
+<p class="rms-eyebrow">REGIONAL MANAGEMENT SYSTEM</p>
+<h1 id="rms-main" tabindex="-1">서류제출현황</h1>
+<p class="rms-subtitle">신청기업과 관리기관이 같은 신청서와 서류 현황을 확인합니다.</p>
+</div>
+<div>
+<p class="rms-breadcrumb">홈 &nbsp;›&nbsp; 사업신청 › 접수서류 확인</p>
+</div>
+</div>
+<nav aria-label="사업신청 단계">
+<ol class="rms-steps">
+<li>
+<button type="button" data-action="document-step" data-id="1">01 사업 선택</button>
+</li>
+<li>
+<button type="button" data-action="document-step" data-id="2">02 신청기업 정보</button>
+</li>
+<li aria-current="step">
+<button type="button" data-action="document-step" data-id="3" aria-current="step">03 접수서류 확인</button>
+</li>
+<li>
+<button type="button" data-action="document-step" data-id="4">04 제출 및 보완</button>
+</li>
+</ol>
+</nav>
+<form id="rms-application-filter" class="rms-filter">
+<div class="rms-fieldgrid">
+<div class="rms-field rms-span2">
+<label for="rms-application">신청기업 · 사업</label>
+<select id="rms-application" name="application">
+<option value="A001" selected>가상 한빛정밀 / 2026년 지역기업 성장사다리 지원사업</option>
+<option value="A002">가상 한빛정밀 / 2026년 스마트공정 전환 기술지원사업</option>
+<option value="A003">가상 새봄바이오 / 2026년 지역기업 성장사다리 지원사업</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-submission">신청서 상태</label>
+<input id="rms-submission" name="submission" type="text" value="작성중">
+</div>
+<div class="rms-field ">
+<label for="rms-companyRegion">기업 소재지</label>
+<input id="rms-companyRegion" name="companyRegion" type="text" value="충남">
+</div>
+</div>
+</form>
+<section class="rms-panel">
+<div class="rms-panelhead">
+<h2>2026년 지역기업 성장사다리 지원사업</h2>
+<span class="rms-badge rms-badge-">작성중</span>
+</div>
+<dl class="rms-profile">
+<div>
+<dt>기업명</dt>
+<dd>가상 한빛정밀</dd>
+</div>
+<div>
+<dt>대표자</dt>
+<dd>가상 대표자</dd>
+</div>
+<div class="rms-wide">
+<dt>신청서 주소</dt>
+<dd>충남 천안시 가상산업로 99</dd>
+</div>
+</dl>
+<div class="rms-note">기업 정보제공 동의: <b>동의하지 않음</b> · 기업별 서류를 확인하고 보완을 요청할 수 있습니다.</div>
+<div class="rms-panelhead">
+<h2>접수서류</h2>
+</div>
+<div class="rms-statusrow">
+<button type="button" data-action="doc-status" data-id="" aria-pressed="true">전체 9</button>
+<button type="button" data-action="doc-status" data-id="미제출" aria-pressed="false">미제출 9</button>
+<button type="button" data-action="doc-status" data-id="조회완료" aria-pressed="false">조회완료 0</button>
+<button type="button" data-action="doc-status" data-id="조회실패" aria-pressed="false">조회실패 0</button>
+<button type="button" data-action="doc-status" data-id="보완필요" aria-pressed="false">보완필요 0</button>
+<button type="button" data-action="doc-status" data-id="제출완료" aria-pressed="false">제출완료 0</button>
+</div>
+<div class="rms-tablewrap" tabindex="0" role="region" aria-label="접수서류 목록 (표 가로 스크롤)">
+<table class="rms-table ">
+<caption>접수서류 목록</caption>
+<thead>
+<tr>
+<th scope="col">순번</th>
+<th scope="col">서류명 / 제공기관</th>
+<th scope="col">필수여부</th>
+<th scope="col">제출상태</th>
+<th scope="col">조회일시 / 첨부파일</th>
+<th scope="col">처리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>
+<b>사업자등록증명서</b>
+<small>국세청</small>
+</td>
+<td>
+<span class="rms-required">필수</span>
+</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F01">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F01">보완요청</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>
+<b>폐업사실증명서</b>
+<small>국세청</small>
+</td>
+<td>선택</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F02">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F02">보완요청</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td>
+<b>휴업사실증명서</b>
+<small>국세청</small>
+</td>
+<td>선택</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F03">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F03">보완요청</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>
+<b>표준재무제표증명서</b>
+<small>국세청</small>
+</td>
+<td>
+<span class="rms-required">필수</span>
+</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F04">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F04">보완요청</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>
+<b>국세 납세증명서</b>
+<small>국세청</small>
+</td>
+<td>
+<span class="rms-required">필수</span>
+</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F05">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F05">보완요청</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td>
+<b>지방세 납세증명서</b>
+<small>지방자치단체</small>
+</td>
+<td>
+<span class="rms-required">필수</span>
+</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F06">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F06">보완요청</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td>
+<b>부가가치세 과세표준증명</b>
+<small>국세청</small>
+</td>
+<td>선택</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F07">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F07">보완요청</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td>
+<b>중소기업확인서</b>
+<small>중소벤처기업부</small>
+</td>
+<td>
+<span class="rms-required">필수</span>
+</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F08">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F08">보완요청</button>
+</div>
+</td>
+</tr>
+<tr>
+<td>9</td>
+<td>
+<b>4대 사회보험료 완납 증명서</b>
+<small>국민건강보험공단</small>
+</td>
+<td>선택</td>
+<td>
+<span class="rms-badge rms-badge-gray">미제출</span>
+</td>
+<td>—</td>
+<td>
+<div class="rms-actions">
+<button type="button" class="rms-btn rms-btn-small" data-action="doc-detail" data-id="F09">상세</button>
+<button type="button" class="rms-btn rms-btn-small" data-action="supplement" data-id="F09">보완요청</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rms-muted rms-space">9종은 우선 연계대상입니다. 필수 여부는 사업별로 다릅니다. 서류당 한 파일을 선택하며 여러 파일은 ZIP으로 묶습니다.</p>
+<div class="rms-actions rms-space">
+<button type="button" class="rms-btn " data-action="document-step" data-id="2">이전: 신청기업 정보</button>
+<button type="button" class="rms-btn rms-btn-primary" data-action="document-step" data-id="4">다음: 제출 및 보완</button>
+</div>
+</section>
+</section>

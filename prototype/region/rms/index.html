@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>RMS 기업지원사업 관리시스템 · 기능개선 시연</title>
+  <!-- 운영 CSS는 원본 그대로 보존. 개선 스타일은 이 파일들 뒤에서 범위 한정 적용합니다. -->
+  <link rel="stylesheet" href="static/notosansKR/css/notosanskr.css">
+  <link rel="stylesheet" href="static/css/ui.css">
+  <link rel="stylesheet" href="static/css/uiCustom.css">
+  <link rel="stylesheet" href="static/css/rms-demo-shell.css">
+  <link rel="stylesheet" href="static/css/rms-enhance.css">
+  <script src="static/js/rms-enhance/core.js" defer></script>
+  <script src="static/js/rms-enhance/views.js" defer></script>
+  <script src="static/js/rms-enhance/app.js" defer></script>
+</head>
+<body class="rms-demo">
+  <a class="rms-demo-skip" href="#rms-main">본문 바로가기</a>
+  <div id="wrap">
+    <header id="header" class="rms-demo-header">
+      <a class="rms-demo-brand" href="#home" aria-label="RMS 기업지원사업 관리시스템 홈"><img src="static/images/logo_subtop.png" alt="RMS 기업지원사업 관리시스템"></a>
+      <nav class="rms-demo-nav" aria-label="주요 업무"><a href="#home">공고</a><a href="#documents">사업신청·관리</a><a href="#doctors">기술닥터</a><a href="#faq">소통관리</a></nav>
+      <div id="rms-user-menu" class="rms-demo-user"></div>
+    </header>
+    <div class="rms-demo-toolbar"><span><b>기능개선 시연</b> 가상 데이터로 동작합니다.</span><div><label for="rms-role">사용자 역할</label><select id="rms-role"><option value="visitor">로그인 전</option><option value="company">지원기업</option><option value="tp">관리기관 · 충남TP</option><option value="admin">시스템 관리자</option></select><a href="#guide">시연 안내</a><button type="button" id="rms-export">JSON 저장</button><label class="rms-demo-import">JSON 불러오기<input type="file" id="rms-import" accept=".json,application/json"></label></div></div>
+    <main id="body"><div id="rms-enhance-app" class="rms-enhance" aria-busy="true"><div class="rms-loading" role="status">시연 데이터를 불러오는 중입니다.</div></div></main>
+    <footer id="footer" class="rms-demo-footer"><b>RMS 기업지원사업 관리시스템</b><span>2026 기능개선 사전 검토용 · 실제 신청, 인증, 서류 조회 및 전송이 이루어지지 않습니다.</span></footer>
+  </div>
+  <div id="rms-dialog-host" class="rms-enhance"></div><div id="rms-toast" class="rms-enhance rms-toast" role="status" aria-live="polite"></div>
+  <noscript>이 프로토타입은 JavaScript를 사용합니다. 브라우저에서 JavaScript를 허용해 주세요.</noscript>
+</body>
+</html>

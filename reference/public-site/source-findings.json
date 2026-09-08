@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "review_date_kst": "2026-09-08",
+  "entry_url": "https://www.smtech.go.kr/region/rms",
+  "evidence_scope": "Public HTTP response HTML, CSS and JavaScript only; no authenticated pages, backend code or database access.",
+  "archive": {
+    "manifest": "manifest.json",
+    "raw_analysis": "source-audit.json",
+    "human_report": "source-audit.md",
+    "unique_urls": 150,
+    "http_200_files": 91,
+    "http_404_urls": 59,
+    "successful_bytes": 40203296,
+    "max_concurrency": 1,
+    "collection_http_gets_including_initial_retry_attempts": 162,
+    "normalization": "Manifest URLs and filenames omit anonymous JSESSIONID path parameters and static cache-busting v query parameters. Response file bytes are unchanged. Original HTML may contain anonymous session text and stays out of prototype distribution."
+  },
+  "architecture": {
+    "context_path": "/region/rms",
+    "page_route_pattern": "/biz/<business>/<screen>.do",
+    "json_response_route_pattern": "/biz/<business>/<operation>.json",
+    "business_script_pattern": "/static/js/biz/<business>/<screen>.js",
+    "common_script_paths": ["/static/js/cmmn/constants.js", "/static/js/cmmn/common.js", "/static/js/cmmn/callAjax.js", "/static/js/ui/ui.js"],
+    "observed_rendering": "HTML responses already contain public business data, list/table markup; per-page JS binds events and invokes shared functions.",
+    "backend_framework_confirmed": false,
+    "backend_template_engine_confirmed": false,
+    "backend_version_confirmed": false
+  },
+  "dom": {
+    "entry_shell": ["#wrap", "#header", "#body", "#footer"],
+    "entry_body": [".mKeysub1", "form#searchForm", ".gTitle2 > .mTitle2", ".mList1 > ul > li"],
+    "detail_popup": [".mPopup1.w100per", ".modalBg", ".popupBg", ".title", ".cont.scrollY", ".mTitle2", ".mBoard1 > table", ".mButton1", ".mBtn1"],
+    "login_body_class": "gLogin",
+    "login_layout": [".mLogin1", ".login", ".loginBg", "#smsCrtfcLayer"],
+    "form_hidden_names": ["sbjt_id", "pblanc_id", "pblanc_rcept_id", "rcvfvr_entrprs_instt_id"],
+    "detail_query_names": ["sbjtId", "pblancId"]
+  },
+  "css": {
+    "core_stylesheet": "/region/rms/static/css/ui.css",
+    "core_bytes": 34117,
+    "developer_override_stylesheet": "/region/rms/static/css/uiCustom.css",
+    "developer_override_bytes": 656,
+    "body_font": "Noto Sans KR",
+    "body_font_size_px": 14,
+    "body_line_height": "150%",
+    "body_letter_spacing": "-1px",
+    "wrap_min_width_px": 1300,
+    "header_height_px": 72,
+    "footer_height_px": 41,
+    "body_padding": "26px 30px 40px",
+    "primary_color": "#005ead",
+    "core_grid_columns": ["44%", "calc(56% - 10px)"],
+    "uiCustom_grid_columns": ["35%", "calc(65% - 10px)"],
+    "core_public_list_card_width": "calc(33.33% - 22px)",
+    "actual_public_list_inline_card_width": "calc(25% - 22px)",
+    "reuse_rule": "Keep original bytes and relative paths. Add a new stylesheet after originals; scope overrides and new class names to a dedicated feature root."
+  },
+  "libraries": [
+    {"name": "jQuery", "version": "3.6.0", "evidence": "File header", "path": "/static/js/jquery/3.6.0/jquery-3.6.0.min.js"},
+    {"name": "jQuery UI", "version": "1.12.1", "evidence": "File header; parent folder 3.6.0 is not the UI version", "path": "/static/js/jquery/3.6.0/jquery-ui.js"},
+    {"name": "jQuery Form", "version": "3.51.0-2014.06.20", "evidence": "File header", "path": "/static/js/jquery/jquery.form.js"},
+    {"name": "bPopup", "version": "0.10.0", "evidence": "File header", "path": "/static/js/jquery/jquery.bpopup.min.js"},
+    {"name": "blockUI", "version": "2.7", "evidence": "$.blockUI.version=2.7 in file", "path": "/static/js/jquery/jquery.blockUI.min.js"},
+    {"name": "SweetAlert2", "version": "11.6.11", "evidence": "File header; public entry and detail", "path": "/static/js/sweetalert2/sweetalert2.min.js"},
+    {"name": "SweetAlert", "version": null, "evidence": "Login HTML script src; version unconfirmed", "path": "/static/js/sweetalert/sweetalert.min.js"},
+    {"name": "ParamQuery Pro", "version": "8.6.0", "evidence": "File header; detail popup", "path": "/static/js/paramquery/pqgrid.min.js"},
+    {"name": "ParamQuery Touch", "version": "1.0.1", "evidence": "File header", "path": "/static/js/paramquery/pqTouch/pqtouch.min.js"},
+    {"name": "JSZip", "version": null, "path_version_label": "2.5.0", "evidence": "Directory name only; internal version unconfirmed", "path": "/static/js/paramquery/jsZip-2.5.0/jszip.min.js"},
+    {"name": "FileSaver", "version": null, "evidence": "File header", "path": "/static/js/paramquery/FileSaver.js"},
+    {"name": "AXJ", "version": null, "evidence": "Detail HTML script src", "path": "/static/js/AX/AXJ.js"},
+    {"name": "AXTree", "version": null, "evidence": "Detail HTML script src", "path": "/static/js/AX/AXTree.js"}
+  ],
+  "ajax_contract_observed_in_source": {
+    "helpers": ["fnGetAjaxData(url, data, callback)", "callAjax.fnGetAjaxData(url, data, async, callback)"],
+    "http_method": "POST",
+    "response_data_type": "json",
+    "request_data": "Plain object or serialized form; not explicitly application/json",
+    "context_prefix": "CONST_CONTEXT_PATH",
+    "request_header": {"AJAX": "true"},
+    "response_common_keys": ["resultCode", "resultMsg"],
+    "response_codes_seen": ["success", "noAuth", "loginDuplicated"],
+    "http_auth_error_seen": 403,
+    "gfnSetFormAction_method": "POST",
+    "executed_during_audit": false
+  },
+  "actions_observed": [
+    {"action": "Public announcement detail", "selector": "a[name=btn_detail]", "helper": "fn_bpopup", "path": "/biz/pblancManage/pblancManage/pblancDetailPop.do", "parameters": ["sbjtId", "pblancId"], "verified_by_public_get": true},
+    {"action": "Apply", "selector": "a[name=btn_regist]", "helper": "gfnSetFormAction", "path": "/biz/pblancManage/pblancReqstManage/pblancReqst.do", "method": "POST", "executed": false},
+    {"action": "Initial notice lookup", "helper": "fnGetAjaxData", "path": "/biz/main/searchData.json", "method": "POST", "executed": false},
+    {"action": "Initial notice popup", "helper": "fn_Popup", "path": "/biz/main/noticeMatterPop.do", "executed": false},
+    {"action": "Public support-company manual", "selector": "#btn_down_rcvfvr_manual", "path": "/static/file/manual/rcvfvr_manual.pdf", "downloaded_by_this_collector": false},
+    {"action": "Communication board", "selector": "#btn_mlrd_manage", "path": "/biz/mlrdManage/mlrdManage/mlrdManage.do", "verified_by_get": false, "reason": "Unique URL collection limit reached"}
+  ],
+  "unknowns_requiring_internal_source": [
+    "Authenticated menu and role-specific screens",
+    "Actual JDK, Spring, eGovFrame, servlet container and DBMS versions",
+    "Server template engine and original templates",
+    "Controller/service/mapper source and database schema",
+    "Business DTOs, authorization, transaction and validation rules",
+    "Existing commercial library usage rights and approved versions"
+  ]
+}

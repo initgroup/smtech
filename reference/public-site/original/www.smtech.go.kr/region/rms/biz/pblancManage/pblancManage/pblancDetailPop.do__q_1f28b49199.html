@@ -1,0 +1,312 @@
+
+
+
+
+
+
+<script>
+	const CONST_CONTEXT_PATH = '/region/rms';
+</script>
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>기업지원사업 관리시스템</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/region/rms/static/images/common/favicon.ico;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5" />
+
+	<!--jQuery dependency, any stable version of jQuery-->
+    <link rel="stylesheet" href="/region/rms/static/js/jquery/3.6.0/jquery-ui.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" >
+    <link rel="stylesheet" href="/region/rms/static/notosansKR/css/notosanskr.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" >
+    <link rel="stylesheet" href="/region/rms/static/css/ui.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" >
+    <link rel="stylesheet" href="/region/rms/static/css/uiCustom.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" >
+
+	<script src="/region/rms/static/js/jquery/3.6.0/jquery-3.6.0.min.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script src="/region/rms/static/js/jquery/3.6.0/jquery-ui.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script src="/region/rms/static/js/jquery/jquery.form.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script src="/region/rms/static/js/jquery/jquery-simple-tree-table.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script src="/region/rms/static/js/jquery/jquery.mtz.monthpicker.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script src="/region/rms/static/js/ui/ui.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+
+	<!--blockUI-->
+	<script src="/region/rms/static/js/jquery/jquery.blockUI.min.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+
+	<!-- system common -->
+	<script type="text/javascript" src="/region/rms/static/js/cmmn/constants.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script type="text/javascript" src="/region/rms/static/js/cmmn/common.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script type="text/javascript" src="/region/rms/static/js/cmmn/callAjax.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+
+	<!--ParamQuery Grid css files-->
+	<link rel="stylesheet" href="/region/rms/static/js/paramquery/pqgrid.min.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" />
+	<!--add pqgrid.ui.css for jQueryUI theme support-->
+	<link rel="stylesheet" href="/region/rms/static/js/paramquery/pqgrid.ui.min.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"  />
+	<link rel="stylesheet" href="/region/rms/static/js/paramquery/themes/bootstrap/pqgrid.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" >
+	<link rel="stylesheet" href="/region/rms/static/js/paramquery/pqgrid.custom.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" >
+
+	<!--Include jsZip file (v2.5.0) before pqgrid js file to support xlsx and zip export (optional)-->
+	<script type="text/javascript" src="/region/rms/static/js/paramquery/jsZip-2.5.0/jszip.min.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5" ></script>
+	<!--ParamQuery Grid js files-->
+	<script type="text/javascript" src="/region/rms/static/js/paramquery/pqgrid.min.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5" ></script>
+	<!--ParamQuery Grid localization file-->
+	<script src="/region/rms/static/js/paramquery/localize/pq-localize-kr.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5"></script>
+	<!--Include pqTouch file to provide support for touch devices (optional)-->
+	<script type="text/javascript" src="/region/rms/static/js/paramquery/pqTouch/pqtouch.min.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5" ></script>
+
+	<script type="text/javascript" src="/region/rms/static/js/paramquery/FileSaver.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5"></script>
+
+	<!-- AXTree -->
+	<link rel="stylesheet" type="text/css" href="/region/rms/static/css/AXJ.min.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"/>
+	<script type="text/javascript" src="/region/rms/static/js/AX/AXJ.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" ></script>
+	<script type="text/javascript" src="/region/rms/static/js/AX/AXTree.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" ></script>
+
+	<!-- highcharts js -->
+	<!--
+	<script type="text/javascript" src="/region/rms/static/js/highcharts/highcharts.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script type="text/javascript" src="/region/rms/static/js/highcharts/modules/exporting.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script type="text/javascript" src="/region/rms/static/js/highcharts/modules/export-data.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script type="text/javascript" src="/region/rms/static/js/highcharts/modules/data.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	<script type="text/javascript" src="/region/rms/static/js/highcharts/modules/accessibility.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+	 -->
+
+	<script type="text/javascript" src="/region/rms/static/js/jquery/jquery.bpopup.min.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" ></script>
+
+   	<link href="/region/rms/static/js/sweetalert2/sweetalert2.min.css;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156" rel="stylesheet" type="text/css" />
+   	<script type="text/javascript" src="/region/rms/static/js/sweetalert2/sweetalert2.min.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?v=20260908163156"></script>
+</head>
+
+<body>
+	<div id="mask"></div>
+	
+
+
+
+
+<script>
+	if(fnIsEmpty('{pblanc_progrs_sttus_code_nm=공고, rcept_clos_minute=00, pblanc_no=2026_충남_시군구연고산업육성_F_0494, rcept_begin_date_disp=2026-09-01, pblanc_nm=[부여군]굿뜨래 농산물 활용한 백제문화기반 디저트산업육성사업 시군구 4차 공고, rcept_begin_date=20260901, sbjt_area_code=013, rcept_end_date=20260908, exc_instt_nm=(재)충남테크노파크, tot_cnt=1, pblanc_edit_yn=Y, rcept_end_date_disp=2026-09-08, pblanc_dt=2026-08-31 16:31:12.209273, sbjt_nm=부여군 굿뜨래 농산물을 활용한 백제문화기반 디저트산업 육성사업, rcept_clos_hour=18, pblanc_register_id=24142780, pblanc_id=20260831P00494, pblanc_dt_disp=2026-08-31, slctn_result_pick_cnt=0, sbjt_area_code_nm=충남, rcept_clos_time=180059, pblanc_sport_trget=(시군구)혁신화&amp;성장촉진, pblanc_cn=<p>중소벤처기업부, 충청남도, 부여군 지원사업 충남테크노파크-공고 제2026-호</p><p>&nbsp;</p><p>2026년도 충남시군구연고산업육성사업 지원 모집공고(4차)</p><p>- 부여군 굿뜨래 농산물을 활용한 백제문화기반 디저트산업 육성 -</p><p><br></p><table><thead><tr><th><p>2026년도 중소벤처기업부와 충청남도 및 부여군이 지원하는 시군구 연고산업 육성사업 수행자로 선정된 수행기관별 지원 프로그램을 안내하오니, 해당 프로그램 참여를 희망하는 부여군 지역 소재 중소기업의 많은 신청 바랍니다.</p></th></tr></thead><tbody><tr></tr></tbody></table><p><br></p><p>2026년 8월 31일</p><p>중소벤처기업부장관, 충청남도지사, 부여군수,</p><p>(재)충남테크노파크원장, 호서대학교 총장, (사)한국지역특화산업협회 회장</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>지원개요</p><p>&nbsp;</p><p>ㅇ (지원규모) 총 497,500천원</p><p>&nbsp;</p><p>ㅇ (지원프로그램 및 내용) 4개 유형, 총 14개 프로그램</p><p>- 기업 당 3개 제품까지, 제품별로는 6개 프로그램까지 신청 가능</p><p>※ 기 패키지지원 선정기업은 타 프로그램 지원 불가</p><p>- 최근 2년 이내 동일 제품에 대한 동일 내용 지원이 있을 경우, 중복지원으로 간주되어 지원이 배제 됨</p><p><br></p><table><thead><tr><th><p>지원유형</p></th><th><p>프로그램명</p></th><th><p>지원내용</p></th><th><p>지원기관</p></th></tr></thead><tbody><tr><td><p>기술</p><p>혁신</p><p>지원</p></td><td><p>• 지식재산권 획득</p></td><td><p>- 연고 산업 관련 기업의 시장 경쟁력 강화를 위한 국내/외 지재권 획득 지원</p><p>· 특허 출원, 상표 출원, 국외 출원, PCT 등</p></td><td><p>충남TP</p></td></tr></tbody></table><p><br></p><p>◦ (지원금액 및 지원건수)</p><p><br></p><table><thead><tr><th><p>지원유형</p></th><th><p>프로그램명</p></th><th><p>지원건수</p></th><th><p>선정</p><p>건수</p></th><th><p>잔여건수</p></th><th><p>건당 최대지원금</p></th><th><p>지원기관명</p></th></tr></thead><tbody><tr><td><p>기술</p><p>혁신</p><p>지원</p></td><td><p>• 지식재산권 획득</p></td><td><p>10</p></td><td><p>9</p></td><td><p>1</p></td><td><p>5백만원</p></td><td><p>충남TP</p></td></tr></tbody></table><p><br></p><p>※ 선정평가 결과에 의해 지원금은 조정될 수 있음</p><p>◦ 기업부담금 : 지원신청금액의 10% 이상 + 부가세</p><p>- 전년도 매출액 10억 미만일시 5% + 부가세 부담</p><p>※ 공장자동화지원의 경우 매출과 상관없이 자부담 50%</p><p>- 예시 1) 전년도 매출액이 10억원인 기업이 시제품 제작 10,000천원(A)을 지원 신청하는 경우, 기업부담금은 2,100천원(B+C)</p><p><br></p><table><thead><tr><th><p>지원신청금액(A)</p></th><th colspan="3"><p>기업부담금</p></th><th><p>총합계(A+B+C)</p></th></tr></thead><tbody><tr><td><p>기업부담금(B)</p></td><td><p>부가세(C)</p></td><td><p>기업부담총액(B+C)</p></td></tr><tr><td><p>10,000천원</p></td><td><p>1,000천원</p></td><td><p>1,100천원</p></td><td><p>2,100천원</p></td><td><p>12,100천원</p></td></tr></tbody></table><p><br></p><p>- 예시 2) 전년도 매출액이 10억원 미만인 기업이 시제품 제작 10,000천원(A)을 지원 신청하는 경우, 기업부담금은 1,550천원(B+C)</p><p><br></p><table><thead><tr><th><p>지원신청금액(A)</p></th><th colspan="3"><p>기업부담금</p></th><th><p>총합계(A+B+C)</p></th></tr></thead><tbody><tr><td><p>기업부담금(B)</p></td><td><p>부가세(C)</p></td><td><p>기업부담총액(B+C)</p></td></tr><tr><td><p>10,000천원</p></td><td><p>500천원</p></td><td><p>1,050천원</p></td><td><p>1,550천원</p></td><td><p>11,550천원</p></td></tr></tbody></table><p><br></p><p>&nbsp;</p><p>ㅇ (신청자격)</p><p>① 충남 부여군 지역 내에 소재한 중소기업으로 부여군 연고자원1)을 활용 디저트 제품 생산(예정) 기업</p><p>1) 연고자원 : 부여군에서 생산되는 굿뜨래 인증 농산물, 부여 10品 농산물(수박, 밤, 토마토, 양송이, 멜론, 딸기, 오이, 표고버섯, 왕대추, 포도)</p><p>② 부여군 굿뜨래 공동 브랜드 사용승인 업체 중 디저트 제품 생산(예정) 기업</p><p>&nbsp;</p><p>󰊲 평가방법 및 기준</p><p>&nbsp;</p><p>ㅇ (평가방법) 예비진단(필수) 신청기업의 참여제한 등에 대한 사전검토 → 면담/현장실태조사(선택) → 선정평가(필수)</p><p>&nbsp;</p><p>ㅇ (평가기준) 예비진단, 면담/현장실태조사 및 선정평가를 진행하여 최종 수혜기업으로 선정</p><p>&nbsp;</p><p>- 상세 내역 및 배점은 지역별·과제별 특성을 고려하여 변경 가능</p><p><br></p><table><thead><tr><th><p>평가항목</p></th><th><p>평가지표</p></th><th><p>배점</p></th><th><p>비고</p></th></tr></thead><tbody><tr><td rowspan="2"><p>지원 필요성</p></td><td><p>ㆍ본 지원을 통해 달성하고자 하는 목표</p></td><td><p>20</p></td><td><p>-</p></td></tr><tr><td><p>ㆍ지원대상 제품/서비스 사양, 현 상황, 애로사항,</p><p>시의성 및 지원의 필요성 등</p></td><td><p>20</p></td><td><p>-</p></td></tr><tr><td rowspan="2"><p>내용 타당성</p></td><td><p>ㆍ지원내용 범위, 수행일정의 구체성</p></td><td><p>25</p></td><td><p>-</p></td></tr><tr><td><p>ㆍ지원금액의 적정성</p></td><td><p>10</p></td><td><p>-</p></td></tr><tr><td rowspan="2"><p>기대효과</p></td><td><p>ㆍ지원대상 제품의 사업화 가능성</p></td><td><p>15</p></td><td><p>-</p></td></tr><tr><td><p>ㆍ고용 및 매출 증대 가능성</p></td><td><p>10</p></td><td><p>-</p></td></tr><tr><td colspan="2"><p>배점 합계</p></td><td><p>100</p></td><td><p>-</p></td></tr></tbody></table><p><br></p><p>&nbsp;</p><p>ㅇ (우대가점) 아래항목 해당 시, 우대가점 반영(최대 5점)</p><p>&nbsp;</p><p><br></p><table><thead><tr><th><p>구분</p></th><th><p>우대가점 기준</p></th><th><p>증빙서류</p></th><th><p>가점</p></th></tr></thead><tbody><tr><td><p>1</p></td><td><p>ㆍ최근 3년 이내 지역특화 R&amp;D 종료(성공)기업</p></td><td><p>지역산업진흥원 확인</p></td><td><p>3</p></td></tr><tr><td><p>2</p></td><td><p>ㆍ중소기업 복지플랫폼 우수 활용기업</p></td><td><p>인증서</p></td><td><p>1</p></td></tr><tr><td><p>3</p></td><td><p>ㆍ중소기업중앙회가 선정한 명문장수기업</p></td><td><p>인증서</p></td><td><p>2</p></td></tr><tr><td><p>4</p></td><td><p>ㆍ｢자유무역협정의 이행을 위한 관세법의 특례에 관한 법률｣ 제12조에 따른 원산지인증수출자</p></td><td><p>인증서</p><p>(유효기간에 한함)</p></td><td><p>1</p></td></tr><tr><td><p>5</p></td><td><p>ㆍ｢지역중소기업법 시행령｣ 제30조 제1항에 따른 위기징후 단계 “주의·심각”에 소재하는 중소기업</p></td><td><p>주관기관 확인</p></td><td><p>2</p></td></tr><tr><td><p>6</p></td><td><p>ㆍ전년도 충남테크노파크 공용장비 사용료 200만원(VAT별도) 이상 납부기업</p></td><td><p>세금계산서</p></td><td><p>2</p></td></tr><tr><td><p>7</p></td><td><p>ㆍ충남테크노파크 입주 및 졸업기업</p></td><td><p>입주계약서</p></td><td><p>3</p></td></tr><tr><td><p>8</p></td><td><p>ㆍ충남연구개발장비시스템(CES) 가입기업</p></td><td><p>시스템 My Page 이미지</p></td><td><p>1</p></td></tr><tr><td><p>9</p></td><td><p>ㆍ충남지역 소재 공급기업 활용</p></td><td><p>공급기업 사업자등록증</p></td><td><p>1</p></td></tr><tr><td><p>10</p></td><td><p>ㆍ충남 유망중소기업 지정기업</p></td><td><p>지정증명서</p></td><td><p>1</p></td></tr><tr><td><p>11</p></td><td><p>ㆍ신청 아이템이 백제 문화 기반 연관 컨텐츠인 경우</p></td><td><p>사업계획서</p></td><td><p>3</p></td></tr></tbody></table><p><br></p><p>※충남 TP 임대료, 관리비, 장비사용료 장기미납기업(4개월 이상)은 참여 제한</p><p>&nbsp;</p><p>󰊳 유의사항</p><p>&nbsp;</p><p>◦ (중복지원 불가) 목표 및 내용이 동일하거나 유사한 과제(주제)로 기 지원받은 경우 중복지원 불가</p><p>&nbsp;</p><p>- 중복지원을 한 경우, 선정평가에서 지원제외 대상으로 처리 또는 선정 이후라도 지원기업 협약 해약 처리가 될 수 있으므로 유의</p><p>&nbsp;</p><p>- 중복 수급, 페이백 등 부정행위 적발시 해당 지원금 환수 및 제재부가금을 부과할 수 있으며, 지역특화산업육성(비R&amp;D) 등 정부지원사업에 참여를 제한받을 수 있음</p><p>&nbsp;</p><p>◦ (공급기업의 과도한 과제 수행 불가) 본 사업 내 지원프로그램은 한 개의 공급기업이 최대 3개 과제까지 수행가능</p><p>&nbsp;</p><p>- 하나의 공급기업의 과도한 과제 수행으로 인한 결과물의 품질 부실 사태 방지를 위하여 한 개의 공급기업이 최대 3개 과제까지 수행 가능</p><p>&nbsp;</p><p>&nbsp;</p><p>◦ (지원제외 대상) 다음 사항에 해당하는 기업</p><p><br></p><table><thead><tr><th colspan="2"><p>구 분</p></th><th><p>신청제외 대상</p></th></tr></thead><tbody><tr><td rowspan="5"><p>공통</p></td><td><p>1</p></td><td><p>ㆍ휴·폐업 중인 기업</p></td></tr><tr><td><p>2</p></td><td><p>ㆍ국세 또는 지방세를 체납 중인 자 또는 기업</p></td></tr><tr><td><p>3</p></td><td><p>ㆍ한국신용정보원의 ｢일반신용정보관리규약｣에 따라 연체, 대위변제·대지급, 부도, 관련인, 금융질서문란, 회생·파산 등의 정보가 등록되어 있는 기업</p></td></tr><tr><td><p>4</p></td><td><p>ㆍ｢민사집행법｣에 따라 채무불이행자명부에 등재되거나, 신용정보집중기관(은행연합회 등) 또는 금융기관에 의해 채무불이행자(체불사업자 포함)로 등록되거나 불량거래처로 규제 중인 기업</p></td></tr><tr><td><p>5</p></td><td><p>ㆍ임직원의 횡령·배임 등 사회적 물의를 일으키거나, 그 밖의 허위 및 부정한 방법(제3자 부당개입 등)으로 신청한 자 또는 기업</p></td></tr><tr><td rowspan="2"><p>개별</p></td><td><p>6</p></td><td><p>ㆍ의무사항(보고서/성과실적 제출, 정산금/환수금 납부 등)을 불이행하거나, 각종 법령 위반(사업비 목적 외 사용 등)으로 국가연구개발사업, 정부지원사업, 지역산업육성사업 등에서 제재 중인 기업</p></td></tr><tr><td><p>7</p></td><td><p>ㆍ그 외 지원사업별 지원제외 대상에 해당하는 기업</p></td></tr></tbody></table><p><br></p><p>◦ (기타 유의사항) 제출된 서류는 일체 반환하지 않음</p><p>󰊴 추진절차 및 일정</p><p>&nbsp;</p><p>◦ 지원기업 선정절차 및 일정(안) ※ 일정은 추진 상황에 따라 변동될 수 있음</p><p><br></p><table><thead><tr><th><p>모집공고</p></th><th><p>➡</p></th><th><p>신청ᐧ접수</p></th><th><p>➡</p></th><th><p>사전검토</p></th><th><p>➡</p></th><th><p>실태조사</p><p>(필요시)</p></th><th><p>➡</p></th><th><p>선정평가</p></th></tr></thead><tbody><tr><td><p>담당기관</p></td><td><p>지원기업</p></td><td><p>담당기관</p></td><td><p>담당기관</p></td><td><p>담당/지원기업</p></td></tr><tr><td><p>9.01(화)~</p></td><td><p>9.1(화)~9.8(월)</p></td><td><p>9월 초</p></td><td><p>9월 초</p></td><td><p>9.16(수)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>󰀻</p></td></tr><tr><td><p>성과조사</p></td><td rowspan="3"><p>󰀹</p></td><td><p>최종평가 및</p><p>사업비 지급</p></td><td rowspan="3"><p>󰀹</p></td><td><p>결과보고</p></td><td rowspan="3"><p>󰀹</p></td><td><p>중간모니터링</p></td><td rowspan="3"><p>󰀹</p></td><td><p>결과통보 및 협약</p></td></tr><tr><td><p>담당/지원기업</p></td><td><p>담당기관</p></td><td><p>주관기관 ↔</p><p>지원기업</p></td><td><p>담당기관</p></td><td><p>담당기관</p></td></tr><tr><td><p>수시</p></td><td><p>결과보고 후</p><p>(11월 말)</p></td><td><p>~ 11월 초</p></td><td><p>수시</p></td><td><p>~ 9월 중순</p></td></tr></tbody></table><p><br></p><p>※ 담당기관 : 충남TP, 호서대학교, (사)한국지역특화산업협회</p><p>※ 지원기업 : 수혜기업</p><p>&nbsp;</p><p>◦ (사전검토) 중복지원, 사업참여제한 등의 형식 요건을 검토하고 공고상 명시된 사전제외대상 여부, 우대가점 증빙자료 검토 후 평가대상 여부 최종 확인</p><p>◦ (실태조사) 평가위원회 개최 전 신청기업의 역량 점검을 목적으로 신청기업의 실체 등의 사실 확인 중심으로 실시(필요시 실시)</p><p><br></p><table><thead><tr><th><p>구분</p></th><th><p>점검방식</p></th><th><p>수행주체</p></th></tr></thead><tbody><tr><td><p>현장실태조사</p><p>(대면)</p></td><td><p>신청기업 방문 및 현장 확인을 통해 기업지원 수행역량 등 확인</p></td><td rowspan="3"><p>평가위원 및 담당자</p></td></tr><tr><td><p>서면실태조사</p><p>(비대면)</p></td><td><p>신청기업이 제출한 신청서류 (신청서 등) 및 역량을 확인할 수 있는 증빙서류 (조직도, 구성원 현황 등)를 별도 제출받아 확인</p></td></tr><tr><td><p>면담조사</p><p>(대면)</p></td><td><p>신청기업이 제출한 신청서류(신청서 등) 및 대면 질의응답(대표자, 사업책임자 등)을 통해 확인</p></td></tr></tbody></table><p><br></p><p>◦ (선정평가) 선정·평가 과정이 공정하고 전문성 있는 평가가 될 수 있도록 사전검토, 위원회 진행, 결과의 정리 순으로 진행</p><p>- 선정평가위원회 결과에 따라 지원대상에서 제외될 수 있으며, 지원금액 및 지원기간 등 주요내용은 조정될 수 있음.</p><p>&nbsp;</p><p>◦ (결과통보) 신청기업의 선정·평가 결과를 전문기관으로부터 확정된 결과에 따라 신청기업에게 선정결과 개별 통보</p><p>◦ (중간모니터링) 사업 수행 중 원활한 사업 추진 여부 확인을 위한 중간 모니터링을 서면으로 진행하나, 필요에 따라 현장실태조사 진행</p><p>◦ (결과보고서 제출) 결과보고서 및 사업 실적, 성과 등 결과물은 협약서에 기재된 기한까지 제출</p><p>- 결과보고서 제출 시 자부담 증빙(이체내역 등) 제출 필수</p><p>&nbsp;</p><p>◦ (최종평가 및 사업비 지급) 선정된 수행과제에 대한 달성여부 평가를 진행하고, 사업 완료 결과보고서 제출 후 최종 평가 결과에 따라 사업비 지급</p><p>- 사업완료 후 완료보고서 및 증빙서류의 적정성, 사업목표달성 여부를 평가 후 지원금 지급</p><p>- 성공 판정된 과제의 사업비는 주관/참여기관에서 공급기업으로 직접 지급</p><p>- 완료 결과보고서를 근거로 최종 평가 후 실패 판정 과제는 사업비 미지급</p><p>&nbsp;</p><p>◦ (성과조사) 사업 종료 후 후속 성과조사와 관리 실시 예정</p><p>- 과제종료 후, 수혜기업은 주관기관의 사업성과 활용을 위한 제반자료 요청 시 필수적으로 협조해야 함</p><p>- 사업기간 및 성과활용기간(사업 종료 후 5년) 내 발생한 매출, 고용, 기업지원실적 등 조사</p><p>&nbsp;</p><p>&nbsp;</p><p>󰊵 신청기간 및 방법 ※ 일정은 추진 상황에 따라 변동될 수 있음</p><p>&nbsp;</p><p>◦ (공고기간) 2026. 09. 01.(화) ~ 09. 08.(화)</p><p>&nbsp;</p><p>◦ (접수기간) 2026. 09. 01.(화) ~ 09. 08.(화) 18:00 까지</p><p>&nbsp;</p><p>◦ (신청방법) 온라인 방문(해당공고 선택) → 신청서류 제출(업로드)</p><p>&nbsp;</p><p>- (신청·접수처) http://www.smtech.go.kr/region/rms</p><p>&nbsp;</p><p>* 지원프로그램별 필수양식 및 선택사항 업로드</p><p>&nbsp;</p><p>- (제출서류) 첨부서식 제출 또는 증명서 발급</p><p><br></p><table><thead><tr><th><p>구분</p></th><th><p>제출서류 목록</p></th></tr></thead><tbody><tr><td><p>필수</p></td><td><p>○ 지원신청서 [서식 1]</p><p>○ 상세사업계획서 [서식 2]</p><p>※ 복수 지원 시 지원프로그램별로 사업계획서를 각각 작성하여 제출</p><p>○ 기업·개인정보 이용 동의서 [서식 3]</p><p>○ 신청자격 적정성 확인서 [서식 3]</p><p>○ 중복지원금지 확약서 [서식 3]</p><p>○ 성실의무 이행 서약서 [서식 3]</p><p>○ 사업자등록증 사본</p><p>○ 최근 3개년 재무제표(창업3년 미만기업: 해당기간 내 재무제표 제출)</p><p>※ 일반과세자에 한해 부가가치세 과세표준증명 대체 가능</p><p>○ 4대보험 사업장 가입자명부 사본(공고일 이후 발급분)</p><p>○ 납세증명서(국세, 지방세) 사본(공고일 이후 발급분)</p><p>[↓ 두가지 중 하나는 필수 제출]</p><p>○ 굿뜨래 브랜드 인증 관련 증빙 서류</p><p>○ 제품 생산 관련 부여군 굿뜨래 부여10品 원물 사용 관련 증빙 서류</p><p>※굿뜨래 부여10品 : 부여군에서 생산되는 굿뜨래 부여 10品 농산물(수박, 밤, 토마토, 양송이, 멜론, 딸기, 오이, 표고버섯, 왕대추, 포도)</p></td></tr><tr><td><p>선택</p></td><td><p>○ 수출실적증빙(직접수출, 간접수출)</p><p>○ 공장등록증 사본</p><p>○ 기업부설연구소 관련 서류</p><p>○ 우대가점 증빙자료</p><p>○ 기타 증빙자료(지식재산권, 인증관련서류, 제품, 기술 홍보자료 등)</p></td></tr></tbody></table><p><br></p><p>&nbsp;</p><p>󰊶 관련법규 (※ 본 공고문에서 정하지 않은 사항은 아래의 법령 및 규정을 적용)</p><p>&nbsp;</p><p>◦ (요령) 지역산업육성사업 운영요령</p><p>&nbsp;</p><p>◦ (지침) 지역산업육성 기업지원사업 관리지침</p><p>&nbsp;</p><p>󰊷 문의처</p><p>ㅇ 지원프로그램 관련 수행기관별 문의</p><p><br></p><table><thead><tr><th><p>기관명</p></th><th><p>담당자명</p></th><th><p>전화번호</p></th><th><p>이메일</p></th></tr></thead><tbody><tr><td><p>(재)충남테크노파크</p></td><td><p>김재윤 과장</p></td><td><p>041-589-0652</p></td><td><p>jykim@ctp.or.kr</p></td></tr></tbody></table><p><br></p><p>&nbsp;</p><p>ㅇ 온라인 접수 관련 시스템 문의</p><p><br></p><table><thead><tr><th><p>기관명</p></th><th><p>담당자명</p></th><th><p>전화번호</p></th><th><p>이메일</p></th></tr></thead><tbody><tr><td><p>대표번호</p></td><td><p>-</p></td><td><p>(국번없이)1357</p></td><td><p>-</p></td></tr></tbody></table><p><br></p>, atch_file_id=FILE0000000000166271, pblanc_progrs_sttus_code=PUB, sbjt_id=S3469966, pblanc_rcept_writng_papers_cnt=4, exc_instt_code=10000143, rcept_clos_time_disp=18:00, busi_year=2026, pblanc_register_nm=박정미, rn=1, pblanc_sport_progrm=특허지원(국내), pblanc_mfrc_indust=시군구 연고산업}')){
+		alert('데이터가 존재하지 않습니다.');
+		parent.fn_bClose();
+	}
+</script>
+<script type="text/javaScript" src="/region/rms/static/js/biz/pblancManage/pblancManage/pblancDetailPop.js;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5"></script>
+
+<!-- layer -->
+<div class="mPopup1 w100per" style="display: block">
+	<input type="hidden" id="sbjtId" name="sbjtId" value="S3469966"></input>
+	<input type="hidden" id="pblancId" name="pblancId" value="20260831P00494"></input>
+    <div class="modalBg"></div>
+    <div class="popupBg">
+		<div class="title">
+        	<h3>공고상세</h3>
+        </div>
+        <div class="cont scrollY">
+            <h3 class="mTitle2">공고정보</h3>
+            <!-- board -->
+            <div class="mBoard1">
+                <table>
+                    <caption>공고정보</caption>
+                    <colgroup>
+                        <col width="10%">
+                        <col width="40%">
+                        <col width="10%">
+                        <col width="*">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="tal">과제명</th>
+                            <td class="tal" >부여군 굿뜨래 농산물을 활용한 백제문화기반 디저트산업 육성사업</td>
+                            <th scope="row" class="tal">과제번호</th>
+			                <td class="tal">S3469966</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tal">사업연도</th>
+                            <td class="tal">2026</td>
+                            <th scope="row" class="tal">과제지역</th>
+                            <td class="tal">충남</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tal">공고번호</th>
+                            <td class="tal">2026_충남_시군구연고산업육성_F_0494</td>
+                            <th scope="row" class="tal">접수기간</th>
+                            <td class="tal">2026-09-01 ~ 2026-09-08</td>
+                        </tr>
+                        <tr>
+                        
+                            <th scope="row" class="tal">공고명</th>
+                            <td class="tal" >[부여군]굿뜨래 농산물 활용한 백제문화기반 디저트산업육성사업 시군구 4차 공고</td>
+                            <th scope="row" class="tal">접수마감시간</th>
+                            <td class="tal">18:00</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tal">산업명</th>
+                            <td class="tal" colspan="3">시군구 연고산업</td>
+                        </tr>
+                        <tr>
+			            	<th scope="row" class="tal">지원프로그램</th>
+			            	<td class="pxy0" colspan="3">
+			            		<table>
+			            			<caption>지원프로그램</caption>
+			            			<colgroup>
+							            <col width="15%">
+							            <col width="20%">
+							            <col width="*">
+							            <col width="10%">
+							        </colgroup>
+							        <thead>
+							        	<tr>
+							        		<th>지원대상명</th>
+							        		<th>프로그램명</th>
+							        		<th>프로그램설명</th>
+							        		<th>정부지원금<br>(단위:원)</th>
+							        	</tr>
+							        </thead>
+							        <tbody>
+							        	
+											<tr>
+												<td class="tal">(시군구)혁신화&amp;성장촉진</td>
+								        		<td class="tal">특허지원(국내)</td>
+								        		<td class="tal">- 연고 산업 관련 기업의 시장 경쟁력 강화를 위한 국내/외 지재권 획득 지원
+ · 특허 출원, 상표 출원, 국외 출원, PCT 등</td>
+								        		<td class="tar">5,000,000</td>
+							        		</tr>
+							        	
+							        </tbody>
+			            		</table>
+			            	</td>
+			            </tr>
+                        <tr>
+                            <th scope="row" class="tal">공고내용</th>
+                            <td class="tal" colspan="3"><p>중소벤처기업부, 충청남도, 부여군 지원사업 충남테크노파크-공고 제2026-호</p><p>&nbsp;</p><p>2026년도 충남시군구연고산업육성사업 지원 모집공고(4차)</p><p>- 부여군 굿뜨래 농산물을 활용한 백제문화기반 디저트산업 육성 -</p><p><br></p><table><thead><tr><th><p>2026년도 중소벤처기업부와 충청남도 및 부여군이 지원하는 시군구 연고산업 육성사업 수행자로 선정된 수행기관별 지원 프로그램을 안내하오니, 해당 프로그램 참여를 희망하는 부여군 지역 소재 중소기업의 많은 신청 바랍니다.</p></th></tr></thead><tbody><tr></tr></tbody></table><p><br></p><p>2026년 8월 31일</p><p>중소벤처기업부장관, 충청남도지사, 부여군수,</p><p>(재)충남테크노파크원장, 호서대학교 총장, (사)한국지역특화산업협회 회장</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>지원개요</p><p>&nbsp;</p><p>ㅇ (지원규모) 총 497,500천원</p><p>&nbsp;</p><p>ㅇ (지원프로그램 및 내용) 4개 유형, 총 14개 프로그램</p><p>- 기업 당 3개 제품까지, 제품별로는 6개 프로그램까지 신청 가능</p><p>※ 기 패키지지원 선정기업은 타 프로그램 지원 불가</p><p>- 최근 2년 이내 동일 제품에 대한 동일 내용 지원이 있을 경우, 중복지원으로 간주되어 지원이 배제 됨</p><p><br></p><table><thead><tr><th><p>지원유형</p></th><th><p>프로그램명</p></th><th><p>지원내용</p></th><th><p>지원기관</p></th></tr></thead><tbody><tr><td><p>기술</p><p>혁신</p><p>지원</p></td><td><p>• 지식재산권 획득</p></td><td><p>- 연고 산업 관련 기업의 시장 경쟁력 강화를 위한 국내/외 지재권 획득 지원</p><p>· 특허 출원, 상표 출원, 국외 출원, PCT 등</p></td><td><p>충남TP</p></td></tr></tbody></table><p><br></p><p>◦ (지원금액 및 지원건수)</p><p><br></p><table><thead><tr><th><p>지원유형</p></th><th><p>프로그램명</p></th><th><p>지원건수</p></th><th><p>선정</p><p>건수</p></th><th><p>잔여건수</p></th><th><p>건당 최대지원금</p></th><th><p>지원기관명</p></th></tr></thead><tbody><tr><td><p>기술</p><p>혁신</p><p>지원</p></td><td><p>• 지식재산권 획득</p></td><td><p>10</p></td><td><p>9</p></td><td><p>1</p></td><td><p>5백만원</p></td><td><p>충남TP</p></td></tr></tbody></table><p><br></p><p>※ 선정평가 결과에 의해 지원금은 조정될 수 있음</p><p>◦ 기업부담금 : 지원신청금액의 10% 이상 + 부가세</p><p>- 전년도 매출액 10억 미만일시 5% + 부가세 부담</p><p>※ 공장자동화지원의 경우 매출과 상관없이 자부담 50%</p><p>- 예시 1) 전년도 매출액이 10억원인 기업이 시제품 제작 10,000천원(A)을 지원 신청하는 경우, 기업부담금은 2,100천원(B+C)</p><p><br></p><table><thead><tr><th><p>지원신청금액(A)</p></th><th colspan="3"><p>기업부담금</p></th><th><p>총합계(A+B+C)</p></th></tr></thead><tbody><tr><td><p>기업부담금(B)</p></td><td><p>부가세(C)</p></td><td><p>기업부담총액(B+C)</p></td></tr><tr><td><p>10,000천원</p></td><td><p>1,000천원</p></td><td><p>1,100천원</p></td><td><p>2,100천원</p></td><td><p>12,100천원</p></td></tr></tbody></table><p><br></p><p>- 예시 2) 전년도 매출액이 10억원 미만인 기업이 시제품 제작 10,000천원(A)을 지원 신청하는 경우, 기업부담금은 1,550천원(B+C)</p><p><br></p><table><thead><tr><th><p>지원신청금액(A)</p></th><th colspan="3"><p>기업부담금</p></th><th><p>총합계(A+B+C)</p></th></tr></thead><tbody><tr><td><p>기업부담금(B)</p></td><td><p>부가세(C)</p></td><td><p>기업부담총액(B+C)</p></td></tr><tr><td><p>10,000천원</p></td><td><p>500천원</p></td><td><p>1,050천원</p></td><td><p>1,550천원</p></td><td><p>11,550천원</p></td></tr></tbody></table><p><br></p><p>&nbsp;</p><p>ㅇ (신청자격)</p><p>① 충남 부여군 지역 내에 소재한 중소기업으로 부여군 연고자원1)을 활용 디저트 제품 생산(예정) 기업</p><p>1) 연고자원 : 부여군에서 생산되는 굿뜨래 인증 농산물, 부여 10品 농산물(수박, 밤, 토마토, 양송이, 멜론, 딸기, 오이, 표고버섯, 왕대추, 포도)</p><p>② 부여군 굿뜨래 공동 브랜드 사용승인 업체 중 디저트 제품 생산(예정) 기업</p><p>&nbsp;</p><p>󰊲 평가방법 및 기준</p><p>&nbsp;</p><p>ㅇ (평가방법) 예비진단(필수) 신청기업의 참여제한 등에 대한 사전검토 → 면담/현장실태조사(선택) → 선정평가(필수)</p><p>&nbsp;</p><p>ㅇ (평가기준) 예비진단, 면담/현장실태조사 및 선정평가를 진행하여 최종 수혜기업으로 선정</p><p>&nbsp;</p><p>- 상세 내역 및 배점은 지역별·과제별 특성을 고려하여 변경 가능</p><p><br></p><table><thead><tr><th><p>평가항목</p></th><th><p>평가지표</p></th><th><p>배점</p></th><th><p>비고</p></th></tr></thead><tbody><tr><td rowspan="2"><p>지원 필요성</p></td><td><p>ㆍ본 지원을 통해 달성하고자 하는 목표</p></td><td><p>20</p></td><td><p>-</p></td></tr><tr><td><p>ㆍ지원대상 제품/서비스 사양, 현 상황, 애로사항,</p><p>시의성 및 지원의 필요성 등</p></td><td><p>20</p></td><td><p>-</p></td></tr><tr><td rowspan="2"><p>내용 타당성</p></td><td><p>ㆍ지원내용 범위, 수행일정의 구체성</p></td><td><p>25</p></td><td><p>-</p></td></tr><tr><td><p>ㆍ지원금액의 적정성</p></td><td><p>10</p></td><td><p>-</p></td></tr><tr><td rowspan="2"><p>기대효과</p></td><td><p>ㆍ지원대상 제품의 사업화 가능성</p></td><td><p>15</p></td><td><p>-</p></td></tr><tr><td><p>ㆍ고용 및 매출 증대 가능성</p></td><td><p>10</p></td><td><p>-</p></td></tr><tr><td colspan="2"><p>배점 합계</p></td><td><p>100</p></td><td><p>-</p></td></tr></tbody></table><p><br></p><p>&nbsp;</p><p>ㅇ (우대가점) 아래항목 해당 시, 우대가점 반영(최대 5점)</p><p>&nbsp;</p><p><br></p><table><thead><tr><th><p>구분</p></th><th><p>우대가점 기준</p></th><th><p>증빙서류</p></th><th><p>가점</p></th></tr></thead><tbody><tr><td><p>1</p></td><td><p>ㆍ최근 3년 이내 지역특화 R&amp;D 종료(성공)기업</p></td><td><p>지역산업진흥원 확인</p></td><td><p>3</p></td></tr><tr><td><p>2</p></td><td><p>ㆍ중소기업 복지플랫폼 우수 활용기업</p></td><td><p>인증서</p></td><td><p>1</p></td></tr><tr><td><p>3</p></td><td><p>ㆍ중소기업중앙회가 선정한 명문장수기업</p></td><td><p>인증서</p></td><td><p>2</p></td></tr><tr><td><p>4</p></td><td><p>ㆍ｢자유무역협정의 이행을 위한 관세법의 특례에 관한 법률｣ 제12조에 따른 원산지인증수출자</p></td><td><p>인증서</p><p>(유효기간에 한함)</p></td><td><p>1</p></td></tr><tr><td><p>5</p></td><td><p>ㆍ｢지역중소기업법 시행령｣ 제30조 제1항에 따른 위기징후 단계 “주의·심각”에 소재하는 중소기업</p></td><td><p>주관기관 확인</p></td><td><p>2</p></td></tr><tr><td><p>6</p></td><td><p>ㆍ전년도 충남테크노파크 공용장비 사용료 200만원(VAT별도) 이상 납부기업</p></td><td><p>세금계산서</p></td><td><p>2</p></td></tr><tr><td><p>7</p></td><td><p>ㆍ충남테크노파크 입주 및 졸업기업</p></td><td><p>입주계약서</p></td><td><p>3</p></td></tr><tr><td><p>8</p></td><td><p>ㆍ충남연구개발장비시스템(CES) 가입기업</p></td><td><p>시스템 My Page 이미지</p></td><td><p>1</p></td></tr><tr><td><p>9</p></td><td><p>ㆍ충남지역 소재 공급기업 활용</p></td><td><p>공급기업 사업자등록증</p></td><td><p>1</p></td></tr><tr><td><p>10</p></td><td><p>ㆍ충남 유망중소기업 지정기업</p></td><td><p>지정증명서</p></td><td><p>1</p></td></tr><tr><td><p>11</p></td><td><p>ㆍ신청 아이템이 백제 문화 기반 연관 컨텐츠인 경우</p></td><td><p>사업계획서</p></td><td><p>3</p></td></tr></tbody></table><p><br></p><p>※충남 TP 임대료, 관리비, 장비사용료 장기미납기업(4개월 이상)은 참여 제한</p><p>&nbsp;</p><p>󰊳 유의사항</p><p>&nbsp;</p><p>◦ (중복지원 불가) 목표 및 내용이 동일하거나 유사한 과제(주제)로 기 지원받은 경우 중복지원 불가</p><p>&nbsp;</p><p>- 중복지원을 한 경우, 선정평가에서 지원제외 대상으로 처리 또는 선정 이후라도 지원기업 협약 해약 처리가 될 수 있으므로 유의</p><p>&nbsp;</p><p>- 중복 수급, 페이백 등 부정행위 적발시 해당 지원금 환수 및 제재부가금을 부과할 수 있으며, 지역특화산업육성(비R&amp;D) 등 정부지원사업에 참여를 제한받을 수 있음</p><p>&nbsp;</p><p>◦ (공급기업의 과도한 과제 수행 불가) 본 사업 내 지원프로그램은 한 개의 공급기업이 최대 3개 과제까지 수행가능</p><p>&nbsp;</p><p>- 하나의 공급기업의 과도한 과제 수행으로 인한 결과물의 품질 부실 사태 방지를 위하여 한 개의 공급기업이 최대 3개 과제까지 수행 가능</p><p>&nbsp;</p><p>&nbsp;</p><p>◦ (지원제외 대상) 다음 사항에 해당하는 기업</p><p><br></p><table><thead><tr><th colspan="2"><p>구 분</p></th><th><p>신청제외 대상</p></th></tr></thead><tbody><tr><td rowspan="5"><p>공통</p></td><td><p>1</p></td><td><p>ㆍ휴·폐업 중인 기업</p></td></tr><tr><td><p>2</p></td><td><p>ㆍ국세 또는 지방세를 체납 중인 자 또는 기업</p></td></tr><tr><td><p>3</p></td><td><p>ㆍ한국신용정보원의 ｢일반신용정보관리규약｣에 따라 연체, 대위변제·대지급, 부도, 관련인, 금융질서문란, 회생·파산 등의 정보가 등록되어 있는 기업</p></td></tr><tr><td><p>4</p></td><td><p>ㆍ｢민사집행법｣에 따라 채무불이행자명부에 등재되거나, 신용정보집중기관(은행연합회 등) 또는 금융기관에 의해 채무불이행자(체불사업자 포함)로 등록되거나 불량거래처로 규제 중인 기업</p></td></tr><tr><td><p>5</p></td><td><p>ㆍ임직원의 횡령·배임 등 사회적 물의를 일으키거나, 그 밖의 허위 및 부정한 방법(제3자 부당개입 등)으로 신청한 자 또는 기업</p></td></tr><tr><td rowspan="2"><p>개별</p></td><td><p>6</p></td><td><p>ㆍ의무사항(보고서/성과실적 제출, 정산금/환수금 납부 등)을 불이행하거나, 각종 법령 위반(사업비 목적 외 사용 등)으로 국가연구개발사업, 정부지원사업, 지역산업육성사업 등에서 제재 중인 기업</p></td></tr><tr><td><p>7</p></td><td><p>ㆍ그 외 지원사업별 지원제외 대상에 해당하는 기업</p></td></tr></tbody></table><p><br></p><p>◦ (기타 유의사항) 제출된 서류는 일체 반환하지 않음</p><p>󰊴 추진절차 및 일정</p><p>&nbsp;</p><p>◦ 지원기업 선정절차 및 일정(안) ※ 일정은 추진 상황에 따라 변동될 수 있음</p><p><br></p><table><thead><tr><th><p>모집공고</p></th><th><p>➡</p></th><th><p>신청ᐧ접수</p></th><th><p>➡</p></th><th><p>사전검토</p></th><th><p>➡</p></th><th><p>실태조사</p><p>(필요시)</p></th><th><p>➡</p></th><th><p>선정평가</p></th></tr></thead><tbody><tr><td><p>담당기관</p></td><td><p>지원기업</p></td><td><p>담당기관</p></td><td><p>담당기관</p></td><td><p>담당/지원기업</p></td></tr><tr><td><p>9.01(화)~</p></td><td><p>9.1(화)~9.8(월)</p></td><td><p>9월 초</p></td><td><p>9월 초</p></td><td><p>9.16(수)</p></td></tr><tr><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>&nbsp;</p></td><td><p>󰀻</p></td></tr><tr><td><p>성과조사</p></td><td rowspan="3"><p>󰀹</p></td><td><p>최종평가 및</p><p>사업비 지급</p></td><td rowspan="3"><p>󰀹</p></td><td><p>결과보고</p></td><td rowspan="3"><p>󰀹</p></td><td><p>중간모니터링</p></td><td rowspan="3"><p>󰀹</p></td><td><p>결과통보 및 협약</p></td></tr><tr><td><p>담당/지원기업</p></td><td><p>담당기관</p></td><td><p>주관기관 ↔</p><p>지원기업</p></td><td><p>담당기관</p></td><td><p>담당기관</p></td></tr><tr><td><p>수시</p></td><td><p>결과보고 후</p><p>(11월 말)</p></td><td><p>~ 11월 초</p></td><td><p>수시</p></td><td><p>~ 9월 중순</p></td></tr></tbody></table><p><br></p><p>※ 담당기관 : 충남TP, 호서대학교, (사)한국지역특화산업협회</p><p>※ 지원기업 : 수혜기업</p><p>&nbsp;</p><p>◦ (사전검토) 중복지원, 사업참여제한 등의 형식 요건을 검토하고 공고상 명시된 사전제외대상 여부, 우대가점 증빙자료 검토 후 평가대상 여부 최종 확인</p><p>◦ (실태조사) 평가위원회 개최 전 신청기업의 역량 점검을 목적으로 신청기업의 실체 등의 사실 확인 중심으로 실시(필요시 실시)</p><p><br></p><table><thead><tr><th><p>구분</p></th><th><p>점검방식</p></th><th><p>수행주체</p></th></tr></thead><tbody><tr><td><p>현장실태조사</p><p>(대면)</p></td><td><p>신청기업 방문 및 현장 확인을 통해 기업지원 수행역량 등 확인</p></td><td rowspan="3"><p>평가위원 및 담당자</p></td></tr><tr><td><p>서면실태조사</p><p>(비대면)</p></td><td><p>신청기업이 제출한 신청서류 (신청서 등) 및 역량을 확인할 수 있는 증빙서류 (조직도, 구성원 현황 등)를 별도 제출받아 확인</p></td></tr><tr><td><p>면담조사</p><p>(대면)</p></td><td><p>신청기업이 제출한 신청서류(신청서 등) 및 대면 질의응답(대표자, 사업책임자 등)을 통해 확인</p></td></tr></tbody></table><p><br></p><p>◦ (선정평가) 선정·평가 과정이 공정하고 전문성 있는 평가가 될 수 있도록 사전검토, 위원회 진행, 결과의 정리 순으로 진행</p><p>- 선정평가위원회 결과에 따라 지원대상에서 제외될 수 있으며, 지원금액 및 지원기간 등 주요내용은 조정될 수 있음.</p><p>&nbsp;</p><p>◦ (결과통보) 신청기업의 선정·평가 결과를 전문기관으로부터 확정된 결과에 따라 신청기업에게 선정결과 개별 통보</p><p>◦ (중간모니터링) 사업 수행 중 원활한 사업 추진 여부 확인을 위한 중간 모니터링을 서면으로 진행하나, 필요에 따라 현장실태조사 진행</p><p>◦ (결과보고서 제출) 결과보고서 및 사업 실적, 성과 등 결과물은 협약서에 기재된 기한까지 제출</p><p>- 결과보고서 제출 시 자부담 증빙(이체내역 등) 제출 필수</p><p>&nbsp;</p><p>◦ (최종평가 및 사업비 지급) 선정된 수행과제에 대한 달성여부 평가를 진행하고, 사업 완료 결과보고서 제출 후 최종 평가 결과에 따라 사업비 지급</p><p>- 사업완료 후 완료보고서 및 증빙서류의 적정성, 사업목표달성 여부를 평가 후 지원금 지급</p><p>- 성공 판정된 과제의 사업비는 주관/참여기관에서 공급기업으로 직접 지급</p><p>- 완료 결과보고서를 근거로 최종 평가 후 실패 판정 과제는 사업비 미지급</p><p>&nbsp;</p><p>◦ (성과조사) 사업 종료 후 후속 성과조사와 관리 실시 예정</p><p>- 과제종료 후, 수혜기업은 주관기관의 사업성과 활용을 위한 제반자료 요청 시 필수적으로 협조해야 함</p><p>- 사업기간 및 성과활용기간(사업 종료 후 5년) 내 발생한 매출, 고용, 기업지원실적 등 조사</p><p>&nbsp;</p><p>&nbsp;</p><p>󰊵 신청기간 및 방법 ※ 일정은 추진 상황에 따라 변동될 수 있음</p><p>&nbsp;</p><p>◦ (공고기간) 2026. 09. 01.(화) ~ 09. 08.(화)</p><p>&nbsp;</p><p>◦ (접수기간) 2026. 09. 01.(화) ~ 09. 08.(화) 18:00 까지</p><p>&nbsp;</p><p>◦ (신청방법) 온라인 방문(해당공고 선택) → 신청서류 제출(업로드)</p><p>&nbsp;</p><p>- (신청·접수처) http://www.smtech.go.kr/region/rms</p><p>&nbsp;</p><p>* 지원프로그램별 필수양식 및 선택사항 업로드</p><p>&nbsp;</p><p>- (제출서류) 첨부서식 제출 또는 증명서 발급</p><p><br></p><table><thead><tr><th><p>구분</p></th><th><p>제출서류 목록</p></th></tr></thead><tbody><tr><td><p>필수</p></td><td><p>○ 지원신청서 [서식 1]</p><p>○ 상세사업계획서 [서식 2]</p><p>※ 복수 지원 시 지원프로그램별로 사업계획서를 각각 작성하여 제출</p><p>○ 기업·개인정보 이용 동의서 [서식 3]</p><p>○ 신청자격 적정성 확인서 [서식 3]</p><p>○ 중복지원금지 확약서 [서식 3]</p><p>○ 성실의무 이행 서약서 [서식 3]</p><p>○ 사업자등록증 사본</p><p>○ 최근 3개년 재무제표(창업3년 미만기업: 해당기간 내 재무제표 제출)</p><p>※ 일반과세자에 한해 부가가치세 과세표준증명 대체 가능</p><p>○ 4대보험 사업장 가입자명부 사본(공고일 이후 발급분)</p><p>○ 납세증명서(국세, 지방세) 사본(공고일 이후 발급분)</p><p>[↓ 두가지 중 하나는 필수 제출]</p><p>○ 굿뜨래 브랜드 인증 관련 증빙 서류</p><p>○ 제품 생산 관련 부여군 굿뜨래 부여10品 원물 사용 관련 증빙 서류</p><p>※굿뜨래 부여10品 : 부여군에서 생산되는 굿뜨래 부여 10品 농산물(수박, 밤, 토마토, 양송이, 멜론, 딸기, 오이, 표고버섯, 왕대추, 포도)</p></td></tr><tr><td><p>선택</p></td><td><p>○ 수출실적증빙(직접수출, 간접수출)</p><p>○ 공장등록증 사본</p><p>○ 기업부설연구소 관련 서류</p><p>○ 우대가점 증빙자료</p><p>○ 기타 증빙자료(지식재산권, 인증관련서류, 제품, 기술 홍보자료 등)</p></td></tr></tbody></table><p><br></p><p>&nbsp;</p><p>󰊶 관련법규 (※ 본 공고문에서 정하지 않은 사항은 아래의 법령 및 규정을 적용)</p><p>&nbsp;</p><p>◦ (요령) 지역산업육성사업 운영요령</p><p>&nbsp;</p><p>◦ (지침) 지역산업육성 기업지원사업 관리지침</p><p>&nbsp;</p><p>󰊷 문의처</p><p>ㅇ 지원프로그램 관련 수행기관별 문의</p><p><br></p><table><thead><tr><th><p>기관명</p></th><th><p>담당자명</p></th><th><p>전화번호</p></th><th><p>이메일</p></th></tr></thead><tbody><tr><td><p>(재)충남테크노파크</p></td><td><p>김재윤 과장</p></td><td><p>041-589-0652</p></td><td><p>jykim@ctp.or.kr</p></td></tr></tbody></table><p><br></p><p>&nbsp;</p><p>ㅇ 온라인 접수 관련 시스템 문의</p><p><br></p><table><thead><tr><th><p>기관명</p></th><th><p>담당자명</p></th><th><p>전화번호</p></th><th><p>이메일</p></th></tr></thead><tbody><tr><td><p>대표번호</p></td><td><p>-</p></td><td><p>(국번없이)1357</p></td><td><p>-</p></td></tr></tbody></table><p><br></p></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tal">수행기관</th>
+                            <td class="tal">(재)충남테크노파크</td>
+                            <th scope="row" class="tal">공고일</th>
+                            <td class="tal">2026-08-31</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- //board -->
+
+            <h3 class="mTitle2">담당자정보</h3>
+            <!-- board -->
+	        <div class="mBoard1">
+				<table>
+	                <caption>담당자정보</caption>
+	                <colgroup>
+	                    <col width="20%">
+	                    <col width="20%">
+	                    <col width="20%">
+	                    <col width="20%">
+	                    <col width="*">
+	                </colgroup>
+	                <thead>
+	                	<tr>
+	                        <th scope="col">기관명</th>
+                            <th scope="col">담당자명</th>
+                            <th scope="col">연락처</th>
+                            <th scope="col">이메일</th>
+                            <th scope="col">담당업무</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                	
+	                		
+	                		
+	                		
+						<tr>
+							<td>(재)충남테크노파크</td>
+							<td>김재윤</td>
+							<td>041-589-0727</td>
+							<td>jykim@ctp.or.kr</td>
+							<td>실무총괄</td>
+						</tr>
+							
+	                		
+	                	
+			          </tbody>
+				</table>
+			</div>
+	        <!-- //board -->
+
+	        <div class="gTitle2">
+                <h3 class="mTitle2">첨부파일</h3>
+                <div class="gRt">
+                	
+                		
+                    <a href="/region/rms/combiz/file/downloadZipFile.do;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?fileId=FILE0000000000166271" class="mBtn1 s">일괄다운로드</a>
+                	
+                </div>
+            </div>
+            <!-- board -->
+	        <div class="mBoard1">
+				<table>
+	                <caption>첨부파일정보</caption>
+	                <colgroup>
+	                    <col width="5%">
+	                    <col width="*">
+	                    <col width="10%">
+	                    <col width="10%">
+	                </colgroup>
+	                <thead>
+	                	<tr>
+	                        <th scope="col">순번</th>
+                            <th scope="col">파일명</th>
+                            <th scope="col">크기(KB)</th>
+                            <th scope="col">다운로드</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                	
+	                		
+	                		
+	                		
+		                		
+						<tr>
+							<td>1</td>
+							<td class="tal">붙임 1. 2026년 부여군 시군구연고산업육성사업 수혜기업 모집 공고문(4차)_최종본.hwp</td>
+							<td class="tar">141.5</td>
+							<td><a href="/region/rms/combiz/file/downloadFile.do;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?fileKey=34776d41346b72646155766c624c636e6a4b796d56653167524d4f424b67376c3265476f4e6b79513279343d" class="mBtn1 s">다운로드</a></td>
+						</tr>
+							
+		                		
+						<tr>
+							<td>2</td>
+							<td class="tal">붙임 2. 신청서 및 사업계획서 필수제출서식_2026부여군시군구_4차공고.zip</td>
+							<td class="tar">70.5</td>
+							<td><a href="/region/rms/combiz/file/downloadFile.do;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?fileKey=34776d41346b72646155766c624c636e6a4b796d56664f3068596d5a6d644a70676c614f7a3074725866553d" class="mBtn1 s">다운로드</a></td>
+						</tr>
+							
+		                		
+						<tr>
+							<td>3</td>
+							<td class="tal">[붙임3] 기업지원관리시스템(RMS) 사용자 매뉴얼(신청 기업용).pdf</td>
+							<td class="tar">5862.0</td>
+							<td><a href="/region/rms/combiz/file/downloadFile.do;JSESSIONID_rbms=90CC7FCFA39B74BB8272C54465E825B5?fileKey=34776d41346b72646155766c624c636e6a4b796d56562f646c7656374a344679667042457637764c72306b3d" class="mBtn1 s">다운로드</a></td>
+						</tr>
+							
+	                		
+	                	
+			          </tbody>
+				</table>
+			</div>
+	        <!-- //board -->
+
+			
+
+            <div class="mButton1 tar">
+                <a href="javascript:fnClose();" class="mBtn1 m gray">닫기</a>
+            </div>
+        </div>
+        <button class="close" onclick="javascript:fnClose();">레이어 닫기</button>
+    </div>
+</div>
+<!-- //layer -->
+
+</body>
+</html>

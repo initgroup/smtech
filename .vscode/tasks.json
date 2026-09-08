@@ -1,0 +1,1 @@
+{"version":"2.0.0","tasks":[{"label":"RMS: 프로토타입 실행","type":"process","command":"${workspaceFolder}/.venv/Scripts/python.exe","args":["-u","tools/serve.py","--port","8080"],"options":{"cwd":"${workspaceFolder}"},"isBackground":true,"problemMatcher":[],"presentation":{"reveal":"always","panel":"dedicated"}}]}

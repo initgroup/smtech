@@ -1,0 +1,50 @@
+div.pq-theme * { font-family: 'Noto Sans KR', sans-serif, Dotum,Gulim,Helvetica,Apple-Gothic; font-size:14.7px;}
+
+.pq-grid-cell.pq-drop-icon > div:before {
+    content: "▼";
+    width: 20px;
+    height: 20px;
+    color: #ccc;
+    float: right;
+}
+.pq-grid-cell.pq-calendar > div:before {
+    content: "\01F4C5";
+    width: 20px;
+    height: 20px;
+    color: #ccc;
+    float: right;
+}
+
+
+.pq-grid-col > .pq-td-div{
+	padding: 10px;
+}
+
+.pq-grid-cell > div{
+	padding: 10px;
+}
+
+/* pqgrid 헤더 가운데 정렬 */
+.pq-grid-title-row div.pq-td-div {
+	text-align:center !important;
+}
+
+/* pqgrid 순번 가운데 정렬 */
+.pq-grid-number-cell {
+	display:flex;
+    align-items: center;
+    justify-content:center;
+}
+
+/* pqgrid 순번 헤더 스타일 */
+#pq-head-cell-u0-0--1-left {
+	color:#fff !important;
+	margin: auto;
+  	width: 50%;
+  	padding: 10px;
+}
+
+/* pqgrid 헤더 스타일 */
+div[role="columnheader"] .pq-td-div{
+	text-align:center !important;
+}

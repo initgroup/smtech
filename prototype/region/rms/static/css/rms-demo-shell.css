@@ -1,0 +1,30 @@
+/* Local demo host only. Do not copy this shell stylesheet into the production JSP. */
+.rms-demo{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.rms-demo .rms-demo-brand img{width:185px;height:auto;max-width:100%;display:block}
+.rms-demo #footer.rms-demo-footer{line-height:1.6}
+body.rms-demo{margin:0;background:#f5f7fa;color:#233449;font-family:"Noto Sans KR","Malgun Gothic",sans-serif;font-size:14px;line-height:1.55;letter-spacing:-.3px}
+.rms-demo #wrap{min-width:0;width:100%;padding:0}
+.rms-demo #header.rms-demo-header{height:auto;min-height:86px;box-sizing:border-box;background:#fff;border:0;border-bottom:1px solid #dce2e9;border-radius:0;padding:14px max(28px,calc((100vw - 1440px)/2));display:flex;align-items:center;justify-content:space-between;gap:28px;position:relative}
+.rms-demo .rms-demo-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#243b53;white-space:nowrap}
+.rms-demo .rms-demo-brand strong{font-family:Arial,sans-serif;font-size:42px;color:#0866a8;font-weight:800;line-height:1;letter-spacing:-3px}
+.rms-demo .rms-demo-brand span{font-size:13px;font-weight:700;line-height:1.4}
+.rms-demo .rms-demo-nav{display:flex;gap:40px;align-items:center}
+.rms-demo .rms-demo-nav a{font-size:17px;font-weight:700;color:#1e344a;text-decoration:none;padding:13px 0}
+.rms-demo .rms-demo-nav a[aria-current]{color:#0068ad;border-bottom:3px solid #0068ad}
+.rms-demo .rms-demo-user{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:13px}
+.rms-demo .rms-demo-user button,.rms-demo .rms-demo-toolbar button{border:1px solid #bdcbd8;border-radius:3px;padding:6px 11px;background:white;color:#28415a;font:inherit;cursor:pointer}
+.rms-demo .rms-demo-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px max(28px,calc((100vw - 1440px)/2));background:#edf3f8;border-bottom:1px solid #dce6ee;font-size:12px;color:#486078;flex-wrap:wrap}
+.rms-demo .rms-demo-toolbar>div{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rms-demo .rms-demo-toolbar b{background:#315a79;color:#fff;padding:3px 7px;border-radius:3px;margin-right:8px;font-size:12px}
+.rms-demo .rms-demo-toolbar select{font:inherit;padding:5px;border:1px solid #c5d2de;background:#fff;border-radius:3px;color:#263e55}
+.rms-demo .rms-demo-toolbar a{color:#315a79;text-decoration:underline;text-underline-offset:3px}
+.rms-demo .rms-demo-import{cursor:pointer;border:1px solid #bdcbd8;border-radius:3px;background:white;padding:6px 11px}
+.rms-demo .rms-demo-import input{position:absolute;width:1px;height:1px;opacity:0}
+.rms-demo .rms-demo-import:focus-within{outline:3px solid #e39822;outline-offset:2px}
+.rms-demo #body{padding:30px max(28px,calc((100vw - 1440px)/2)) 50px;min-height:calc(100vh - 244px);width:auto;box-sizing:border-box}
+.rms-demo #footer.rms-demo-footer{height:auto;min-height:72px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px max(28px,calc((100vw - 1440px)/2));border-top:1px solid #dce2e9;background:white;color:#718094;font-size:12px;clear:both}
+.rms-demo-skip{position:fixed;left:20px;top:-80px;z-index:2000;padding:12px 20px;background:#0b4675;color:#fff!important}
+.rms-demo-skip:focus{top:10px}
+.rms-demo :focus-visible{outline:3px solid #d78b16;outline-offset:3px}
+@media(max-width:1080px){.rms-demo .rms-demo-nav{gap:18px}.rms-demo #header.rms-demo-header{gap:15px;flex-wrap:wrap}.rms-demo .rms-demo-user{margin-left:auto}.rms-demo .rms-demo-nav a{font-size:15px}}
+@media(max-width:700px){.rms-demo #header.rms-demo-header{padding:16px}.rms-demo .rms-demo-nav{order:3;width:100%;justify-content:space-between;gap:8px}.rms-demo .rms-demo-nav a{font-size:14px}.rms-demo .rms-demo-brand strong{font-size:35px}.rms-demo .rms-demo-toolbar{padding:10px 16px}.rms-demo #body{padding:20px 16px 35px}.rms-demo #footer.rms-demo-footer{padding:20px 16px;display:block}.rms-demo-footer span{display:block;margin-top:7px}}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+
+
+<script>
+	const CONST_CONTEXT_PATH = '/region/rms';
+</script>
+
+
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no" />
+
+        <link rel="shortcut icon" type="image/x-icon" href="/region/rms/static/images/common/favicon.ico;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A" />
+        <link rel="stylesheet" href="/region/rms/static/js/jquery/3.6.0/jquery-ui.css;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944" >
+        <link rel="stylesheet" href="/region/rms/static/notosansKR/css/notosanskr.css;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944" >
+        <link rel="stylesheet" href="/region/rms/static/css/login.css;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944" >
+
+		<!--jQuery dependency, any stable version of jQuery-->
+		<script src="/region/rms/static/js/jquery/3.6.0/jquery-3.6.0.min.js;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944"></script>
+		<script src="/region/rms/static/js/jquery/3.6.0/jquery-ui.js;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944"></script>
+
+		<!--blockUI-->
+		<script src="/region/rms/static/js/jquery/jquery.blockUI.min.js;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944"></script>
+
+        <script type="text/javascript" src="/region/rms/static/js/sweetalert/sweetalert.min.js;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944"></script>
+
+		<!-- system common -->
+		<script type="text/javascript" src="/region/rms/static/js/cmmn/constants.js;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944"></script>
+		<script type="text/javascript" src="/region/rms/static/js/cmmn/common.js;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944"></script>
+		<script type="text/javascript" src="/region/rms/static/js/cmmn/callAjax.js;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944"></script>
+        <script type="text/javascript" src="/region/rms/static/js/biz/login/login.js;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A?v=20260908162944"></script>
+        <title>기업지원사업 관리시스템</title>
+
+    </head>
+
+	<body class="gLogin">
+		<input type="hidden" id="smsCrtfcSe" value="" />
+		<!-- login -->
+		<div class="mLogin1">
+			<p class="title">
+				<img src="/region/rms/static/images/img_login1.png;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A" alt="RMS 지역특화산업육성 기업지원사업 관리시스템 - Regional industry development enterprise support program Management System">
+			</p>
+			<div class="login">
+				<div class="loginBg">
+					<h1>
+						<strong class="txtPrimary">RMS</strong>를 이용하기 위해서는
+						<br>로그인이 필요합니다.
+					</h1>
+					<dl>
+						<dt>아이디</dt>
+						<dd class="id">
+							<input type="text" class="it" title="아이디" placeholder="아이디를 입력하세요" value="" id="loginId">
+						</dd>
+						<dt>아이디</dt>
+						<dd class="pw">
+							<input type="password" class="it" title="아이디" placeholder="비밀번호를 입력하세요" value="" id="secretNo">
+						</dd>
+					</dl>
+					<a href="javascript:fnLogin();" class="btnLogin">로그인</a>
+					
+					<div class="findGrop">
+						<a href="https://www.smtech.go.kr/front/log/idFind.do" target="_blank" class="btnIdfind">아이디 찾기</a>
+						<a href="https://www.smtech.go.kr/front/log/pwFind.do" target="_blank" class="btnPwFind">비밀번호 찾기</a>
+					</div>
+						
+					<div class="info">중소기업 통합콜센터 : <strong>1357</strong>(국번없이)</div>
+					<ul class="link">
+						<li class="type2">
+							<div class="flex">
+								SMTECH 아이디가 없는 중소기업은 아래의 링크로
+								<br>이동하여 회원가입을 진행해주세요.
+							</div>
+							<a href="https://smtech.go.kr" target="_blank" class="btn">바로가기</a>
+						</li>
+						<li>
+							<div class="flex">지원기업 사용자매뉴얼</div>
+							<a href="javascript:;" id="btn_down_rcvfvr_manual" class="btn">다운로드</a>
+						</li>
+						<li>
+							<div class="flex">소통창구(공지사항.시스템 에러문의)</div>
+							<a href="javascript:;" id="btn_mlrd_manage" class="btn">바로가기</a>
+						</li>
+					</ul>
+				</div>
+				<div class="footer">
+					<div class="logo">
+						<img src="/region/rms/static/images/logo_footer1.png;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A" alt="중소벤처기업부">
+						<img src="/region/rms/static/images/logo_footer2.png;JSESSIONID_rbms=F0E99348E4A049CF6562DE3082DCF51A" alt="중소기업기술정보진흥원">
+					</div>
+					<div class="addr">
+						세종특별자치시 집현중앙로 79, 중소기업기술정보진흥원(TIPA)
+						<br>Copyrights &copy; 중소기업기술정보진흥원. All Right Reserved.
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //login -->
+
+		<!-- layer -->
+		<div id="smsCrtfcLayer" class="mPopup1">
+			<div class="modalBg"></div>
+			<div class="popupBg">
+				<h3>
+					휴대폰으로 전송된
+					<br>6자리 인증번호를 입력해 주세요.
+				</h3>
+				<dl class="list1">
+					<dt>인증번호 <em>( 남은시간 : <span id="remainTime"></span> )</em></dt>
+					<dd>
+						<input type="text" class="it" title="인증번호" id="crtfcNo" maxlength="6">
+					</dd>
+				</dl>
+				<dl class="list1" id="smsMsg">
+				</dl>
+				<div class="mButton1">
+					<a href="javascript:fnSmsCrtfc();" class="mBtn1 jsBtnClose1">확인</a>
+					<a href="javascript:fnCrtfcNoReSend();" class="mBtn1 line">재전송</a>
+					<a href="javascript:fnCloseCrtfcPop();" class="mBtn1 gray">취소</a>
+				</div>
+			</div>
+		</div>
+		<!-- //layer -->
+
+	</body>
+
+</html>
+

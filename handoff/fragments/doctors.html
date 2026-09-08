@@ -1,0 +1,317 @@
+<!-- Publisher fragment generated from RMSViews. Synthetic data; attach your controller handlers to data-action. -->
+<section class="rms-enhance" data-rms-screen="doctors">
+<div class="rms-pagehead">
+<div>
+<p class="rms-eyebrow">REGIONAL MANAGEMENT SYSTEM</p>
+<h1 id="rms-main" tabindex="-1">기술닥터 통합검색</h1>
+<p class="rms-subtitle">지역의 경계를 넘어, 기업에 필요한 전문가를 찾아보세요.</p>
+</div>
+<div>
+<p class="rms-breadcrumb">홈 &nbsp;›&nbsp; 기술닥터 › 통합검색</p>
+</div>
+</div>
+<nav class="rms-tabs" aria-label="세부 업무">
+<a href="#doctors" aria-current="page">기술닥터 통합검색</a>
+<a href="#matches">매칭·지원 관리</a>
+<a href="#stats">통계·성과</a>
+</nav>
+<div class="rms-metrics">
+<div class="rms-metric">
+<span>전체 기술닥터</span>
+<strong>8<small>명</small>
+</strong>
+</div>
+<div class="rms-metric">
+<span>충남 지원가능</span>
+<strong>7<small>명</small>
+</strong>
+</div>
+<div class="rms-metric">
+<span>타지역 등록 전문가</span>
+<strong>6<small>명</small>
+</strong>
+</div>
+<div class="rms-metric">
+<span>정보 현행화 대상</span>
+<strong>2<small>명</small>
+</strong>
+</div>
+</div>
+<form id="rms-doctor-search" class="rms-filter">
+<div class="rms-fieldgrid">
+<div class="rms-field rms-span2">
+<label for="rms-q">이름·소속기관·취득기술</label>
+<input id="rms-q" name="q" type="text" value="">
+</div>
+<div class="rms-field ">
+<label for="rms-institution">기관유형</label>
+<select id="rms-institution" name="institution">
+<option value="">전체</option>
+<option value="O01">대학</option>
+<option value="O02">연구기관</option>
+<option value="O03">민간기업</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-year">선정연도</label>
+<select id="rms-year" name="year">
+<option value="">전체</option>
+<option value="2026">2026년</option>
+<option value="2025">2025년</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-industry">산업분야</label>
+<select id="rms-industry" name="industry">
+<option value="">전체</option>
+<option value="I01">기계·소재</option>
+<option value="I02">바이오·의료</option>
+<option value="I03">정보통신</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-technology">기술분야</label>
+<select id="rms-technology" name="technology">
+<option value="">전체</option>
+<option value="T01">제조기술</option>
+<option value="T02">└ 스마트공정</option>
+<option value="T03">└ 소재분석</option>
+<option value="T04">바이오 공정</option>
+<option value="T05">인공지능</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-region">지원가능 지역</label>
+<select id="rms-region" name="region">
+<option value="">전국</option>
+<option value="충남">충남</option>
+<option value="대전">대전</option>
+<option value="충북">충북</option>
+<option value="세종">세종</option>
+<option value="경북">경북</option>
+<option value="부산">부산</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-sort">정렬</label>
+<select id="rms-sort" name="sort">
+<option value="name" selected>이름순</option>
+<option value="updated">최근 갱신순</option>
+<option value="organization">소속기관순</option>
+<option value="institution">기관유형순</option>
+<option value="technology">기술분야순</option>
+<option value="region">등록지역순</option>
+</select>
+</div>
+</div>
+<div class="rms-filterfoot">
+<div class="rms-checkboxes">
+<label>
+<input type="checkbox" name="available">지원 가능한 기술닥터만</label>
+<label>
+<input type="checkbox" name="stale">정보 현행화 대상만</label>
+</div>
+<div class="rms-actions">
+<button type="button" class="rms-btn " data-action="doctor-reset" data-id="">초기화</button>
+<button class="rms-btn rms-btn-primary" type="submit">검색</button>
+</div>
+</div>
+</form>
+<section class="rms-panel">
+<div class="rms-panelhead">
+<span class="rms-count">검색결과 <strong>8</strong>명</span>
+<div>
+<span id="rms-compare-count" class="rms-muted">0명 선택 · 최대 3명</span>
+<button type="button" class="rms-btn rms-btn-small" data-action="compare" data-id="">선택 비교</button>
+</div>
+</div>
+<div class="rms-tablewrap" tabindex="0" role="region" aria-label="기술닥터 검색결과 (표 가로 스크롤)">
+<table class="rms-table ">
+<caption>기술닥터 검색결과</caption>
+<thead>
+<tr>
+<th scope="col">비교</th>
+<th scope="col">기술닥터</th>
+<th scope="col">소속기관</th>
+<th scope="col">전문·취득기술</th>
+<th scope="col">지원가능 지역</th>
+<th scope="col">활동상태</th>
+<th scope="col">최종 갱신일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<input type="checkbox" aria-label="강다온 비교 선택" data-compare="D008">
+</td>
+<td>
+<a href="#doctor/D008">
+<b>강다온</b>
+</a>
+<small>2025년 선정</small>
+</td>
+<td>가상 대전테크랩<small>민간기업 · 대전 등록</small>
+</td>
+<td>인공지능<small>기업 맞춤형 기술 진단</small>
+</td>
+<td>대전 · 충남</td>
+<td>
+<span class="rms-badge rms-badge-green">지원가능</span>
+</td>
+<td>2026-09-01</td>
+</tr>
+<tr>
+<td>
+<input type="checkbox" aria-label="김가람 비교 선택" data-compare="D001">
+</td>
+<td>
+<a href="#doctor/D001">
+<b>김가람</b>
+</a>
+<small>2026년 선정</small>
+</td>
+<td>가상 충남산업대학교<small>대학 · 충남 등록</small>
+</td>
+<td>스마트공정, 소재분석<small>공정 최적화·불량 원인 분석</small>
+</td>
+<td>충남 · 대전 · 세종</td>
+<td>
+<span class="rms-badge rms-badge-green">지원가능</span>
+</td>
+<td>2026-09-01</td>
+</tr>
+<tr>
+<td>
+<input type="checkbox" aria-label="박지온 비교 선택" data-compare="D003">
+</td>
+<td>
+<a href="#doctor/D003">
+<b>박지온</b>
+</a>
+<small>2026년 선정</small>
+</td>
+<td>가상 충북바이오센터<small>연구기관 · 충북 등록</small>
+</td>
+<td>바이오 공정<small>기업 맞춤형 기술 진단</small>
+</td>
+<td>충북 · 충남</td>
+<td>
+<span class="rms-badge rms-badge-green">지원가능</span>
+</td>
+<td>2026-09-01</td>
+</tr>
+<tr>
+<td>
+<input type="checkbox" aria-label="오유진 비교 선택" data-compare="D006">
+</td>
+<td>
+<a href="#doctor/D006">
+<b>오유진</b>
+</a>
+<small>2025년 선정</small>
+</td>
+<td>가상 부산기술대학교<small>대학 · 부산 등록</small>
+</td>
+<td>소재분석<small>기업 맞춤형 기술 진단</small>
+</td>
+<td>부산 · 충남</td>
+<td>
+<span class="rms-badge rms-badge-gray">활동중지</span>
+</td>
+<td>2026-09-01</td>
+</tr>
+<tr>
+<td>
+<input type="checkbox" aria-label="이서준 비교 선택" data-compare="D002">
+</td>
+<td>
+<a href="#doctor/D002">
+<b>이서준</b>
+</a>
+<small>2026년 선정</small>
+</td>
+<td>가상 대전소재연구원<small>연구기관 · 대전 등록</small>
+</td>
+<td>소재분석<small>기업 맞춤형 기술 진단</small>
+</td>
+<td>대전 · 충남</td>
+<td>
+<span class="rms-badge rms-badge-green">지원가능</span>
+</td>
+<td>2026-09-01</td>
+</tr>
+<tr>
+<td>
+<input type="checkbox" aria-label="정하린 비교 선택" data-compare="D005">
+</td>
+<td>
+<a href="#doctor/D005">
+<b>정하린</b>
+</a>
+<small>2025년 선정</small>
+</td>
+<td>가상 경북제조연구원<small>연구기관 · 경북 등록</small>
+</td>
+<td>스마트공정<small>기업 맞춤형 기술 진단</small>
+</td>
+<td>경북 · 충남</td>
+<td>
+<span class="rms-badge rms-badge-green">지원가능</span>
+</td>
+<td>2025-02-10<small>
+<span class="rms-badge rms-badge-orange">현행화 대상</span>
+</small>
+</td>
+</tr>
+<tr>
+<td>
+<input type="checkbox" aria-label="최도윤 비교 선택" data-compare="D004">
+</td>
+<td>
+<a href="#doctor/D004">
+<b>최도윤</b>
+</a>
+<small>2026년 선정</small>
+</td>
+<td>가상 세종AI연구소<small>연구기관 · 세종 등록</small>
+</td>
+<td>인공지능<small>공정 최적화·불량 원인 분석</small>
+</td>
+<td>세종 · 충남</td>
+<td>
+<span class="rms-badge rms-badge-green">지원가능</span>
+</td>
+<td>2026-09-01</td>
+</tr>
+<tr>
+<td>
+<input type="checkbox" aria-label="한시우 비교 선택" data-compare="D007">
+</td>
+<td>
+<a href="#doctor/D007">
+<b>한시우</b>
+</a>
+<small>2025년 선정</small>
+</td>
+<td>가상 충남품질연구원<small>연구기관 · 충남 등록</small>
+</td>
+<td>스마트공정<small>공정 최적화·불량 원인 분석</small>
+</td>
+<td>충남 · 대전 · 세종</td>
+<td>
+<span class="rms-badge rms-badge-green">지원가능</span>
+</td>
+<td>2025-02-10<small>
+<span class="rms-badge rms-badge-orange">현행화 대상</span>
+</small>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="rms-tablefoot">
+<span>등록지역과 지원가능 지역을 구분하여 표시합니다.</span>
+<span>가상 전문가 데이터</span>
+</div>
+</section>
+</section>

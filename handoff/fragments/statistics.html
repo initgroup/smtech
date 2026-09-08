@@ -1,0 +1,215 @@
+<!-- Publisher fragment generated from RMSViews. Synthetic data; attach your controller handlers to data-action. -->
+<section class="rms-enhance" data-rms-screen="statistics">
+<div class="rms-pagehead">
+<div>
+<p class="rms-eyebrow">REGIONAL MANAGEMENT SYSTEM</p>
+<h1 id="rms-main" tabindex="-1">기술닥터 통계·성과</h1>
+<p class="rms-subtitle">전문가 현황과 기간별 매칭·기업지원 실적을 확인합니다.</p>
+</div>
+<div>
+<p class="rms-breadcrumb">홈 &nbsp;›&nbsp; 기술닥터 › 통계·성과</p>
+</div>
+</div>
+<nav class="rms-tabs" aria-label="세부 업무">
+<a href="#doctors">기술닥터 통합검색</a>
+<a href="#matches">매칭·지원 관리</a>
+<a href="#stats" aria-current="page">통계·성과</a>
+</nav>
+<form id="rms-stats-search" class="rms-filter">
+<div class="rms-fieldgrid">
+<div class="rms-field ">
+<label for="rms-region">등록지역</label>
+<select id="rms-region" name="region">
+<option value="">전국</option>
+<option value="충남">충남</option>
+<option value="대전">대전</option>
+<option value="충북">충북</option>
+<option value="세종">세종</option>
+<option value="경북">경북</option>
+<option value="부산">부산</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-industry">산업분야</label>
+<select id="rms-industry" name="industry">
+<option value="">전체</option>
+<option value="I01">기계·소재</option>
+<option value="I02">바이오·의료</option>
+<option value="I03">정보통신</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-technology">기술분야</label>
+<select id="rms-technology" name="technology">
+<option value="">전체</option>
+<option value="T01">제조기술</option>
+<option value="T02">└ 스마트공정</option>
+<option value="T03">└ 소재분석</option>
+<option value="T04">바이오 공정</option>
+<option value="T05">인공지능</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-start">매칭 요청 시작일</label>
+<input id="rms-start" name="start" type="date" value="2026-01-01">
+</div>
+<div class="rms-field ">
+<label for="rms-end">매칭 요청 종료일</label>
+<input id="rms-end" name="end" type="date" value="2026-12-31">
+</div>
+</div>
+<div class="rms-actions rms-space">
+<button class="rms-btn rms-btn-primary" type="submit">통계 조회</button>
+</div>
+</form>
+<div class="rms-metrics">
+<div class="rms-metric">
+<span>등록 전문가</span>
+<strong>8<small>명</small>
+</strong>
+</div>
+<div class="rms-metric">
+<span>매칭 요청</span>
+<strong>2<small>건</small>
+</strong>
+</div>
+<div class="rms-metric">
+<span>지원완료 실적</span>
+<strong>1<small>건</small>
+</strong>
+</div>
+<div class="rms-metric">
+<span>지원완료 기업</span>
+<strong>1<small>개사</small>
+</strong>
+</div>
+</div>
+<div class="rms-two">
+<section class="rms-panel">
+<div class="rms-panelhead">
+<h2>지역별 전문가 현황</h2>
+</div>
+<div class="rms-chart">
+<div class="rms-bar">
+<span>충남</span>
+<progress value="2" max="2" aria-label="충남 등록 전문가 2명">
+</progress>
+<b>2명</b>
+</div>
+<div class="rms-bar">
+<span>대전</span>
+<progress value="2" max="2" aria-label="대전 등록 전문가 2명">
+</progress>
+<b>2명</b>
+</div>
+<div class="rms-bar">
+<span>충북</span>
+<progress value="1" max="2" aria-label="충북 등록 전문가 1명">
+</progress>
+<b>1명</b>
+</div>
+<div class="rms-bar">
+<span>세종</span>
+<progress value="1" max="2" aria-label="세종 등록 전문가 1명">
+</progress>
+<b>1명</b>
+</div>
+<div class="rms-bar">
+<span>경북</span>
+<progress value="1" max="2" aria-label="경북 등록 전문가 1명">
+</progress>
+<b>1명</b>
+</div>
+<div class="rms-bar">
+<span>부산</span>
+<progress value="1" max="2" aria-label="부산 등록 전문가 1명">
+</progress>
+<b>1명</b>
+</div>
+</div>
+</section>
+<section class="rms-panel">
+<div class="rms-panelhead">
+<h2>집계 기준</h2>
+</div>
+<ul class="rms-checks">
+<li>등록·활동 현황은 현재 가상 데이터 기준입니다.</li>
+<li>기간은 매칭 요청일에 적용합니다.</li>
+<li>지원실적은 지원완료 상태의 매칭 건수입니다.</li>
+<li>지원기업 수는 기업 ID의 중복을 제거합니다.</li>
+<li>지역 간 매칭은 기업 지역과 등록지역을 비교합니다.</li>
+</ul>
+</section>
+</div>
+<section class="rms-panel">
+<div class="rms-panelhead">
+<h2>지역별 매칭 및 지원실적</h2>
+<button type="button" class="rms-btn rms-btn-small" data-action="stats-export" data-id="">CSV 내려받기</button>
+</div>
+<div class="rms-tablewrap" tabindex="0" role="region" aria-label="지역별 기술닥터 통계 (표 가로 스크롤)">
+<table class="rms-table ">
+<caption>지역별 기술닥터 통계</caption>
+<thead>
+<tr>
+<th scope="col">등록지역</th>
+<th scope="col">등록 전문가</th>
+<th scope="col">활동 전문가</th>
+<th scope="col">매칭 요청</th>
+<th scope="col">지원완료</th>
+<th scope="col">지역 간 매칭</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>충남</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>대전</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>충북</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>세종</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>경북</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>부산</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>

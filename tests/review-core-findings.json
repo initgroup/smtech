@@ -1,0 +1,87 @@
+[
+  {
+    "name": "control_seed_valid",
+    "result": true
+  },
+  {
+    "name": "control_no_consent_query_rejected",
+    "result": true
+  },
+  {
+    "name": "control_other_company_application_rejected",
+    "result": true
+  },
+  {
+    "name": "control_other_region_doctor_edit_rejected",
+    "result": true
+  },
+  {
+    "name": "control_mismatch_not_auto_overwritten",
+    "result": {
+      "inputPreserved": true,
+      "status": "보완필요"
+    }
+  },
+  {
+    "name": "control_private_question_hidden",
+    "result": true
+  },
+  {
+    "name": "submitted_application_later_query_failure",
+    "result": {
+      "submission": "제출완료",
+      "requiredStatus": "조회실패",
+      "previousFileLost": true
+    }
+  },
+  {
+    "name": "submitted_application_consent_withdrawal",
+    "result": {
+      "submission": "제출완료",
+      "consent": false,
+      "submissionNowRejected": true
+    }
+  },
+  {
+    "name": "json_submitted_docs_without_evidence",
+    "result": {
+      "importAccepted": true,
+      "submission": "제출완료",
+      "consent": false,
+      "files": 0
+    }
+  },
+  {
+    "name": "json_wrong_classification_kind",
+    "result": {
+      "accepted": true
+    }
+  },
+  {
+    "name": "json_nonexistent_doctor_user",
+    "result": {
+      "accepted": true
+    }
+  },
+  {
+    "name": "json_nonexistent_support_region",
+    "result": {
+      "accepted": true
+    }
+  },
+  {
+    "name": "hidden_work_classification_questions",
+    "result": {
+      "questionStillVisible": true,
+      "faqCount": 0
+    }
+  },
+  {
+    "name": "supplement_resolved_with_prior_address_query",
+    "result": {
+      "status": "조회완료",
+      "lastAction": "조회값 반영",
+      "file": null
+    }
+  }
+]

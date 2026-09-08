@@ -1,0 +1,131 @@
+<!-- Publisher fragment generated from RMSViews. Synthetic data; attach your controller handlers to data-action. -->
+<section class="rms-enhance" data-rms-screen="home-settings">
+<div class="rms-pagehead">
+<div>
+<p class="rms-eyebrow">REGIONAL MANAGEMENT SYSTEM</p>
+<h1 id="rms-main" tabindex="-1">관리자 설정</h1>
+<p class="rms-subtitle">분류와 화면 노출, 연계 대상 서류를 관리합니다.</p>
+</div>
+<div>
+<p class="rms-breadcrumb">홈 &nbsp;›&nbsp; 관리자 › 기능개선 설정</p>
+</div>
+</div>
+<nav class="rms-tabs" aria-label="세부 업무">
+<a href="#manage">표준분류</a>
+<a href="#manage/home" aria-current="page">메인·소통 설정</a>
+<a href="#manage/documents">연계서류 설정</a>
+</nav>
+<div class="rms-two">
+<section class="rms-panel">
+<div class="rms-panelhead">
+<h2>메인 콘텐츠 배치</h2>
+</div>
+<div class="rms-sortable">
+<label class="rms-checkrow">
+<input type="checkbox" data-home-visible="announcements" checked>모집 중인 사업공고</label>
+<button type="button" class="rms-btn rms-btn-small" data-action="home-up" data-id="announcements">위로</button>
+</div>
+<div class="rms-sortable">
+<label class="rms-checkrow">
+<input type="checkbox" data-home-visible="help" checked>FAQ 검색·주요 질문</label>
+<button type="button" class="rms-btn rms-btn-small" data-action="home-up" data-id="help">위로</button>
+</div>
+<div class="rms-sortable">
+<label class="rms-checkrow">
+<input type="checkbox" data-home-visible="questions" checked>최근 질문·답변</label>
+<button type="button" class="rms-btn rms-btn-small" data-action="home-up" data-id="questions">위로</button>
+</div>
+<p class="rms-muted rms-space">설정한 순서와 노출 여부는 메인화면에 바로 반영됩니다.</p>
+</section>
+<section class="rms-panel">
+<div class="rms-panelhead">
+<h2>기존 업무분류 매핑</h2>
+</div>
+<form id="rms-work-map">
+<div class="rms-fieldgrid rms-cols2">
+<div class="rms-field ">
+<label for="rms-from">기존 분류</label>
+<select id="rms-from" name="from">
+<option value="W01" selected>로그인</option>
+<option value="W02">사업신청</option>
+<option value="W03">사업관리</option>
+<option value="W04">기술닥터</option>
+</select>
+</div>
+<div class="rms-field ">
+<label for="rms-to">변경 분류</label>
+<select id="rms-to" name="to">
+<option value="W01">로그인</option>
+<option value="W02">사업신청</option>
+<option value="W03" selected>사업관리</option>
+<option value="W04">기술닥터</option>
+</select>
+</div>
+</div>
+<p class="rms-muted rms-space">선택한 분류의 FAQ와 소통 게시물에 동일한 업무분류를 적용합니다.</p>
+<div class="rms-actions rms-space">
+<button class="rms-btn" type="submit">매핑 적용</button>
+</div>
+</form>
+</section>
+</div>
+<section class="rms-panel">
+<div class="rms-panelhead">
+<h2>소통 게시물 메인 노출</h2>
+</div>
+<div class="rms-tablewrap" tabindex="0" role="region" aria-label="게시물 노출 설정 (표 가로 스크롤)">
+<table class="rms-table rms-compact">
+<caption>게시물 노출 설정</caption>
+<thead>
+<tr>
+<th scope="col">제목</th>
+<th scope="col">공개여부</th>
+<th scope="col">메인 노출</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>사업 신청서 임시저장 방법을 알려주세요.</td>
+<td>
+<span class="rms-badge rms-badge-">공개</span>
+</td>
+<td>
+<label class="rms-checkrow">
+<input type="checkbox" data-question-visible="P001" checked>메인에 표시</label>
+</td>
+</tr>
+<tr>
+<td>기술닥터 지원가능 지역은 어디서 확인하나요?</td>
+<td>
+<span class="rms-badge rms-badge-">공개</span>
+</td>
+<td>
+<label class="rms-checkrow">
+<input type="checkbox" data-question-visible="P002" checked>메인에 표시</label>
+</td>
+</tr>
+<tr>
+<td>서류 보완 제출기한이 궁금합니다.</td>
+<td>
+<span class="rms-badge rms-badge-">공개</span>
+</td>
+<td>
+<label class="rms-checkrow">
+<input type="checkbox" data-question-visible="P003" checked>메인에 표시</label>
+</td>
+</tr>
+<tr>
+<td>가상 비공개 문의</td>
+<td>
+<span class="rms-badge rms-badge-">비공개</span>
+</td>
+<td>
+<label class="rms-checkrow">
+<input type="checkbox" data-question-visible="P004" disabled>메인에 표시</label>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>

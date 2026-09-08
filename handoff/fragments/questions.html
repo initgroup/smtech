@@ -1,0 +1,82 @@
+<!-- Publisher fragment generated from RMSViews. Synthetic data; attach your controller handlers to data-action. -->
+<section class="rms-enhance" data-rms-screen="questions">
+<div class="rms-pagehead">
+<div>
+<p class="rms-eyebrow">REGIONAL MANAGEMENT SYSTEM</p>
+<h1 id="rms-main" tabindex="-1">소통하기</h1>
+<p class="rms-subtitle">업무유형과 궁금한 내용을 함께 검색하세요.</p>
+</div>
+<div>
+<p class="rms-breadcrumb">홈 &nbsp;›&nbsp; 소통관리 › 소통하기</p>
+</div>
+</div>
+<nav class="rms-tabs" aria-label="세부 업무">
+<a href="#faq">자주하는 질문</a>
+<a href="#questions" aria-current="page">소통하기</a>
+</nav>
+<section class="rms-panel">
+<form id="rms-faq-search" class="rms-searchbar">
+<div class="rms-field ">
+<label for="rms-work">업무유형</label>
+<select id="rms-work" name="work">
+<option value="" selected>전체</option>
+<option value="W01">로그인</option>
+<option value="W02">사업신청</option>
+<option value="W03">사업관리</option>
+<option value="W04">기술닥터</option>
+</select>
+</div>
+<div class="rms-field rms-span2" >
+<label for="rms-faq-query">검색어</label>
+<input name="q" id="rms-faq-query" value="" placeholder="제목·내용·답변·키워드 검색">
+</div>
+<button class="rms-btn rms-btn-primary" type="submit">검색</button>
+<button type="button" class="rms-btn " data-action="faq-reset" data-id="">초기화</button>
+</form>
+<div class="rms-tablewrap" tabindex="0" role="region" aria-label="소통하기 공개 질문 (표 가로 스크롤)">
+<table class="rms-table rms-compact">
+<caption>소통하기 공개 질문</caption>
+<thead>
+<tr>
+<th scope="col">업무유형</th>
+<th scope="col">질문 제목</th>
+<th scope="col">등록일</th>
+<th scope="col">답변상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>사업관리</td>
+<td>
+<button type="button" class="rms-link" data-action="question" data-id="P003">서류 보완 제출기한이 궁금합니다.</button>
+</td>
+<td>2026-09-08</td>
+<td>
+<span class="rms-badge rms-badge-orange">답변대기</span>
+</td>
+</tr>
+<tr>
+<td>사업신청</td>
+<td>
+<button type="button" class="rms-link" data-action="question" data-id="P001">사업 신청서 임시저장 방법을 알려주세요.</button>
+</td>
+<td>2026-09-07</td>
+<td>
+<span class="rms-badge rms-badge-green">답변완료</span>
+</td>
+</tr>
+<tr>
+<td>기술닥터</td>
+<td>
+<button type="button" class="rms-link" data-action="question" data-id="P002">기술닥터 지원가능 지역은 어디서 확인하나요?</button>
+</td>
+<td>2026-09-06</td>
+<td>
+<span class="rms-badge rms-badge-green">답변완료</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
