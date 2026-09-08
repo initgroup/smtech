@@ -28,6 +28,9 @@ $ignoreLines = @(Get-Content -LiteralPath $ignoreFile -ErrorAction SilentlyConti
 if ($ignoreLines -notcontains 'local/') {
     Add-Content -LiteralPath $ignoreFile -Value "`nlocal/" -Encoding UTF8
 }
+if ($ignoreLines -notcontains '/deliverables/') {
+    Add-Content -LiteralPath $ignoreFile -Value "`n/deliverables/" -Encoding UTF8
+}
 
 if ($RemoteUrl) {
     $remotes = @(& git remote)
@@ -47,12 +50,12 @@ if ($Push) {
     if ($LASTEXITCODE -ne 0) { throw 'Supply -RemoteUrl for the first push.' }
 }
 
-# Remove previously tracked local files from the index, preserving disk files.
-Invoke-Git -GitArgs @('rm', '-r', '--cached', '--ignore-unmatch', '--', ':(glob)local/**', ':(glob)**/local/**')
+# Remove private files and generated delivery archives from the index only.
+Invoke-Git -GitArgs @('rm', '-r', '--cached', '--ignore-unmatch', '--', ':(glob)local/**', ':(glob)**/local/**', ':(glob)deliverables/**')
 Invoke-Git -GitArgs @('add', '--all')
-$trackedLocal = @(& git ls-files -- ':(glob)local/**' ':(glob)**/local/**')
+$trackedLocal = @(& git ls-files -- ':(glob)local/**' ':(glob)**/local/**' ':(glob)deliverables/**')
 if ($LASTEXITCODE -ne 0) { throw 'Cannot verify excluded files.' }
-if ($trackedLocal.Count -gt 0) { throw 'local files are still tracked. Aborting.' }
+if ($trackedLocal.Count -gt 0) { throw 'Excluded local or deliverables files are still tracked. Aborting.' }
 
 & git diff --cached --quiet
 $diffExit = $LASTEXITCODE

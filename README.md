@@ -27,7 +27,7 @@ VS Code에서 새 PowerShell 터미널을 열면 `.venv`가 자동 활성화됩�
 
 ## Git 저장 및 업로드
 
-`local/` 폴더와 모든 하위 파일은 `.gitignore`로 제외합니다. 중첩된 `local` 폴더도 제외됩니다. `tmp/`, `node_modules/`, Python 캐시 및 로그도 제외합니다.
+`local/` 폴더와 모든 하위 파일은 `.gitignore`로 제외합니다. 중첩된 `local` 폴더도 제외됩니다. 루트의 `deliverables/`는 재생성 가능한 인계용 ZIP 보관 폴더로, Git 및 Render 배포에 필요하지 않아 제외합니다. `tmp/`, `node_modules/`, Python 캐시 및 로그도 제외합니다.
 
 먼저 Git 커밋 작성자 정보가 없다면 본인 정보로 설정하세요.
 
@@ -58,7 +58,7 @@ git config --global user.email "본인 이메일"
 
 스크립트는 필요하면 `main` 브랜치로 Git 저장소를 초기화하고, 제외 규칙에 해당하지 않는 모든 변경사항을 커밋합니다. `-Push`가 있을 때만 현재 브랜치를 `origin`으로 업로드하며, 원격 인증은 Git에서 진행합니다. 실행 정책으로 차단되면 `powershell -NoProfile -ExecutionPolicy Bypass -File .\git-upload.ps1 -Push`를 사용하세요. 실행 정책 우회는 해당 PowerShell 프로세스에만 적용됩니다.
 
-이미 추적 중인 `local` 파일은 디스크에 남겨 두고 Git 추적에서 제외합니다. 단, 과거 커밋에 포함된 파일까지 삭제하지는 않습니다. 현재 프로젝트는 Git 저장소가 없는 상태에서 준비했습니다.
+이미 추적 중인 `local` 및 `deliverables` 파일은 디스크에 남겨 두고 Git 추적에서 제외합니다. 단, 과거 커밋에 포함된 파일까지 삭제하지는 않습니다.
 
 ## 우선 읽을 문서
 
