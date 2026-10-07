@@ -6,8 +6,8 @@
   var V=window.RMSViews,e=V.esc,b=V.btn;
   function toast(message) {var el=document.getElementById('rms-toast');el.textContent=message;el.setAttribute('data-visible','');clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.removeAttribute('data-visible');},5000);}
   function showError(error) { var target=host.querySelector('[data-dialog-error]');if(target){target.hidden=false;target.textContent=error.message||String(error);target.focus();}else toast(error.message||String(error)); }
-  function closeModal() {var d=host.querySelector('dialog');if(d){d.close();host.replaceChildren();}if(modalReturnFocus&&modalReturnFocus.isConnected)modalReturnFocus.focus();}
-  function modal(title,body,options) {modalReturnFocus=document.activeElement;host.innerHTML='<dialog class="rms-dialog'+(options&&options.program?' rms-dialog-program':'')+'" aria-labelledby="rms-dialog-title"><div class="rms-dialoghead"><h2 id="rms-dialog-title"'+(options&&options.draggable?' tabindex="0" data-dialog-move title="제목 드래그 또는 방향키로 이동"':'')+'>'+e(title)+'</h2><button type="button" aria-label="닫기" data-action="close">×</button></div><div class="rms-dialogbody"><div class="rms-error" data-dialog-error tabindex="-1" role="alert" hidden></div>'+body+'</div></dialog>';var d=host.querySelector('dialog');d.addEventListener('cancel',function(ev){ev.preventDefault();closeModal();});d.showModal();if(options&&options.draggable)movableDialog(d);}
+  function closeModal() {cancelMydataSample();var d=host.querySelector('dialog');if(d){d.close();host.replaceChildren();}if(modalReturnFocus&&modalReturnFocus.isConnected)modalReturnFocus.focus();}
+  function modal(title,body,options) {cancelMydataSample();modalReturnFocus=document.activeElement;host.innerHTML='<dialog class="rms-dialog'+(options&&options.program?' rms-dialog-program':options&&options.mydata?' rms-dialog-mydata':'')+'" aria-labelledby="rms-dialog-title"><div class="rms-dialoghead"><h2 id="rms-dialog-title"'+(options&&options.draggable?' tabindex="0" data-dialog-move title="제목 드래그 또는 방향키로 이동"':'')+'>'+e(title)+'</h2><button type="button" aria-label="닫기" data-action="close">×</button></div><div class="rms-dialogbody"><div class="rms-error" data-dialog-error tabindex="-1" role="alert" hidden></div>'+body+'</div></dialog>';var d=host.querySelector('dialog');d.addEventListener('cancel',function(ev){ev.preventDefault();closeModal();});d.showModal();if(options&&options.draggable)movableDialog(d);}
   function movableDialog(d) {
     var handle=d.querySelector('[data-dialog-move]'),drag;
     function rect(){var r=d.getBoundingClientRect();return {left:parseFloat(d.style.left)||r.left||8,top:parseFloat(d.style.top)||r.top||8,width:r.width||Math.min(1180,(window.innerWidth||1024)-16),height:r.height||Math.min(650,(window.innerHeight||768)-16)};}
@@ -168,7 +168,61 @@
     var input=data(form),a=store.getApplications().find(function(x){return x.id===form.dataset.id;});
     if(['companyName','representative','inputAddress'].some(function(k){return input[k]!==a[k];}))store.saveApplicationInfo(a.id,input);
   }
+
+  // Self-contained sample: no store writes, credentials, file uploads or API requests.
+  var mydataSample=null,mydataTimer;
+  function cancelMydataSample() {clearTimeout(mydataTimer);mydataSample=null;}
+  function createMydataSample() {
+    return {phase:'select',consent:false,fileGuide:'',queriedAt:'',rows:[
+      {id:'F01',name:'사업자등록증명서',provider:'국세청',selected:true,status:'ready',fields:[['상호','가상 한빛정밀'],['대표자','가상 대표자'],['사업장 주소','충남 천안시 시연로 100 (가상)'],['사업 상태','계속사업자 (예시)']]},
+      {id:'F05',name:'국세 납세증명서',provider:'국세청',selected:true,status:'ready',fields:[['납세자','가상 한빛정밀'],['체납 여부','체납 없음 (예시)'],['증명 상태','유효 (예시)']]},
+      {id:'F06',name:'지방세 납세증명서',provider:'지방자치단체',selected:true,status:'ready',fields:[['납세자','가상 한빛정밀'],['체납 여부','체납 없음 (재조회 예시)'],['증명 상태','유효 (예시)']]},
+      {id:'F08',name:'중소기업확인서',provider:'중소벤처기업부',selected:true,status:'ready',fields:[]}
+    ]};
+  }
+  function renderMydataSample(focus) {
+    var target=host.querySelector('#rms-mydata-sample');if(!target||!mydataSample)return;
+    target.innerHTML=views.mydataSample(mydataSample);
+    if(focus){var el=target.querySelector(focus);if(el)el.focus({preventScroll:true});}
+  }
+  function openMydataSample() {
+    modal('공공 마이데이터 API 연계','<div id="rms-mydata-sample"></div>',{mydata:true,draggable:true});
+    mydataSample=createMydataSample();renderMydataSample();
+  }
+  function updateMydataSelection() {
+    var sample=mydataSample;if(!sample||sample.phase!=='select')return;
+    sample.consent=!!host.querySelector('#rms-mydata-consent')?.checked;
+    host.querySelectorAll('[data-mydata-document]').forEach(function(input){var row=sample.rows.find(function(item){return item.id===input.dataset.mydataDocument;});if(row)row.selected=input.checked;});
+    var count=sample.rows.filter(function(row){return row.selected;}).length;
+    host.querySelector('#rms-mydata-query').disabled=!sample.consent||!count;
+    host.querySelector('#rms-mydata-hint').textContent=!count?'조회할 서류를 1개 이상 선택해 주세요.':count+'개 서류 선택 · '+(sample.consent?'가상 조회를 시작할 수 있습니다.':'동의 후 조회할 수 있습니다.');
+  }
+  function queryMydataSample() {
+    var sample=mydataSample;if(!sample||sample.phase!=='select')return;
+    updateMydataSelection();if(!sample.consent||!sample.rows.some(function(row){return row.selected;}))return;
+    sample.phase='querying';renderMydataSample('#rms-mydata-status');
+    mydataTimer=setTimeout(function(){
+      if(mydataSample!==sample||!host.querySelector('#rms-mydata-sample'))return;
+      sample.rows.forEach(function(row){if(row.selected)row.status=row.id==='F06'?'failed':row.id==='F08'?'unavailable':'success';});
+      sample.queriedAt=new Date().toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false});
+      sample.phase='results';renderMydataSample('#rms-mydata-status');
+    },700);
+  }
+  function retryMydataSample(id) {
+    var sample=mydataSample;if(!sample||!['results','preview'].includes(sample.phase))return;
+    var row=sample.rows.find(function(item){return item.id===id&&item.selected&&item.status==='failed';});if(!row)return;
+    sample.phase='results';row.status='loading';renderMydataSample('#rms-mydata-status');
+    mydataTimer=setTimeout(function(){if(mydataSample!==sample||!host.querySelector('#rms-mydata-sample'))return;row.status='success';sample.queriedAt=new Date().toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false});renderMydataSample('#rms-mydata-status');},500);
+  }
+
   var actions={
+    'mydata-open':openMydataSample,
+    'mydata-query':queryMydataSample,
+    'mydata-retry':retryMydataSample,
+    'mydata-reset':function(){if(!mydataSample)return;clearTimeout(mydataTimer);mydataSample=createMydataSample();renderMydataSample('#rms-mydata-consent');host.querySelector('.rms-dialogbody').scrollTop=0;},
+    'mydata-file':function(id){if(!mydataSample)return;var row=mydataSample.rows.find(function(item){return item.id===id&&item.selected&&item.status==='unavailable';});if(!row)return;mydataSample.fileGuide=id;renderMydataSample();var guide=host.querySelector('.rms-mydata-file-guide');guide.setAttribute('tabindex','-1');guide.focus();},
+    'mydata-preview':function(){var sample=mydataSample;if(!sample||sample.phase!=='results'||sample.rows.some(function(row){return row.status==='loading';})||!sample.rows.some(function(row){return row.selected&&row.status==='success';}))return;sample.phase='preview';renderMydataSample('.rms-mydata-preview');host.querySelector('.rms-mydata-preview').scrollIntoView?.({block:'nearest'});},
+
     'home-programs':function(){var section=document.getElementById('rms-home2-programs');if(section){section.scrollIntoView?.({behavior:'smooth',block:'start'});section.focus({preventScroll:true});}},
     'sfr-open':openSfrLayer,
     'sfr-navigate':navigateSfr,
@@ -227,7 +281,8 @@
     else if(form.id==='rms-doctype-form'){commit(function(){store.saveDocumentType({id:id,name:f.name,provider:f.provider,active:!!f.active});},'서류 설정을 저장했습니다.');}
   }catch(err){showError(err);}}
   function eventChange(event) {var el=event.target;try{
-    if(el.dataset.compare){if(el.checked&&ui.selected.size>=3){el.checked=false;throw new Error('기술닥터는 최대 3명까지 비교할 수 있습니다.');}if(el.checked)ui.selected.add(el.dataset.compare);else ui.selected.delete(el.dataset.compare);document.getElementById('rms-compare-count').textContent=ui.selected.size+'명 선택 · 최대 3명';}
+    if(el.id==='rms-mydata-consent'||el.hasAttribute('data-mydata-document')){updateMydataSelection();}
+    else if(el.dataset.compare){if(el.checked&&ui.selected.size>=3){el.checked=false;throw new Error('기술닥터는 최대 3명까지 비교할 수 있습니다.');}if(el.checked)ui.selected.add(el.dataset.compare);else ui.selected.delete(el.dataset.compare);document.getElementById('rms-compare-count').textContent=ui.selected.size+'명 선택 · 최대 3명';}
     else if(el.id==='rms-consent'){commit(function(){store.consent(ui.appId,el.checked);},el.checked?'가상 정보제공 동의를 기록했습니다.':'가상 정보제공 동의를 철회했습니다.');}
     else if(el.name==='application'){ui.docStatus='';go('documents/'+el.value+'/'+(route()[2]||'3'));}
     else if(el.name==='userId'){var u=store.getState().users.find(function(x){return x.id===el.value;});if(u)host.querySelector('[name=organization]').value=u.organization;}

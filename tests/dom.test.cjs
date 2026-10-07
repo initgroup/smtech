@@ -688,3 +688,62 @@ test('alternate home keeps existing FAQ search and its route survives JSON backu
   assert.ok(second.document.body.classList.contains('rms-home-design2'));
   second.healthy();
 });
+
+
+test('MyData sample is available on both home designs and requires consent plus a selected document',async()=>{
+  for(const route of ['home','home/2']){
+    const b=await browser();b.route(route);const before=b.state();
+    b.click('[data-action="mydata-open"]');
+    assert.match(b.one('dialog').textContent,/실제 공공 API 호출이나 개인정보 전송은 없습니다/);
+    assert.equal(b.one('[data-action="mydata-query"]').disabled,true);
+    b.click('[data-action="mydata-query"]');
+    assert.ok(b.document.querySelector('#rms-mydata-consent'));
+    b.change('#rms-mydata-consent',true);
+    assert.equal(b.one('[data-action="mydata-query"]').disabled,false);
+    b.document.querySelectorAll('[data-mydata-document]').forEach(el=>b.change('[data-mydata-document="'+el.dataset.mydataDocument+'"]',false));
+    assert.equal(b.one('[data-action="mydata-query"]').disabled,true);
+    b.click('[data-action="mydata-query"]');
+    assert.match(b.one('#rms-mydata-hint').textContent,/1개 이상/);
+    b.change('[data-mydata-document="F01"]',true);
+    b.click('[data-action="mydata-query"]');
+    assert.ok(b.one('.rms-mydata-loading'));
+    await new Promise(resolve=>setTimeout(resolve,750));
+    assert.equal(b.document.querySelectorAll('[data-mydata-result]').length,1);
+    assert.match(b.one('[data-mydata-result="F01"]').textContent,/조회완료/);
+    close(b);assert.equal(b.currentRoute(),'#'+route);assert.deepEqual(b.state(),before);b.healthy();
+  }
+});
+
+test('MyData sample shows mixed results, retries, file guidance and preview without saving or changing roles',async()=>{
+  const b=await browser();const before=b.state();const saved=[...b.values];
+  b.click('[data-action="mydata-open"]');b.change('#rms-mydata-consent',true);b.click('[data-action="mydata-query"]');
+  await new Promise(resolve=>setTimeout(resolve,750));
+  assert.equal(b.document.querySelectorAll('[data-mydata-result]').length,4);
+  assert.match(b.one('[data-mydata-result="F01"] details').textContent,/가상 한빛정밀/);
+  assert.match(b.one('[data-mydata-result="F06"]').textContent,/조회실패/);
+  assert.match(b.one('[data-mydata-result="F08"]').textContent,/미제공 예시/);
+  b.click('[data-action="mydata-file"]');assert.match(b.one('.rms-mydata-file-guide').textContent,/파일을 선택하거나 전송하지 않습니다/);
+  b.click('[data-action="mydata-preview"]');assert.ok(b.one('.rms-mydata-preview'));
+  b.click('[data-action="mydata-retry"]');assert.match(b.one('[data-mydata-result="F06"]').textContent,/재조회 중/);
+  assert.equal(b.one('[data-action="mydata-preview"]').disabled,true);
+  await new Promise(resolve=>setTimeout(resolve,550));
+  assert.match(b.one('[data-mydata-result="F06"]').textContent,/조회완료/);
+  b.click('[data-action="mydata-preview"]');assert.equal(b.document.querySelectorAll('.rms-mydata-preview li').length,4);
+  assert.match(b.one('.rms-mydata-preview').textContent,/직접 제출 필요/);
+  assert.deepEqual(b.state(),before);assert.deepEqual([...b.values],saved);assert.equal(b.one('#rms-role').value,'visitor');
+  b.click('[data-action="mydata-reset"]');assert.equal(b.one('#rms-mydata-consent').checked,false);
+  assert.equal(b.document.querySelector('.rms-mydata-preview'),null);b.healthy();
+});
+
+test('closing, navigating or reopening cancels pending MyData sample work',async()=>{
+  const b=await browser();
+  b.click('[data-action="mydata-open"]');b.change('#rms-mydata-consent',true);b.click('[data-action="mydata-query"]');
+  b.one('dialog').dispatchEvent(new b.window.Event('cancel',{cancelable:true}));
+  assert.equal(b.document.querySelector('dialog'),null);
+  b.click('[data-action="mydata-open"]');
+  await new Promise(resolve=>setTimeout(resolve,750));
+  assert.equal(b.one('#rms-mydata-consent').checked,false);assert.equal(b.document.querySelector('[data-mydata-result]'),null);
+  b.change('#rms-mydata-consent',true);b.click('[data-action="mydata-query"]');b.route('doctors');
+  await new Promise(resolve=>setTimeout(resolve,750));
+  assert.equal(b.document.querySelector('dialog'),null);b.healthy();
+});

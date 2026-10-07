@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T08:18:02.379Z",
+  "generatedAt": "2026-10-07T08:59:35.215Z",
   "source": "prototype/region/rms",
   "screens": [
     {
@@ -108,8 +108,8 @@
     },
     {
       "path": "fragments/home.html",
-      "bytes": 7022,
-      "sha256": "4324131a097ab53335bce8453931e7343c87f9b78ecd2d5e1ad6a0273bd815cc"
+      "bytes": 7521,
+      "sha256": "1d3ae67f24eb8fbeb09e0e8f8c97d276fedfb1876a429b0a4355a82cddcc8524"
     },
     {
       "path": "fragments/matches.html",
@@ -133,13 +133,13 @@
     },
     {
       "path": "static/css/rms-enhance.css",
-      "bytes": 44359,
-      "sha256": "2b72c0d1d8a82241f4a8f68bb160a0ba3eefe4dd1d85076f9bf7bf23cec86d43"
+      "bytes": 57865,
+      "sha256": "4debbda388c5eea0181cbeda13c86410e467c644e183143aaaedd742d076d2a1"
     },
     {
       "path": "static/js/rms-enhance/app.js",
-      "bytes": 51035,
-      "sha256": "0187ad1f7abb76f4970bc1afe5d229766399ff557d6251c19a49271a318a304e"
+      "bytes": 56101,
+      "sha256": "db7676bdf62ae58493b2488611b57729357cc361bbc60c312abb4690827cdc34"
     },
     {
       "path": "static/js/rms-enhance/core.js",
@@ -148,8 +148,8 @@
     },
     {
       "path": "static/js/rms-enhance/views.js",
-      "bytes": 105264,
-      "sha256": "62e717980b9784ab817fa8aea647d6dee3d73d423a5476ec5bbee478a8994070"
+      "bytes": 112644,
+      "sha256": "8a603a873db1ca9de102ac9f8b43183f4570f9c3634b00f02f7fe6c6b0e4a821"
     }
   ]
 }
