@@ -649,3 +649,42 @@ test('statistics form reports reversed dates and applies a valid region filter',
   assert.ok(b.document.querySelector('[data-action="stats-export"]'));
   b.healthy();
 });
+
+
+test('both home designs switch without changing data and alternate styling ends on business pages', async()=>{
+  const b=await browser();
+  const before=b.state();
+  assert.equal(b.one('.rms-design-switch').getAttribute('href'),'#home/2');
+  b.route(b.one('.rms-design-switch').getAttribute('href'));
+  assert.ok(b.document.body.classList.contains('rms-home-design2'));
+  assert.equal(b.document.querySelectorAll('.rms-home2-shortcuts>a').length,8);
+  assert.equal(b.document.querySelectorAll('.rms-home2-program').length,seed.programs.length);
+  b.click('.rms-home2-program h3 button');
+  assert.match(b.one('dialog').textContent,new RegExp(seed.programs[0].title));
+  close(b);
+  assert.equal(b.one('.rms-design-switch').getAttribute('href'),'#home');
+  b.route(b.one('.rms-design-switch').getAttribute('href'));
+  assert.equal(b.document.body.classList.contains('rms-home-design2'),false);
+  assert.equal(b.document.querySelectorAll('.rms-announcement').length,seed.programs.length);
+  for(const role of ['visitor','company','tp','admin']){
+    b.role(role);b.route('home/2');b.healthy();
+    b.route('doctors');b.healthy();
+    assert.equal(b.document.body.classList.contains('rms-home-design2'),false);
+  }
+  assert.deepEqual(b.state(),before);
+});
+
+test('alternate home keeps existing FAQ search and its route survives JSON backup', async()=>{
+  let backup;
+  const first=await browser({picker:async()=>({name:'design-2.json',createWritable:async()=>({write:async text=>{backup=text;},close:async()=>{}})})});
+  first.route('home/2');
+  first.set('#rms-home-query','서류');first.submit('#rms-faq-search');
+  assert.equal(first.currentRoute(),'#faq');
+  assert.equal(first.one('#rms-faq-search [name=q]').value,'서류');
+  first.route('home/2');first.click('#rms-export');await flush();
+  assert.equal(JSON.parse(backup).presentation.route,'home/2');
+  const second=await browser();await importFile(second,backup);second.click('#rms-confirm-import');
+  assert.equal(second.currentRoute(),'#home/2');
+  assert.ok(second.document.body.classList.contains('rms-home-design2'));
+  second.healthy();
+});

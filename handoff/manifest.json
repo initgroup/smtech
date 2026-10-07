@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T11:14:13.171Z",
+  "generatedAt": "2026-10-07T08:18:02.379Z",
   "source": "prototype/region/rms",
   "screens": [
     {
@@ -108,8 +108,8 @@
     },
     {
       "path": "fragments/home.html",
-      "bytes": 6701,
-      "sha256": "83ffeca26f07f090b21ed302cd0b9963fb0e55063ca164abe9e3cc9d2507dee3"
+      "bytes": 7022,
+      "sha256": "4324131a097ab53335bce8453931e7343c87f9b78ecd2d5e1ad6a0273bd815cc"
     },
     {
       "path": "fragments/matches.html",
@@ -133,23 +133,23 @@
     },
     {
       "path": "static/css/rms-enhance.css",
-      "bytes": 26677,
-      "sha256": "69bb164f103712912897215ddd6213b35d2da9a7e10946e2e9f05b441e703978"
+      "bytes": 44359,
+      "sha256": "2b72c0d1d8a82241f4a8f68bb160a0ba3eefe4dd1d85076f9bf7bf23cec86d43"
     },
     {
       "path": "static/js/rms-enhance/app.js",
-      "bytes": 50752,
-      "sha256": "7420e6ad4dd41bd88c5b036781d7d0fa94d80be7c532a7787a4b6097196c9ceb"
+      "bytes": 51035,
+      "sha256": "0187ad1f7abb76f4970bc1afe5d229766399ff557d6251c19a49271a318a304e"
     },
     {
       "path": "static/js/rms-enhance/core.js",
-      "bytes": 35604,
-      "sha256": "93bc7435e10cf6758d4fa8b5ff0922b5afa62b3d73cc05062e94ceda991cface"
+      "bytes": 35612,
+      "sha256": "f907ede5e7e2860305710b0ef9f6a86d1fb99a0165c5ecc190566bf457a608e1"
     },
     {
       "path": "static/js/rms-enhance/views.js",
-      "bytes": 96869,
-      "sha256": "61088e9370ad7bf75280f74046048b12e73fecc9d5d274939e446dd9019c852b"
+      "bytes": 105264,
+      "sha256": "62e717980b9784ab817fa8aea647d6dee3d73d423a5476ec5bbee478a8994070"
     }
   ]
 }

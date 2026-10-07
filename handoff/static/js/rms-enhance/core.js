@@ -104,7 +104,7 @@
   function validatePresentation(value) {
     safeTree(value,0);
     assert(value && roles.includes(value.role),'시연 역할 형식 오류');
-    assert(typeof value.route==='string' && /^(home|doctors|doctor\/[A-Za-z0-9_-]+|matches|stats|documents(?:\/[A-Za-z0-9_-]+(?:\/[1-4])?)?|faq|questions|manage(?:\/(?:home|documents))?|guide(?:\/SFR-\d{2})?)$/.test(value.route),'시연 화면 경로 오류');
+    assert(typeof value.route==='string' && /^(home(?:\/2)?|doctors|doctor\/[A-Za-z0-9_-]+|matches|stats|documents(?:\/[A-Za-z0-9_-]+(?:\/[1-4])?)?|faq|questions|manage(?:\/(?:home|documents))?|guide(?:\/SFR-\d{2})?)$/.test(value.route),'시연 화면 경로 오류');
     var source=value.ui;assert(source && typeof source==='object' && !Array.isArray(source),'시연 화면 설정 오류');
     var result={role:value.role,route:value.route,ui:{}};
     ['faqQuery','faqWork','docStatus','codeKind','appId'].forEach(function(k){assert(typeof source[k]==='string' && source[k].length<=500,'시연 검색조건 오류');result.ui[k]=source[k];});
