@@ -1,0 +1,11 @@
+<!-- @template dialogs/match-request | @owner publisher | @since RMS-PUB-20261008-01 | presenter: app.js#match-request -->
+<form id="rms-match-form" data-id="{{id}}">
+  <div class="rms-note">{{name}} · {{organization}}<br>지원가능 지역: {{{itemsHtml}}}</div>
+  <div class="rms-field">
+  <label for="rms-request">기술애로 및 요청내용 *</label>
+  <textarea id="rms-request" name="request" required maxlength="1000" placeholder="기업의 기술애로와 필요한 지원 내용을 입력해 주세요.">
+  </textarea>
+  </div>
+  <div class="rms-actions rms-space">{{{bHtml}}}<button class="rms-btn rms-btn-primary" type="submit">매칭 요청</button>
+  </div>
+  </form>

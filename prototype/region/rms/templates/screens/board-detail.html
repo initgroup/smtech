@@ -1,0 +1,9 @@
+<!-- @template screens/board-detail | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#boardDetail -->
+<article class="rms-board-detail">
+  <p class="rms-board-detail-category">{{itemValue}} · {{category}}</p>
+  <h3>{{title}}</h3>
+  <div class="rms-board-detail-meta">
+  <span>등록일 {{date}}</span>{{{value}}}</div>
+  <div class="rms-board-detail-text">{{body}}</div>{{{value2}}}{{{value3}}}<div class="rms-actions rms-space">
+  <a class="rms-btn" href="#boards/{{type}}">게시판 목록</a>{{{btnHtml}}}</div>
+  </article>

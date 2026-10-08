@@ -1,0 +1,100 @@
+{
+  "release": "RMS-PUB-20261008-01",
+  "contractVersion": 1,
+  "description": "First structured publisher delivery. Protected integration files are never included in publisher deltas.",
+  "protectedPrefixes": [
+    "integration/",
+    "local/",
+    ".git/",
+    ".venv/",
+    "tmp/",
+    "deliverables/"
+  ],
+  "rules": [
+    {
+      "prefix": "prototype/region/rms/index.html",
+      "owner": "shared",
+      "review": "manual-merge"
+    },
+    {
+      "prefix": "prototype/region/rms/asset-manifest.json",
+      "owner": "publisher",
+      "review": "hash-compare"
+    },
+    {
+      "prefix": "prototype/region/rms/templates/",
+      "owner": "publisher",
+      "review": "hash-compare"
+    },
+    {
+      "prefix": "prototype/region/rms/contracts/",
+      "owner": "contract",
+      "review": "manual-merge"
+    },
+    {
+      "prefix": "prototype/region/rms/static/js/rms-enhance/",
+      "owner": "publisher",
+      "review": "hash-compare"
+    },
+    {
+      "prefix": "prototype/region/rms/static/css/rms-",
+      "owner": "publisher",
+      "review": "hash-compare"
+    },
+    {
+      "prefix": "prototype/region/rms/data/",
+      "owner": "demo",
+      "review": "reference-only"
+    },
+    {
+      "prefix": "handoff/jsp-examples/",
+      "owner": "example",
+      "review": "reference-only"
+    },
+    {
+      "prefix": "handoff/integration-examples/",
+      "owner": "example",
+      "review": "reference-only"
+    },
+    {
+      "prefix": "docs/",
+      "owner": "documentation",
+      "review": "reference-only"
+    },
+    {
+      "prefix": "README.md",
+      "owner": "documentation",
+      "review": "reference-only"
+    },
+    {
+      "prefix": "releases/",
+      "owner": "documentation",
+      "review": "reference-only"
+    },
+    {
+      "prefix": "tools/",
+      "owner": "tooling",
+      "review": "reference-only"
+    },
+    {
+      "prefix": "tests/",
+      "owner": "verification",
+      "review": "reference-only"
+    },
+    {
+      "prefix": ".gitattributes",
+      "owner": "shared",
+      "review": "manual-merge"
+    },
+    {
+      "prefix": ".gitignore",
+      "owner": "shared",
+      "review": "manual-merge"
+    }
+  ],
+  "omitted": [
+    "Original CSS/fonts/images stay unchanged.",
+    "handoff/static, handoff/templates and fragments are regenerated mirrors; use canonical prototype files.",
+    "Reference documents and download ZIPs are excluded from publisher deltas."
+  ]
+}

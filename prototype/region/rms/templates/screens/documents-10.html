@@ -1,0 +1,25 @@
+<!-- @template screens/documents-10 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#documents -->
+{{{top}}}<form id="rms-application-filter" class="rms-filter">
+  <div class="rms-fieldgrid">{{{selectHtml}}}{{{fieldHtml}}}{{{fieldHtml2}}}</div>
+  </form>
+  <section class="rms-panel">
+  <div class="rms-panelhead">
+  <h2>{{title}}</h2>{{{badgeHtml}}}</div>
+  <dl class="rms-profile">
+  <div>
+  <dt>기업명</dt>
+  <dd>{{companyName}}</dd>
+  </div>
+  <div>
+  <dt>대표자</dt>
+  <dd>{{representative}}</dd>
+  </div>
+  <div class="rms-wide">
+  <dt>신청서 주소</dt>
+  <dd>{{inputAddress}}</dd>
+  </div>
+  </dl>{{{value}}}<div class="rms-panelhead">
+  <h2>접수서류</h2>{{{value2}}}</div>
+  <div class="rms-statusrow">{{{itemsHtml}}}</div>{{{tableHtml}}}<p class="rms-muted rms-space">9종은 우선 연계대상입니다. 필수 여부는 사업별로 다릅니다. 서류당 한 파일을 선택하며 여러 파일은 ZIP으로 묶습니다.</p>
+  <div class="rms-actions rms-space">{{{btnHtml}}}{{{value3}}}{{{btnHtml2}}}</div>
+  </section>

@@ -1,0 +1,31 @@
+<!-- @template screens/stats | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#stats -->
+<form id="rms-stats-search" class="rms-filter">
+  <div class="rms-fieldgrid">{{{selectHtml}}}{{{selectHtml2}}}{{{selectHtml3}}}{{{fieldHtml}}}{{{fieldHtml2}}}</div>
+  <div class="rms-actions rms-space">
+  <button class="rms-btn rms-btn-primary" type="submit">통계 조회</button>
+  </div>
+  </form>
+  <div class="rms-metrics">{{{metricHtml}}}{{{metricHtml2}}}{{{metricHtml3}}}{{{metricHtml4}}}</div>
+  <div class="rms-two">
+  <section class="rms-panel">
+  <div class="rms-panelhead">
+  <h2>지역별 전문가 현황</h2>
+  </div>
+  <div class="rms-chart">{{{itemsHtml}}}</div>
+  </section>
+  <section class="rms-panel">
+  <div class="rms-panelhead">
+  <h2>집계 기준</h2>
+  </div>
+  <ul class="rms-checks">
+  <li>등록·활동 현황은 현재 가상 데이터 기준입니다.</li>
+  <li>기간은 매칭 요청일에 적용합니다.</li>
+  <li>지원실적은 지원완료 상태의 매칭 건수입니다.</li>
+  <li>지원기업 수는 기업 ID의 중복을 제거합니다.</li>
+  <li>지역 간 매칭은 기업 지역과 등록지역을 비교합니다.</li>
+  </ul>
+  </section>
+  </div>
+  <section class="rms-panel">
+  <div class="rms-panelhead">
+  <h2>지역별 매칭 및 지원실적</h2>{{{btnHtml}}}</div>{{{tableHtml}}}</section>

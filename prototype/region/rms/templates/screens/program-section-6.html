@@ -1,0 +1,21 @@
+<!-- @template screens/program-section-6 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#programSection -->
+<article>
+  <div class="rms-program-card-meta">{{{badgeHtml}}}<span>{{region}}</span>
+  </div>
+  <p class="rms-program-category">{{category}}</p>
+  <h3>
+  <button type="button" data-action="program" data-id="{{id}}">{{title}}</button>
+  </h3>
+  <dl>
+  <div>
+  <dt>접수기간</dt>
+  <dd>{{start}} ~ {{end}}</dd>
+  </div>
+  <div>
+  <dt>접수마감</dt>
+  <dd>{{end2}} <strong>{{deadlineTime}}</strong>
+  </dd>
+  </div>
+  </dl>
+  <div class="rms-actions">{{{btnHtml}}}{{{btnHtml2}}}</div>
+  </article>

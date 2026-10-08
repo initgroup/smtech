@@ -10,12 +10,16 @@ const path = require('node:path');
 const vm = require('node:vm');
 const {parseHTML} = require('../tmp/qa/node_modules/linkedom');
 const base = path.join(__dirname, '../prototype/region/rms');
-const seed = JSON.parse(fs.readFileSync(path.join(base, 'data/seed.json'), 'utf8'));
+const seed = JSON.parse(fs.readFileSync(path.join(base, 'demo/data/seed.json'), 'utf8'));
 const html = fs.readFileSync(path.join(base, 'index.html'), 'utf8');
 const scripts = [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map(([,file]) => ({name:path.basename(file), text:fs.readFileSync(path.join(base,file),'utf8')}));
 
 async function browser(options={}) {
-  const {window} = parseHTML(html);
+  const entryHtml=options.entry?fs.readFileSync(path.join(base,options.entry),'utf8'):html;
+  const entryScripts=[...entryHtml.matchAll(/<script[^>]+src="([^"]+)"/g)].map(([,file])=>({name:path.basename(file),text:fs.readFileSync(path.join(base,file),'utf8')}));
+  const nativeWindow=parseHTML(entryHtml);const globals=new Map();
+  // linkedom's defaultView writes properties to Node globalThis. Keep application globals per test window.
+  const window=new Proxy(nativeWindow,{get(target,key){if(key==='window')return window;return globals.has(key)?globals.get(key):Reflect.get(target,key);},set(target,key,value){globals.set(key,value);return true;}});
   const document = window.document;
   const values = new Map(options.entries||[]);
   const errors = [];
@@ -62,12 +66,12 @@ async function browser(options={}) {
   const sandbox={
     window,document,location,FormData:BrowserFormData,Blob,URL:{createObjectURL(blob){downloads.push(blob);return 'blob:qa-download';},revokeObjectURL(){}},
     console:{log(){},warn(){},error(...args){errors.push(args.join(' '));}},
-    fetch:async url=>{if(url==='data/seed.json')return {ok:true,json:async()=>JSON.parse(JSON.stringify(seed))};assert.match(String(url),/^data\/mydata\/[a-z-]+\.xml$/,'QA must read only local XML assets');return {ok:true,text:async()=>fs.readFileSync(path.join(base,String(url)),'utf8')};},
+    fetch:async url=>{if(url==='demo/data/boards.json')return {ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(base,'demo/data/boards.json'),'utf8'))};if(url==='demo/data/seed.json')return {ok:true,json:async()=>JSON.parse(JSON.stringify(seed))};assert.match(String(url),/^demo\/data\/mydata\/[a-z-]+\.xml$/,'QA must read only local XML assets');return {ok:true,text:async()=>fs.readFileSync(path.join(base,String(url)),'utf8')};},
     setTimeout:(fn,ms)=>{const timer=setTimeout(fn,ms);timer.unref();return timer;},clearTimeout,
     requestAnimationFrame:fn=>fn(0)
   };
   vm.createContext(sandbox);
-  scripts.forEach(script=>vm.runInContext(script.text,sandbox,{filename:script.name}));
+  entryScripts.forEach(script=>{if(script.name==='app.js'&&options.integrationFactory)window.RMSIntegration=options.integrationFactory(window);vm.runInContext(script.text,sandbox,{filename:script.name});});
   await new Promise(resolve=>setImmediate(resolve));
   function one(selector){const el=document.querySelector(selector);assert.ok(el,'Missing DOM element: '+selector);return el;}
   function dispatch(el,type){return el.dispatchEvent(new window.Event(type,{bubbles:true,cancelable:true}));}
@@ -205,6 +209,37 @@ test('guide requirements start collapsed and support individual, global and dire
   b.route('guide');assert.equal(opened().length,0);
 });
 
+test('toolbar lists all 15 SFRs with a leading guide link and clickable unrelated requirements',async()=>{
+  const b=await browser();
+  for(const route of ['home','doctors','documents/A001/2','guide']){
+    b.route(route);const bar=b.one('#rms-demo-sfr'),buttons=Array.from(bar.querySelectorAll('[data-action="sfr-open"]'));
+    assert.equal(buttons.length,15);assert.deepEqual(buttons.map(el=>el.dataset.id),Array.from({length:15},(_,i)=>'SFR-'+String(i+1).padStart(2,'0')));
+    const guide=bar.querySelector('a[href="#guide"]');assert.equal(guide.textContent,'전체 SFR 보기');assert.equal(guide.parentElement.firstElementChild,guide);
+    assert.equal(b.document.querySelector('.rms-demo-toolbar-intro a[href="#guide"]'),null);
+    buttons.forEach(button=>{assert.equal(button.disabled,false);assert.equal(button.getAttribute('aria-disabled'),null);assert.equal(button.classList.contains('rms-sfr-highlight'),button.dataset.sfrRelated==='true');assert.equal(button.classList.contains('rms-sfr-inactive'),button.dataset.sfrRelated==='false');});
+  }
+  b.route('home');const unrelated=b.one('[data-action="sfr-open"][data-id="SFR-01"]');assert.equal(unrelated.dataset.sfrRelated,'false');
+  b.click(unrelated);assert.match(b.one('#rms-sfr-layer-title').textContent,/SFR-01/);assert.equal(b.currentRoute(),'#home');
+  b.click('[data-sfr-close]');b.click('[data-action="sfr-open"][data-id="SFR-06"]');assert.match(b.one('#rms-sfr-layer-title').textContent,/SFR-06/);b.click('[data-sfr-close]');b.healthy();
+});
+
+test('SFR layer stays below visible toolbar buttons during switching, dragging, resizing and page scroll',async()=>{
+  const b=await browser({width:1280,height:800}),disclosure=b.one('#rms-demo-disclosure'),bar=b.one('#rms-demo-sfr');
+  disclosure.setAttribute('open','');let barBottom=240;
+  bar.getBoundingClientRect=()=>({left:28,top:barBottom-60,right:1252,bottom:barBottom,width:1224,height:60});
+  b.click('[data-action="sfr-open"][data-id="SFR-06"]');const layer=b.one('#rms-sfr-layer');
+  const belowButtons=()=>{assert.ok(parseFloat(layer.style.getPropertyValue('--rms-layer-top'))>=barBottom+12);assert.ok(parseFloat(layer.style.getPropertyValue('--rms-layer-top'))+parseFloat(layer.style.getPropertyValue('--rms-layer-height'))<=b.window.innerHeight-8);};
+  belowButtons();
+  pointer(b,'[data-sfr-move]','pointerdown',100,300);pointer(b,b.document,'pointermove',100,0);pointer(b,b.document,'pointerup',100,0);belowButtons();
+  key(b,'[data-sfr-move]','ArrowUp');belowButtons();
+  pointer(b,'[data-sfr-resize="both"]','pointerdown',100,300);pointer(b,b.document,'pointermove',140,1100);pointer(b,b.document,'pointerup',140,1100);belowButtons();
+  b.click('[data-action="sfr-open"][data-id="SFR-15"]');assert.equal(b.one('#rms-sfr-layer'),layer);assert.match(b.one('#rms-sfr-layer-title').textContent,/SFR-15/);belowButtons();
+  b.window.innerHeight=500;b.window.dispatchEvent(new b.window.Event('resize'));belowButtons();
+  barBottom=300;b.window.dispatchEvent(new b.window.Event('scroll'));belowButtons();
+  disclosure.removeAttribute('open');disclosure.dispatchEvent(new b.window.Event('toggle'));key(b,'[data-sfr-move]','ArrowUp');assert.ok(parseFloat(layer.style.getPropertyValue('--rms-layer-top'))<312);
+  disclosure.setAttribute('open','');disclosure.dispatchEvent(new b.window.Event('toggle'));belowButtons();b.healthy();
+});
+
 test('SFR layer preserves unsaved inputs, allows background saves and supports drag and both resize axes',async()=>{
   const b=await browser();openDocs(b);b.route('documents/A001/2');
   b.set('#rms-representative','레이어 비교 중 입력');b.click('.rms-sfr-highlight');
@@ -212,19 +247,19 @@ test('SFR layer preserves unsaved inputs, allows background saves and supports d
   assert.equal(b.one('#rms-representative').value,'레이어 비교 중 입력');
   assert.match(layer.textContent,/SFR-13/);assert.equal(b.document.querySelector('dialog'),null);
   const pointer=(target,type,x,y)=>{const ev=new b.window.Event(type,{bubbles:true,cancelable:true});Object.assign(ev,{clientX:x,clientY:y,pointerId:1,button:0});target.dispatchEvent(ev);};
-  const startLeft=parseFloat(layer.style.left),startTop=parseFloat(layer.style.top);
+  const startLeft=parseFloat(layer.style.getPropertyValue('--rms-layer-left')),startTop=parseFloat(layer.style.getPropertyValue('--rms-layer-top'));
   pointer(b.one('[data-sfr-move]'),'pointerdown',100,100);pointer(b.document,'pointermove',50,120);pointer(b.document,'pointerup',50,120);
-  assert.equal(parseFloat(layer.style.left),startLeft-50);assert.equal(parseFloat(layer.style.top),startTop+20);
-  const width=parseFloat(layer.style.width),height=parseFloat(layer.style.height);
+  assert.equal(parseFloat(layer.style.getPropertyValue('--rms-layer-left')),startLeft-50);assert.equal(parseFloat(layer.style.getPropertyValue('--rms-layer-top')),startTop+20);
+  const width=parseFloat(layer.style.getPropertyValue('--rms-layer-width')),height=parseFloat(layer.style.getPropertyValue('--rms-layer-height'));
   pointer(b.one('[data-sfr-resize="x"]'),'pointerdown',100,100);pointer(b.document,'pointermove',60,100);pointer(b.document,'pointerup',60,100);
-  assert.equal(parseFloat(layer.style.width),width-40);assert.equal(parseFloat(layer.style.height),height);
+  assert.equal(parseFloat(layer.style.getPropertyValue('--rms-layer-width')),width-40);assert.equal(parseFloat(layer.style.getPropertyValue('--rms-layer-height')),height);
   pointer(b.one('[data-sfr-resize="y"]'),'pointerdown',100,100);pointer(b.document,'pointermove',100,50);pointer(b.document,'pointercancel',100,50);
-  assert.equal(parseFloat(layer.style.height),height-50);
+  assert.equal(parseFloat(layer.style.getPropertyValue('--rms-layer-height')),height-50);
   const key=(selector,value)=>{const ev=new b.window.Event('keydown',{bubbles:true,cancelable:true});ev.key=value;b.one(selector).dispatchEvent(ev);};
-  key('[data-sfr-resize="both"]','ArrowRight');assert.equal(parseFloat(layer.style.width),width-24);
+  key('[data-sfr-resize="both"]','ArrowRight');assert.equal(parseFloat(layer.style.getPropertyValue('--rms-layer-width')),width-24);
   b.submit('#rms-company-form');assert.equal(app(b).representative,'레이어 비교 중 입력');assert.equal(b.one('#rms-sfr-layer'),layer);
   b.window.innerWidth=375;b.window.innerHeight=600;b.window.dispatchEvent(new b.window.Event('resize'));
-  assert.ok(parseFloat(layer.style.left)+parseFloat(layer.style.width)<=367);
+  assert.ok(parseFloat(layer.style.getPropertyValue('--rms-layer-left'))+parseFloat(layer.style.getPropertyValue('--rms-layer-width'))<=367);
   key('[data-sfr-move]','Escape');assert.equal(b.document.querySelector('#rms-sfr-layer'),null);b.healthy();
 });
 
@@ -301,12 +336,12 @@ test('SFR navigation resolves imported record IDs and handles legitimately empty
 
 test('SFR layer starts wider on desktop and remains entirely within narrow viewport bounds',async()=>{
   const b=await browser({width:1280,height:800});b.click('[data-action="sfr-open"]');const layer=b.one('#rms-sfr-layer');
-  assert.equal(parseFloat(layer.style.width),900);
+  assert.equal(parseFloat(layer.style.getPropertyValue('--rms-layer-width')),900);
   for(const [width,height] of [[740,700],[375,600],[320,480]]){
     b.window.innerWidth=width;b.window.innerHeight=height;b.window.dispatchEvent(new b.window.Event('resize'));
-    assert.ok(parseFloat(layer.style.left)>=8);assert.ok(parseFloat(layer.style.top)>=8);
-    assert.ok(parseFloat(layer.style.left)+parseFloat(layer.style.width)<=width-8);
-    assert.ok(parseFloat(layer.style.top)+parseFloat(layer.style.height)<=height-8);
+    assert.ok(parseFloat(layer.style.getPropertyValue('--rms-layer-left'))>=8);assert.ok(parseFloat(layer.style.getPropertyValue('--rms-layer-top'))>=8);
+    assert.ok(parseFloat(layer.style.getPropertyValue('--rms-layer-left'))+parseFloat(layer.style.getPropertyValue('--rms-layer-width'))<=width-8);
+    assert.ok(parseFloat(layer.style.getPropertyValue('--rms-layer-top'))+parseFloat(layer.style.getPropertyValue('--rms-layer-height'))<=height-8);
   }
 });
 
@@ -324,7 +359,7 @@ test('screen saves stay in browser until full JSON export; toolbar explains fold
   assert.match(b.one('#rms-storage-help').textContent,/Ctrl\+J/);
   b.click('#rms-storage-info');assert.match(b.one('dialog').textContent,/폴더에 표시/);close(b);
   assert.equal(b.one('#rms-import').parentElement.nextElementSibling.id,'rms-source-download');
-  assert.equal(b.one('#rms-source-download').nextElementSibling.id,'rms-reset');
+  assert.equal(b.one('#rms-source-download').nextElementSibling.id,'rms-release-history');
   b.click('#rms-reset');assert.equal(app(b).representative,'가상 저장 검증');
   close(b);assert.equal(app(b).representative,'가상 저장 검증');
   b.click('#rms-reset');b.click('[data-action="reset"]');
@@ -379,7 +414,7 @@ test('real scripts bootstrap home without errors and preserve the public shell',
   const b=await browser();
   assert.match(b.one('h1').textContent,/기업의 성장/);
   assert.equal(b.document.querySelectorAll('.rms-program-cards>article').length,seed.programs.length);
-  assert.ok(b.document.querySelector('#header .rms-demo-nav'));
+  assert.ok(b.document.querySelector('#header .rms-site-nav'));
   assert.ok(b.document.querySelector('#rms-global-search'));
   b.click('[data-shell="login"]');
   assert.ok(b.one('dialog').hasAttribute('open'));
@@ -443,15 +478,15 @@ test('program dialogs move with pointer and keyboard while staying within a narr
   dialog.getBoundingClientRect=()=>({left:startLeft,top:startTop,width:Math.min(800,b.window.innerWidth-16),height:Math.min(500,b.window.innerHeight-16)});
   // Pointer capture directs browser move/up events back to the title handle.
   pointer(b,title,'pointerdown',100,100);pointer(b,title,'pointermove',85,112);pointer(b,title,'pointerup',85,112);
-  assert.equal(parseFloat(dialog.style.left),startLeft-15);assert.equal(parseFloat(dialog.style.top),startTop+12);
+  assert.equal(parseFloat(dialog.style.getPropertyValue('--rms-layer-left')),startLeft-15);assert.equal(parseFloat(dialog.style.getPropertyValue('--rms-layer-top')),startTop+12);
   key(b,'[data-dialog-move]','ArrowRight');
-  assert.ok(parseFloat(dialog.style.left)>startLeft-15);
+  assert.ok(parseFloat(dialog.style.getPropertyValue('--rms-layer-left'))>startLeft-15);
   b.window.innerWidth=375;b.window.innerHeight=600;b.window.dispatchEvent(new b.window.Event('resize'));
   pointer(b,title,'pointerdown',50,50);pointer(b,title,'pointermove',-1000,-1000);pointer(b,title,'pointercancel',-1000,-1000);
-  assert.ok(parseFloat(dialog.style.left)>=0);assert.ok(parseFloat(dialog.style.top)>=0);
-  const clampedLeft=dialog.style.left,clampedTop=dialog.style.top;
+  assert.ok(parseFloat(dialog.style.getPropertyValue('--rms-layer-left'))>=0);assert.ok(parseFloat(dialog.style.getPropertyValue('--rms-layer-top'))>=0);
+  const clampedLeft=dialog.style.getPropertyValue('--rms-layer-left'),clampedTop=dialog.style.getPropertyValue('--rms-layer-top');
   pointer(b,title,'pointermove',500,500);
-  assert.equal(dialog.style.left,clampedLeft);assert.equal(dialog.style.top,clampedTop,'Cancelled drag must stop changing position');
+  assert.equal(dialog.style.getPropertyValue('--rms-layer-left'),clampedLeft);assert.equal(dialog.style.getPropertyValue('--rms-layer-top'),clampedTop,'Cancelled drag must stop changing position');
   assert.ok(dialog.hasAttribute('open'));close(b);assert.equal(b.document.querySelector('dialog'),null);b.healthy();
 });
 
@@ -550,7 +585,7 @@ test('new administrator announcement records appear publicly and company roles c
 
 test('hash routes and role changes render company, TP and administrator screens',async()=>{
   const b=await browser();
-  b.route('documents');assert.match(b.text(),/사용자 역할을 지원기업/);
+  b.route('documents');assert.match(b.text(),/로그인하면 권한에 따라/);
   b.role('company');assert.ok(b.document.querySelector('#rms-consent'));
   b.route('doctors');assert.ok(b.document.querySelector('#rms-doctor-search'));
   b.route('stats');assert.match(b.text(),/통계는 관리기관/);
@@ -733,7 +768,7 @@ test('four public boards show five recent rows before and after login; more open
     b.click('[data-action="board-detail"]');assert.ok(b.one('dialog').hasAttribute('open'));
     const dialog=b.one('dialog');dialog.getBoundingClientRect=()=>({left:40,top:60,width:800,height:500});
     const title=b.one('[data-dialog-move]');pointer(b,title,'pointerdown',100,100);pointer(b,title,'pointermove',115,112);pointer(b,title,'pointerup',115,112);
-    assert.equal(parseFloat(dialog.style.left),55);assert.equal(parseFloat(dialog.style.top),72);
+    assert.equal(parseFloat(dialog.style.getPropertyValue('--rms-layer-left')),55);assert.equal(parseFloat(dialog.style.getPropertyValue('--rms-layer-top')),72);
     if(type==='resources'){const file=b.one('.rms-board-attachment a');assert.ok(fs.existsSync(path.join(base,file.getAttribute('href'))));assert.ok(file.hasAttribute('download'));}
     close(b);assert.equal(b.one('#rms-role').value,'visitor');b.healthy();
   }
@@ -779,6 +814,24 @@ test('received XML report opens from actual document evidence and offers four bu
   const downloadCount=b.downloads.length;b.click('[data-report-download]');assert.equal(b.downloads.length,downloadCount+1);
   assert.match(await b.downloads.at(-1).text(),/브런치카페광주가산점/);
   const dialog=b.one('dialog');dialog.getBoundingClientRect=()=>({left:40,top:60,width:800,height:500});
-  key(b,'[data-dialog-move]','ArrowRight');assert.ok(parseFloat(dialog.style.left)>40);
+  key(b,'[data-dialog-move]','ArrowRight');assert.ok(parseFloat(dialog.style.getPropertyValue('--rms-layer-left'))>40);
   close(b);b.route('mydata/personal-preference');assert.ok(b.one('#rms-receipt-page'));assert.equal(b.document.querySelectorAll('[data-report-bundle]').length,4);b.healthy();
 });
+
+
+test('server adapter waits before application-step navigation and preserves unsaved input when backend rejects',async()=>{
+  const snapshot=JSON.parse(fs.readFileSync(path.join(base,'contracts/snapshot.example.json'),'utf8'));
+  snapshot.session.displayName='내부 서버 사용자';
+  let finish,reject,calls=0,payload;
+  const b=await browser({entry:'application.html',integrationFactory:window=>({mode:'server',adapter:window.RMSHttpAdapter.create({request(command,value){if(command==='bootstrap')return Promise.resolve(JSON.parse(JSON.stringify(snapshot)));assert.equal(command,'saveApplicationInfo');calls++;payload=value;return new Promise((resolve,fail)=>{finish=resolve;reject=fail;});}})})});
+  assert.equal(b.document.querySelector('#rms-demo-tools'),null);assert.equal(b.window.RMSCore,undefined);assert.equal(b.window.RMSRequirements,undefined);assert.equal(b.window.RMSSfrLayer,undefined);assert.match(b.one('#rms-user-menu').textContent,/내부 서버 사용자/);assert.match(b.text(),/내부 서버 사용자/);assert.equal(b.values.size,0);
+  b.route('documents/A001/2');b.set('#rms-representative','서버 저장 요청');b.click('[data-action="document-step"][data-id="3"]');await flush();
+  assert.equal(b.currentRoute(),'#documents/A001/2');assert.equal(b.one('#rms-representative').value,'서버 저장 요청');assert.equal(b.one('#rms-enhance-app').getAttribute('aria-busy'),'true');
+  b.click('[data-action="document-step"][data-id="3"]');await flush();assert.equal(calls,1);assert.equal(payload.input.representative,'서버 저장 요청');
+  const next=JSON.parse(JSON.stringify(snapshot));next.state.applications.find(a=>a.id==='A001').representative=payload.input.representative;finish(next);await flush();
+  assert.equal(b.currentRoute(),'#documents/A001/3');assert.equal(b.values.size,0,'Server writes never enter localStorage');b.healthy();
+  b.route('documents/A001/2');b.set('#rms-representative','보존해야 하는 입력');b.click('[data-action="document-step"][data-id="3"]');await flush();reject(Error('서버 업무 검증 실패'));await flush();
+  assert.equal(b.currentRoute(),'#documents/A001/2');assert.equal(b.one('#rms-representative').value,'보존해야 하는 입력');assert.match(b.one('#rms-toast').textContent,/서버 업무 검증 실패/);b.healthy();
+});
+
+ test('release history opens a movable version list from the demo toolbar',async()=>{const b=await browser();b.click('#rms-release-history');assert.match(b.one('dialog').textContent,/배포내역/);assert.ok(b.one('[data-dialog-move]'));assert.ok(b.one('.rms-release-item'));const dialog=b.one('dialog');dialog.getBoundingClientRect=()=>({left:50,top:60,width:800,height:500});key(b,'[data-dialog-move]','ArrowRight');assert.ok(parseFloat(dialog.style.getPropertyValue('--rms-layer-left'))>50);close(b);b.healthy();});

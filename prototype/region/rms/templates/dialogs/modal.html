@@ -1,0 +1,10 @@
+<!-- @template dialogs/modal | @owner publisher | @since RMS-PUB-20261008-01 | presenter: app.js#modal -->
+<dialog class="rms-dialog{{{value}}}" aria-labelledby="rms-dialog-title">
+  <div class="rms-dialoghead">
+  <h2 id="rms-dialog-title"{{{value2}}}>{{title}}</h2>
+  <button type="button" aria-label="닫기" data-action="close">×</button>
+  </div>
+  <div class="rms-dialogbody">
+  <div class="rms-error" data-dialog-error tabindex="-1" role="alert" hidden>
+  </div>{{{body}}}</div>
+  </dialog>

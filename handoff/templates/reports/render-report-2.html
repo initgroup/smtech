@@ -1,0 +1,17 @@
+<!-- @template reports/render-report-2 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: ui/mydata-report.js#renderReport -->
+<div class="rms-report" data-report-current="{{id}}">{{{renderIndexHtml}}}<header class="rms-report-header">
+  <div>
+  <p class="rms-report-overline">RECEIVED XML REPORT</p>
+  <h2>{{label}} 수신정보 보고서</h2>
+  <p>{{fileName}}</p>
+  </div>
+  <span class="rms-report-source">사용자 제공 샘플</span>
+  </header>
+  <dl class="rms-report-metadata">{{{kvHtml}}}{{{kvHtml2}}}{{{kvHtml3}}}{{{kvHtml4}}}{{{kvHtml5}}}</dl>
+  <div class="rms-report-toolbar">
+  <nav class="rms-report-tabs" aria-label="수신 보고서 보기">{{{itemsHtml}}}</nav>
+  <button type="button" class="rms-btn rms-btn-small" data-report-download="{{id2}}">XML 다운로드 ↓</button>
+  </div>
+  <div class="rms-report-content">{{{value}}}</div>
+  <footer class="rms-report-footer">표시 기준: 첨부된 수신결과 샘플 · 거래 식별시각은 transactionUniqueId 앞 14자리이며 실제 조회일시와 구분합니다.</footer>
+  </div>

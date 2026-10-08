@@ -1,0 +1,9 @@
+<!-- @template screens/boards | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#boards -->
+{{{headHtml}}}<nav class="rms-tabs" aria-label="공개 게시판">{{{itemsHtml}}}</nav>
+  <section class="rms-panel rms-board-list-panel">
+  <form id="rms-board-search" class="rms-board-search" data-board="{{{type}}}" role="search">
+  <label for="rms-board-query">{{label}} 검색</label>
+  <input id="rms-board-query" name="q" value="{{q}}" placeholder="제목 또는 내용을 입력하세요">
+  <button class="rms-btn rms-btn-primary" type="submit">검색</button>
+  </form>
+  <p class="rms-board-result-count">전체 <strong>{{{length}}}</strong>건{{{value}}}</p>{{{tableHtml}}}{{{value2}}}</section>

@@ -1,0 +1,10 @@
+<!-- @template dialogs/doc-detail-5 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: app.js#docDetail -->
+<form id="rms-file-form" data-id="{{id}}" class="rms-space">
+  <div class="rms-field">
+  <label for="rms-document-file">직접 파일 제출 (1개 · 시연 제한 10MB)</label>
+  <input id="rms-document-file" name="file" type="file" accept=".pdf,.hwp,.hwpx,.jpg,.jpeg,.png,.zip" required>
+  </div>
+  <p class="rms-muted">내용은 서버에 전송하지 않으며 파일명·크기만 저장합니다.</p>
+  <div class="rms-actions rms-space">
+  <button class="rms-btn" type="submit">파일 제출 시연</button>{{{bHtml}}}</div>
+  </form>

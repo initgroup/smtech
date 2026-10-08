@@ -1,0 +1,19 @@
+    <section id="rms-demo-tools" class="rms-demo-toolbar" aria-label="프로토타입 시연 도구">
+      <details id="rms-demo-disclosure">
+        <summary class="rms-demo-toggle" aria-label="기능개선 시연 도구 접기 또는 펼치기" title="시연 도구 접기 / 펼치기"><strong>기능개선 시연 도구</strong><span class="rms-demo-toggle-icon" aria-hidden="true"></span></summary>
+      <div class="rms-demo-toolbar-content">
+        <div class="rms-demo-toolbar-intro"><b>기능개선 시연</b><span>가상 업무자료와 제공된 XML 수신 샘플을 활용한 프로토타입입니다.</span></div>
+        <div class="rms-demo-controls">
+          <div class="rms-demo-role"><label for="rms-role">사용자 역할</label><select id="rms-role"><option value="visitor">로그인 전</option><option value="company">지원기업</option><option value="tp">관리기관 · 충남TP</option><option value="admin">시스템 관리자</option></select></div>
+          <button type="button" id="rms-export" aria-describedby="rms-storage-help">시연내용 JSON 내보내기</button>
+          <button type="button" id="rms-storage-info">저장 위치 안내</button>
+          <label class="rms-demo-import">JSON 불러오기<input type="file" id="rms-import" accept=".json,application/json"></label>
+          <a id="rms-source-download" class="rms-source-download" href="downloads/smtech-source.zip" download="smtech-source.zip" aria-label="내부 개발자용 업무 소스 ZIP 다운로드">개발자 소스 · ZIP</a>
+          <button type="button" id="rms-release-history">배포내역</button>
+          <button type="button" id="rms-reset">가상 기초자료로 되돌리기</button>
+        </div>
+        <div class="rms-demo-context"><p id="rms-storage-help" class="rms-demo-storage" role="status">화면별 저장 → smtech 전용 브라우저 저장소 · 시연내용 JSON 내보내기 → 폴더 선택 후 백업 · 다른 PC에서 JSON 불러오기로 이어보기</p><div id="rms-demo-sfr" class="rms-enhance" aria-label="제안요청서 전체 SFR 및 현재 메뉴 관련 요구사항"></div></div>
+      </div>
+      </details>
+      <nav class="rms-demo-designs" aria-label="메인 시안 선택"><a href="#home" data-home-design="1">메인 시안 1 보기</a><a href="#home/2" data-home-design="2">메인 시안 2 보기</a></nav>
+    </section>

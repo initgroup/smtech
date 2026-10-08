@@ -1,31 +1,27 @@
 # 검증 실행
 
-별도 설치 없이 실행 가능한 업무규칙/파일 검증:
+먼저 생성물을 갱신한 뒤 검증합니다. 런타임/빌드는 Node·Python 기본 기능을 사용합니다.
 
-```powershell
-node tools/package_handoff.cjs
-python tools/package_source.py
-node --test tests/core.test.cjs tests/backup.test.cjs tests/announcement.test.cjs tests/mydata.test.cjs tests/static.test.cjs
-python tests/source_package_test.py
-```
+~~~powershell
+node tools/build.cjs
+node --test tests/*.test.cjs
+python -m unittest discover -s tests -p "*_test.py"
+~~~
 
-화면 이벤트 검증은 실제 브라우저가 아닌 Node + linkedom DOM 시뮬레이터를 사용합니다. 시연 실행에는 필요하지 않습니다. 다음처럼 QA용 임시 폴더에만 설치합니다.
+DOM 검사의 linkedom은 tmp/qa에만 설치하며 내부 ZIP에 포함하지 않습니다. 설치가 필요하면 다음 명령을 사용합니다.
 
-```powershell
+~~~powershell
 npm.cmd install --prefix tmp/qa --cache tmp/npm-cache --no-package-lock --ignore-scripts --no-audit --no-fund linkedom@0.18.12
-node --test tests/dom.test.cjs
-```
+~~~
 
-`announcement.test.cjs`는 공고 상세 데이터, 구버전 보완, 저장 권한·검증·실패 보존, 텍스트 첨부의 JSON 왕복 복원을 검사합니다.
+현재 Node 93개 + Python 20개 = 113개 검증을 통과했습니다. 업무 전용 application.html은 시연 JS 없이 서버 스냅샷으로 테스트하고, index.html은 demo/ 도구를 포함해 별도로 테스트합니다. linkedom의 window 전역은 테스트별로 격리하여 시연 플러그인이 업무 테스트에 남지 않게 합니다.
 
-SFR 검증은 `dom.test.cjs`에 포함됩니다. 15개 상세 설명과 메뉴 링크를 대조하고 모든 링크를 4개 역할로 실행해 접근 전 로그인, 역할 선택 후 목적지 이동, 취소·잘못된 역할·기존 입력값 보존을 검사합니다. 가져온 자료의 식별자 변경·빈 목록과 900px 레이어의 좁은 화면 범위 제한도 포함합니다. 상세 설명과 메뉴 원본은 `docs/sfr-implementation.json`입니다.
+source_package_test.py는 실제 허용 목록과 ZIP 자산 연결을 확인하고, 임시 소스로 동일 버전 재현성·변경 시 버전 증가·시연만 변경된 배포·과거 ZIP 불변·시연 누출 거부를 검사합니다. 임시 Git index에서 staged 파일만 검증하고 미배포 변경을 거부합니다. 실제 프로젝트의 commit/push는 실행하지 않습니다.
 
-`dom.test.cjs`는 실제 index.html/core.js/views.js/app.js를 로드하고 사용자 역할, 라우트, 검색, 비교, 등록, 공고 상세·이동·관리자 편집·첨부 다운로드·백업 복원, 동의/조회, 첨부/제출/보완, 관리자 설정, 통계를 이벤트로 검사합니다. linkedom이 제공하지 않는 select/checkbox/FormData/dialog 등은 최소 표준 동작으로 보완했습니다. 따라서 실제 브라우저 렌더링·레이아웃·포커스·스크린리더·다운로드 창 검증을 대체하지 않습니다.
+delivery_delta_test.py는 내부 수정 충돌, integration 보호, HTML 수동 병합, 삭제 지시, 검사 전후 내부 파일 바이트 불변과 경로·해시 오류를 검사합니다. publisher_package_test.py는 보존한 구형 legacy_publisher_delta.py의 회귀 검사입니다. 현행 배포는 package_source.py 및 tools/delivery/delivery_delta.py를 사용합니다.
 
-시연 백업 검증은 `smtech` 전용 키 이관과 다른 앱 데이터 보존, 독립 저장소 간 JSON 복원 및 기존 PC의 추가자료 제거, 파일 선택 창의 저장·취소·실패 동작을 포함합니다. 파일 선택 API는 테스트에서 모의 실행합니다. 16개 화면·단계 × 4개 역할로 렌더링 및 공통 안내 동작을 검사하며, SFR 레이어의 이동·크기 조절·배경 조작과 기존 업무 이벤트 테스트도 함께 실행하세요. `source_package_test.py`는 소스 ZIP의 최신 파일 일치·제외 대상·재현성과 실제 HTTP 다운로드, 임시 Git 저장소에서 업로드 스크립트가 커밋한 바이트와 ZIP의 일치 여부를 확인합니다. 후자는 Windows PowerShell과 Git이 필요하며 실제 GitHub에는 업로드하지 않습니다.
+최종 배포는 검증 후 python tools/package_delivery.py로 생성합니다. ZIP 해시/CRC·시연 누출·파일 목록은 패키징 시 검사합니다. 실제 브라우저 시각 검수 및 WAS·DB·기관 API 통합은 별도 확인이 필요합니다. 초기 review-core-behavior/findings 기록은 현재 통과 결과표로 사용하지 않습니다.
 
-`review-core-behavior.cjs` 및 `review-core-findings.json`은 구현 중 발견사항의 최초 재현 기록입니다. 현재 회귀검증 기준은 `core.test.cjs`, `dom.test.cjs`, `static.test.cjs`입니다.
+## Git·PowerShell 자동화 검사
 
-2026-10-08 검증: Node 전체 82개 통과. XML 11개, DOM 이벤트 38개, 정적 파일 5개, 기존 업무규칙 28개입니다. 신규 XML 검증은 원본 인코딩 보존, 4개 묶음의 공란·미수신·반복 항목, F01 신청정보 출처, 동일 파일 재조회, 이전 가상 조회 이관, 동의·제출잠금 및 JSON 왕복을 검사합니다. DOM은 4게시판 각 5줄, 공개 열람·검색·별도 페이지, 레이어 이동, 공고 보기 전환, 통합검색과 XML 리포트 탐색·다운로드를 검사합니다. 인계 화면은 20개입니다. 실제 브라우저 연결은 사용할 수 없어 이번 변경의 시각 검수는 수행하지 못했습니다.
-
-시연 안내 접힘 개선: DOM·정적 검증 44개 통과. 요구사항 15개의 기본 접힘, 개별 제목 클릭 토글, 전체 펼침·닫힘, 특정 SFR 직접 접근 시 자동 펼침, 상세 메뉴의 권한별 이동과 원문 보존을 확인했습니다. 개별 summary의 브라우저 기본 동작은 linkedom 테스트에서 표준 동작으로 보완합니다.
+`automation_test.py`는 tmp/의 임시 저장소와 로컬 bare remote에서 실제 스크립트를 실행합니다. 점검/생성 전용 모드의 index·commit 보존, 전체 커밋·새 파일·반복 실행·로컬 push, 제외 파일의 실제 파일 보존, CRLF 정규화, 버전 해시 파일 누락 차단, remote 불일치·detached HEAD 차단, 다른 경로의 Python 실행을 확인합니다. 실제 프로젝트 저장소에는 commit/push하지 않습니다.

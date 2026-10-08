@@ -2,8 +2,8 @@
 
 const test=require('node:test');
 const assert=require('node:assert/strict');
-const core=require('../prototype/region/rms/static/js/rms-enhance/core.js');
-const seed=require('../prototype/region/rms/data/seed.json');
+const core=require('../prototype/region/rms/demo/js/demo-store.js');
+const seed=require('../prototype/region/rms/demo/data/seed.json');
 const clone=value=>JSON.parse(JSON.stringify(value));
 const oldFields=['id','title','region','start','end','category','requiredDocs'];
 const view={role:'admin',route:'home',ui:{doctorFilters:{},statsFilters:{},selected:[],faqQuery:'',faqWork:'',docStatus:'',codeKind:'technology',appId:'A001'}};

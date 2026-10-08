@@ -1,0 +1,8 @@
+<!-- @template dialogs/program-form | @owner publisher | @since RMS-PUB-20261008-01 | presenter: app.js#programForm -->
+<form id="rms-program-form" data-id="{{id}}">
+  <div class="rms-fieldgrid rms-cols2">{{{itemsHtml}}}<div class="rms-field rms-span2">
+  <label for="rms-intro">공고 소개 *</label>
+  <textarea id="rms-intro" name="intro" rows="4">{{value}}</textarea>
+  </div>{{{checksHtml}}}</div>{{{itemsHtml2}}}<div class="rms-actions rms-space">{{{bHtml}}}<button type="submit" class="rms-btn rms-btn-primary">공고 저장</button>
+  </div>
+  </form>

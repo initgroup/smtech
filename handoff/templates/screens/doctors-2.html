@@ -1,0 +1,19 @@
+<!-- @template screens/doctors-2 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#doctors -->
+<tr>
+  <td>
+  <input type="checkbox" aria-label="{{name}} 비교 선택" data-compare="{{id}}"{{{value}}}>
+  </td>
+  <td>
+  <a href="#doctor/{{id2}}">
+  <b>{{name2}}</b>
+  </a>
+  <small>{{year}}년 선정</small>
+  </td>
+  <td>{{organization}}<small>{{{nameHtml}}} · {{owner}} 등록</small>
+  </td>
+  <td>{{{itemsHtml}}}<small>{{acquiredTechnology}}</small>
+  </td>
+  <td>{{{itemsHtml2}}}</td>
+  <td>{{{badgeHtml}}}</td>
+  <td>{{sliceHtml}}{{{value2}}}</td>
+  </tr>

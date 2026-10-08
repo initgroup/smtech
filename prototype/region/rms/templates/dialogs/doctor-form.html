@@ -1,0 +1,9 @@
+<!-- @template dialogs/doctor-form | @owner publisher | @since RMS-PUB-20261008-01 | presenter: app.js#doctorForm -->
+<form id="rms-doctor-form" data-id="{{id}}">
+  <div class="rms-note">SMTECH 가상 사용자를 선택하면 이름과 소속기관을 초기값으로 반영합니다. <span class="rms-required">*</span> 표시 항목은 필수입니다.</div>
+  <div class="rms-fieldgrid rms-cols2">{{{selectHtml}}}{{{fieldHtml}}}{{{selectHtml2}}}{{{selectHtml3}}}{{{selectHtml4}}}{{{fieldHtml2}}}{{{fieldHtml3}}}{{{checksHtml}}}{{{checksHtml2}}}{{{checksHtml3}}}{{{checksHtml4}}}{{{fieldHtml4}}}{{{fieldHtml5}}}<label class="rms-checkrow">
+  <input name="available" type="checkbox"{{{value}}}>현재 기업지원 가능</label>
+  </div>
+  <div class="rms-actions rms-space">{{{bHtml}}}<button class="rms-btn rms-btn-primary" type="submit">저장</button>
+  </div>
+  </form>

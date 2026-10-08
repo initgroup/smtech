@@ -1,8 +1,8 @@
 /* Read-only review probes: production prototype sources are never modified. */
 const fs = require('node:fs');
 const path = require('node:path');
-const core = require('../prototype/region/rms/static/js/rms-enhance/core.js');
-const seed = JSON.parse(fs.readFileSync(path.join(__dirname, '../prototype/region/rms/data/seed.json'), 'utf8'));
+const core = require('../prototype/region/rms/demo/js/demo-store.js');
+const seed = JSON.parse(fs.readFileSync(path.join(__dirname, '../prototype/region/rms/demo/data/seed.json'), 'utf8'));
 const copy = value => JSON.parse(JSON.stringify(value));
 function store() {
   let raw = null;

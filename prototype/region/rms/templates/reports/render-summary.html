@@ -1,0 +1,22 @@
+<!-- @template reports/render-summary | @owner publisher | @since RMS-PUB-20261008-01 | presenter: ui/mydata-report.js#renderSummary -->
+<section class="rms-report-summary">
+  <div class="rms-report-summarytop">
+  <div>
+  <p class="rms-report-overline">수신 데이터 현황</p>
+  <h3>{{{length}}}개 문서에서 {{{populatedCount}}}개 값을 확인했습니다</h3>
+  <p>공란 {{{emptyCount}}}개를 포함한 전체 {{{fieldCount}}}개 항목을 원문 순서대로 제공합니다.</p>
+  </div>
+  <div class="rms-report-ratio">
+  <strong>{{{roundHtml}}}<small>%</small>
+  </strong>
+  <span>필드 수신율</span>
+  </div>
+  </div>
+  <dl class="rms-report-keyfacts">{{{kvHtml}}}{{{kvHtml2}}}{{{kvHtml3}}}{{{kvHtml4}}}</dl>
+  <div class="rms-report-notice">각 문서는 서로 다른 예시 기업·기간의 정보를 포함합니다. 문서별 원문값을 그대로 표시하며, 공란이나 과거 유효기간을 정상·적격으로 판정하지 않습니다.</div>
+  <div class="rms-report-documentcards">{{{itemsHtml}}}</div>
+  <section class="rms-report-coverage">
+  <h3>신청 증빙 9종과 수신 묶음 대조</h3>
+  <div class="rms-report-coveragegrid">{{{itemsHtml2}}}</div>
+  </section>
+  </section>

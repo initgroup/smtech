@@ -1,0 +1,9 @@
+<!-- @template reports/render-summary-2 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: ui/mydata-report.js#renderSummary -->
+<button type="button" data-report-document="{{code}}">
+  <span class="rms-report-docnumber">{{{padStartHtml}}}</span>
+  <span>
+  <strong>{{name}}</strong>
+  <small>{{provider}}</small>
+  </span>{{{statusHtml}}}<span class="rms-report-doccount">{{{populatedCount}}} / {{{fieldCount}}} 항목 <b aria-hidden="true">↗</b>
+  </span>
+  </button>

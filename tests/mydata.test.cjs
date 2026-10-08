@@ -6,14 +6,15 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const web = path.resolve(__dirname, '../prototype/region/rms');
-const source = require(path.join(web, 'static/js/rms-enhance/mydata-report.js'));
-const core = require(path.join(web, 'static/js/rms-enhance/core.js'));
-const seed = JSON.parse(fs.readFileSync(path.join(web, 'data/seed.json'), 'utf8'));
+const source = require('./helpers/mydata-module.cjs');
+const core = require(path.join(web, 'demo/js/demo-store.js'));
+const seed = JSON.parse(fs.readFileSync(path.join(web, 'demo/data/seed.json'), 'utf8'));
 const clone = value => JSON.parse(JSON.stringify(value));
 const evidence = {name:'received-document-supplement.pdf',size:1024};
 const expectedCounts = {'personal-application':9,'personal-preference':5,'company-application':8,'company-preference':3};
+const sampleManifest=clone(source.manifest);
 function bundles() {
-  return source.manifest.map(meta => source.parseXml(fs.readFileSync(path.join(web, meta.xmlPath), 'utf8'), meta));
+  return sampleManifest.map(meta => source.parseXml(fs.readFileSync(path.join(web, meta.xmlPath), 'utf8'), meta));
 }
 function fixture() {
   source.setBundles(bundles());
@@ -110,6 +111,7 @@ test('reports escape XML field content and preserve raw sample status instead of
 });
 
 test('XML loader reads all four local assets through the provided fetch function',async()=>{
+  source.setManifest(sampleManifest);
   const requests=[];
   const loaded=await source.load({fetch:async url=>{
     requests.push(String(url));

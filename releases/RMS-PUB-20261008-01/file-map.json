@@ -1,0 +1,46 @@
+{
+  "release": "RMS-PUB-20261008-01",
+  "moves": [
+    {
+      "from": "static/js/rms-enhance/core.js",
+      "to": [
+        "static/js/rms-enhance/data/demo-store.js",
+        "static/js/rms-enhance/data/selectors.js"
+      ],
+      "note": "Keep internal backend logic in integration-owned adapter; demo-store is never an operational backend."
+    },
+    {
+      "from": "static/js/rms-enhance/views.js",
+      "to": [
+        "templates/",
+        "static/js/rms-enhance/presenters/views.js",
+        "static/js/rms-enhance/generated/requirements.js"
+      ]
+    },
+    {
+      "from": "static/js/rms-enhance/mydata-report.js",
+      "to": [
+        "static/js/rms-enhance/data/mydata-repository.js",
+        "static/js/rms-enhance/ui/mydata-report.js",
+        "templates/reports/"
+      ]
+    },
+    {
+      "from": "static/js/rms-enhance/board-data.js",
+      "to": [
+        "static/js/rms-enhance/data/board-repository.js",
+        "data/boards.json"
+      ]
+    },
+    {
+      "from": "static/js/rms-enhance/app.js",
+      "to": [
+        "static/js/rms-enhance/app.js",
+        "static/js/rms-enhance/common/",
+        "static/js/rms-enhance/ui/sfr-layer.js",
+        "static/js/rms-enhance/adapters/",
+        "templates/dialogs/"
+      ]
+    }
+  ]
+}

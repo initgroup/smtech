@@ -1,0 +1,36 @@
+{
+  "scripts": [
+    "static/js/rms-enhance/generated/templates.js",
+    "demo/generated/templates.js",
+    "static/js/rms-enhance/common/templates.js",
+    "static/js/rms-enhance/common/components.js",
+    "static/js/rms-enhance/generated/contracts.js",
+    "static/js/rms-enhance/common/dom.js",
+    "static/js/rms-enhance/common/layers.js",
+    "static/js/rms-enhance/common/commands.js",
+    "static/js/rms-enhance/data/selectors.js",
+    "static/js/rms-enhance/data/board-repository.js",
+    "static/js/rms-enhance/data/mydata-repository.js",
+    "static/js/rms-enhance/adapters/http.js",
+    "static/js/rms-enhance/ui/mydata-report.js",
+    "static/js/rms-enhance/presenters/views.js",
+    "demo/generated/requirements.js",
+    "demo/generated/releases.js",
+    "demo/js/demo-store.js",
+    "demo/js/receipt-samples.js",
+    "demo/js/adapter.js",
+    "demo/js/requirements-views.js",
+    "demo/js/sfr-layer.js",
+    "demo/js/tools.js",
+    "static/js/rms-enhance/app.js"
+  ],
+  "styles": [
+    "static/css/rms-shell.css",
+    "static/css/rms-tokens.css",
+    "static/css/rms-enhance.css",
+    "static/css/rms-home-refresh.css",
+    "static/css/rms-mydata-report.css",
+    "demo/css/tools.css",
+    "demo/css/sfr.css"
+  ]
+}

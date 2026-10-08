@@ -1,0 +1,24 @@
+# Keep publisher sources stable for hash-based handoff across Windows/intranet checkouts.
+* -text
+*.html text eol=lf
+*.jsp text eol=lf
+*.jspf text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.cjs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+# Collected originals and received samples must retain their original bytes.
+reference/** -text -eol
+prototype/region/rms/static/css/ui.css -text -eol
+prototype/region/rms/static/css/uiCustom.css -text -eol
+prototype/region/rms/static/images/** -text -eol
+prototype/region/rms/static/notosansKR/** -text -eol
+prototype/region/rms/data/mydata/** -text -eol
+handoff/data/mydata/** -text -eol
+
+prototype/region/rms/demo/data/mydata/** -text -eol
+
+# Automation scripts keep the same bytes across Windows clones.
+*.ps1 text eol=lf

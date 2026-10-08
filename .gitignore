@@ -1,8 +1,29 @@
+# Local runtime, dependencies and generated QA artifacts
 __pycache__/
-*.pyc
+*.py[cod]
 .venv/
+venv/
 node_modules/
 tmp/
 *.log
+*.tmp
+*.zip.tmp
 local/
 /deliverables/
+
+# Local configuration and credentials; examples can be shared deliberately.
+.env
+.env.*
+!.env.example
+/integration/local/
+
+# Per-user editor and OS metadata
+.vs/
+.idea/
+.vscode/*.local.json
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Keep generated runtime bundles, release history and public download ZIPs tracked.
+# They are verified against staged/committed sources by git-upload.ps1.

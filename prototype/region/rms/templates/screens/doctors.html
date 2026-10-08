@@ -1,0 +1,14 @@
+<!-- @template screens/doctors | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#doctors -->
+<form id="rms-doctor-search" class="rms-filter">
+  <div class="rms-fieldgrid">{{{fieldHtml}}}{{{selectHtml}}}{{{selectHtml2}}}{{{selectHtml3}}}{{{selectHtml4}}}{{{selectHtml5}}}{{{selectHtml6}}}</div>
+  <div class="rms-filterfoot">
+  <div class="rms-checkboxes">
+  <label>
+  <input type="checkbox" name="available"{{{value}}}>지원 가능한 기술닥터만</label>
+  <label>
+  <input type="checkbox" name="stale"{{{value2}}}>정보 현행화 대상만</label>
+  </div>
+  <div class="rms-actions">{{{btnHtml}}}<button class="rms-btn rms-btn-primary" type="submit">검색</button>
+  </div>
+  </div>
+  </form>

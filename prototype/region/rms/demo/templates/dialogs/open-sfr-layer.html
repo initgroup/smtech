@@ -1,0 +1,19 @@
+<!-- @template dialogs/open-sfr-layer | @owner publisher | @since RMS-PUB-20261008-01 | presenter: ui/sfr-layer.js#openSfrLayer -->
+<section id="rms-sfr-layer" class="rms-sfr-layer" role="dialog" aria-modal="false" aria-labelledby="rms-sfr-layer-title">
+  <header class="rms-sfr-layerhead">
+  <button type="button" data-sfr-move aria-label="레이어 이동: 드래그 또는 방향키">
+  <span id="rms-sfr-layer-title">
+  </span>
+  <small>제목 드래그로 이동 · 방향키 사용 가능</small>
+  </button>
+  <button type="button" data-sfr-close aria-label="SFR 설명 닫기">×</button>
+  </header>
+  <div class="rms-sfr-layerbody" tabindex="0">
+  </div>
+  <footer class="rms-sfr-layerfoot">현재 화면을 조작하며 비교할 수 있습니다. 가장자리로 크기 조절 · Esc 닫기</footer>
+  <button type="button" class="rms-sfr-resize-x" data-sfr-resize="x" aria-label="가로 크기 조절: 드래그 또는 좌우 방향키">
+  </button>
+  <button type="button" class="rms-sfr-resize-y" data-sfr-resize="y" aria-label="세로 크기 조절: 드래그 또는 위아래 방향키">
+  </button>
+  <button type="button" class="rms-sfr-resize-both" data-sfr-resize="both" aria-label="가로 세로 크기 조절: 드래그 또는 방향키">◢</button>
+  </section>

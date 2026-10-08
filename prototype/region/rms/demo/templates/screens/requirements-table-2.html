@@ -1,0 +1,25 @@
+<!-- @template screens/requirements-table-2 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#requirementsTable -->
+<details id="{{id}}" class="rms-requirement-card" data-sfr-row="{{id2}}" tabindex="-1">
+  <summary class="rms-requirement-summary">
+  <span class="rms-requirement-number">{{id3}}</span>
+  <span class="rms-requirement-intro">
+  <strong>{{name}}</strong>
+  <span class="rms-requirement-core">
+  <b>핵심</b> {{demo}}</span>
+  </span>
+  <span class="rms-requirement-toggle" aria-hidden="true">
+  <span class="rms-when-closed">펼치기</span>
+  <span class="rms-when-open">접기</span>
+  <i>
+  </i>
+  </span>
+  </summary>
+  <div class="rms-requirement-content">
+  <section class="rms-requirement-original">
+  <h3>요구사항 정의 및 세부내용</h3>
+  <p class="rms-sfr-definition">{{definition}}</p>
+  <ul class="rms-sfr-details">{{{itemsHtml}}}</ul>
+  </section>
+  <section class="rms-requirement-implementation" data-sfr-coverage aria-label="시연 반영 내용과 실서비스 후속 구현">{{{requirementCoverageHtml}}}</section>
+  </div>
+  </details>

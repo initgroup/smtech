@@ -1,7 +1,7 @@
 const test=require('node:test');
 const assert=require('node:assert/strict');
-const core=require('../prototype/region/rms/static/js/rms-enhance/core.js');
-const seed=require('../prototype/region/rms/data/seed.json');
+const core=require('../prototype/region/rms/demo/js/demo-store.js');
+const seed=require('../prototype/region/rms/demo/data/seed.json');
 function storage(entries=[]){const values=new Map(entries);return {values,getItem:k=>values.has(k)?values.get(k):null,setItem:(k,v)=>values.set(k,v),removeItem:k=>values.delete(k)};}
 const view={role:'company',route:'documents/A001/4',ui:{doctorFilters:{q:'가상',available:true},statsFilters:{},selected:[],faqQuery:'',faqWork:'',docStatus:'',codeKind:'technology',appId:'A001'}};
 

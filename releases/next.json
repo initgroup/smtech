@@ -1,0 +1,10 @@
+{
+  "title": "Git 속성 변경 후 staged ZIP 검증 오류 수정",
+  "changes": [
+    "원본 CSS·폰트 스타일에 -text -eol 보존 규칙을 명시하여 원본 바이트 유지",
+    "git-upload.ps1에서 기존 추적 파일의 Git 속성 규칙을 다시 반영한 후 전체 stage",
+    "ZIP fingerprint 불일치 시 차이가 나는 파일 경로 출력",
+    "이전 LF index와 원본 CRLF 파일이 공존하는 상황을 재현하여 commit·ZIP 검증 회귀 검사"
+  ],
+  "migration": "업무 기능·데이터 계약은 동일합니다. 프로젝트 루트의 수정된 git-upload.ps1을 기존 옵션으로 다시 실행하세요. 원본 CSS 파일은 편집하거나 줄바꿈을 바꿀 필요가 없습니다."
+}

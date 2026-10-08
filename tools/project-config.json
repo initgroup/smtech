@@ -1,0 +1,21 @@
+{
+  "formatVersion": 1,
+  "webRoot": "prototype/region/rms",
+  "archive": "prototype/region/rms/downloads/smtech-source.zip",
+  "history": "releases/history.json",
+  "build": "tools/build.cjs",
+  "packager": "tools/package_source.py",
+  "server": "tools/serve.py",
+  "serveRoot": "prototype",
+  "servePath": "/region/rms/",
+  "defaultPort": 8080,
+  "pythonCandidates": [
+    ".venv/Scripts/python.exe",
+    ".venv/bin/python",
+    "python",
+    "python3"
+  ],
+  "node": "node",
+  "minimumNodeMajor": 20,
+  "minimumPythonMinor": 6
+}

@@ -1,0 +1,5 @@
+<!-- @template dialogs/release-item | @owner publisher | @since 1.1.0 -->
+<details class="rms-release-item" {{{openAttr}}}>
+  <summary><strong>v{{version}}</strong><span>{{date}} · {{title}}</span><b>{{status}}</b></summary>
+  <div class="rms-release-body"><ul>{{{changesHtml}}}</ul><p class="rms-note">이식 안내: {{migration}}</p>{{{downloadHtml}}}</div>
+</details>

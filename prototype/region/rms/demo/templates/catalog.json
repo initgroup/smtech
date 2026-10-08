@@ -1,0 +1,518 @@
+[
+  {
+    "template": "dialogs/account-help",
+    "source": "demo/templates/dialogs/account-help.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/export-demo",
+    "source": "demo/templates/dialogs/export-demo.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/export-demo-2",
+    "source": "demo/templates/dialogs/export-demo-2.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/init-2",
+    "source": "demo/templates/dialogs/init-2.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "dialogs/init-3",
+    "source": "demo/templates/dialogs/init-3.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/login",
+    "source": "demo/templates/dialogs/login.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml3",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/navigate-sfr",
+    "source": "demo/templates/dialogs/navigate-sfr.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "key",
+        "mode": "text"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/open-sfr-layer",
+    "source": "demo/templates/dialogs/open-sfr-layer.html",
+    "presenters": [
+      "demo/js/sfr-layer.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "dialogs/open-sfr-layer-2",
+    "source": "demo/templates/dialogs/open-sfr-layer-2.html",
+    "presenters": [
+      "demo/js/sfr-layer.js"
+    ],
+    "slots": [
+      {
+        "name": "definition",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "requirementCoverageHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/open-sfr-layer-3",
+    "source": "demo/templates/dialogs/open-sfr-layer-3.html",
+    "presenters": [
+      "demo/js/sfr-layer.js"
+    ],
+    "slots": [
+      {
+        "name": "x",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/release-change",
+    "source": "demo/templates/dialogs/release-change.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "text",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/release-download",
+    "source": "demo/templates/dialogs/release-download.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "url",
+        "mode": "text"
+      },
+      {
+        "name": "version",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/release-item",
+    "source": "demo/templates/dialogs/release-item.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "openAttr",
+        "mode": "html"
+      },
+      {
+        "name": "version",
+        "mode": "text"
+      },
+      {
+        "name": "date",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "status",
+        "mode": "text"
+      },
+      {
+        "name": "changesHtml",
+        "mode": "html"
+      },
+      {
+        "name": "migration",
+        "mode": "text"
+      },
+      {
+        "name": "downloadHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/releases",
+    "source": "demo/templates/dialogs/releases.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/reset-confirm",
+    "source": "demo/templates/dialogs/reset-confirm.html",
+    "presenters": [
+      "demo/js/tools.js"
+    ],
+    "slots": [
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml3",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/guide",
+    "source": "demo/templates/screens/guide.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "requirementsTableHtml",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/guide-2",
+    "source": "demo/templates/screens/guide-2.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "gValue",
+        "mode": "html"
+      },
+      {
+        "name": "gValue2",
+        "mode": "html"
+      },
+      {
+        "name": "gValue3",
+        "mode": "html"
+      },
+      {
+        "name": "gValue4",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirement-coverage",
+    "source": "demo/templates/screens/requirement-coverage.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "demo",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml3",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirement-coverage-2",
+    "source": "demo/templates/screens/requirement-coverage-2.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "route",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "content",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirement-coverage-3",
+    "source": "demo/templates/screens/requirement-coverage-3.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "labelsValue",
+        "mode": "html"
+      },
+      {
+        "name": "itemValue",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirement-coverage-4",
+    "source": "demo/templates/screens/requirement-coverage-4.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "item",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirements-table",
+    "source": "demo/templates/screens/requirements-table.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirements-table-2",
+    "source": "demo/templates/screens/requirements-table-2.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "id2",
+        "mode": "text"
+      },
+      {
+        "name": "id3",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "demo",
+        "mode": "text"
+      },
+      {
+        "name": "definition",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "requirementCoverageHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirements-table-3",
+    "source": "demo/templates/screens/requirements-table-3.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "detail",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/sfr-markup",
+    "source": "demo/templates/screens/sfr-markup.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/sfr-markup-2",
+    "source": "demo/templates/screens/sfr-markup-2.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "active",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "text"
+      },
+      {
+        "name": "value3",
+        "mode": "text"
+      },
+      {
+        "name": "id2",
+        "mode": "text"
+      }
+    ]
+  }
+]

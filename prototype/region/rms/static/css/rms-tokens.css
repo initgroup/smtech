@@ -1,0 +1,9 @@
+/* @owner publisher | @since RMS-PUB-20261008-01
+ * Shared design tokens. Internal overrides belong in integration-owned CSS loaded last. */
+.rms-enhance {
+  --rms-blue:#0068ad;
+  --rms-navy:#173e60;
+  --rms-line:#d9e1e9;
+  --rms-ink:#22364a;
+  --rms-muted:#64768a;
+}

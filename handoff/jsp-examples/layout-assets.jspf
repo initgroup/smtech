@@ -1,0 +1,10 @@
+<%-- INTERNAL STARTER @since RMS-PUB-20261008-01
+     Include in the existing layout, after its core styles. Adjust context asset mappings.
+     JSTL prefix c must be declared by the including JSP.
+     The prototype CSP form-action 'none' is demo-only; configure the server's own CSP for JSP forms.
+--%>
+<link rel="stylesheet" href="<c:url value='/region/rms/static/css/rms-tokens.css' />">
+<link rel="stylesheet" href="<c:url value='/region/rms/static/css/rms-enhance.css' />">
+<link rel="stylesheet" href="<c:url value='/region/rms/static/css/rms-home-refresh.css' />">
+<script src="<c:url value='/region/rms/static/js/rms-enhance/common/layers.js' />" defer></script>
+<script src="<c:url value='/assets/integration/jsp-board.js' />" defer></script>

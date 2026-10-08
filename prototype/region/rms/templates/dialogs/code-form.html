@@ -1,0 +1,10 @@
+<!-- @template dialogs/code-form | @owner publisher | @since RMS-PUB-20261008-01 | presenter: app.js#codeForm -->
+<form id="rms-code-form" data-id="{{id}}" data-kind="{{kind}}">
+  <div class="rms-fieldgrid rms-cols2">{{{fieldHtml}}}{{{selectHtml}}}<label class="rms-checkrow">
+  <input type="checkbox" name="active"{{{value}}}>사용</label>
+  <label class="rms-checkrow">
+  <input type="checkbox" name="visible"{{{value2}}}>노출 (소통 업무유형에 적용)</label>
+  </div>
+  <div class="rms-actions rms-space">{{{bHtml}}}<button class="rms-btn rms-btn-primary" type="submit">저장</button>
+  </div>
+  </form>

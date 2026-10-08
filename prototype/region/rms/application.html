@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>RMS 기업지원사업 관리시스템</title>
+  <!-- 운영 CSS는 원본 그대로 보존. 개선 스타일은 이 파일들 뒤에서 범위 한정 적용합니다. -->
+  <link rel="stylesheet" href="static/notosansKR/css/notosanskr.css">
+  <link rel="stylesheet" href="static/css/ui.css">
+  <link rel="stylesheet" href="static/css/uiCustom.css">
+  <link rel="stylesheet" href="static/css/rms-shell.css">
+  <link rel="stylesheet" href="static/css/rms-tokens.css">
+  <link rel="stylesheet" href="static/css/rms-enhance.css">
+  <link rel="stylesheet" href="static/css/rms-home-refresh.css">
+  <link rel="stylesheet" href="static/css/rms-mydata-report.css">
+  <script src="static/js/rms-enhance/generated/templates.js" defer></script>
+  <script src="static/js/rms-enhance/common/templates.js" defer></script>
+  <script src="static/js/rms-enhance/common/components.js" defer></script>
+  <script src="static/js/rms-enhance/generated/contracts.js" defer></script>
+  <script src="static/js/rms-enhance/common/dom.js" defer></script>
+  <script src="static/js/rms-enhance/common/layers.js" defer></script>
+  <script src="static/js/rms-enhance/common/commands.js" defer></script>
+  <script src="static/js/rms-enhance/data/selectors.js" defer></script>
+  <script src="static/js/rms-enhance/data/board-repository.js" defer></script>
+  <script src="static/js/rms-enhance/data/mydata-repository.js" defer></script>
+  <script src="static/js/rms-enhance/adapters/http.js" defer></script>
+  <script src="static/js/rms-enhance/ui/mydata-report.js" defer></script>
+  <script src="static/js/rms-enhance/presenters/views.js" defer></script>
+  <script src="integration/config.js" defer></script>
+  <script src="static/js/rms-enhance/app.js" defer></script>
+</head>
+<body class="rms-site">
+  <a class="rms-site-skip" href="#rms-main">본문 바로가기</a>
+  <div id="wrap">
+    <header id="header" class="rms-site-header">
+      <a class="rms-site-brand" href="#home" aria-label="RMS 기업지원사업 관리시스템 홈"><img src="static/images/logo_subtop.png" alt="RMS 기업지원사업 관리시스템"></a>
+      <nav class="rms-site-nav" aria-label="주요 업무"><a href="#home">공고</a><a href="#documents">사업신청·관리</a><a href="#doctors">기술닥터</a><a href="#faq">소통관리</a></nav>
+      <div id="rms-user-menu" class="rms-site-user"></div>
+    </header>
+    <main id="body"><div id="rms-enhance-app" class="rms-enhance" aria-busy="true"><div class="rms-loading" role="status">업무 데이터를 불러오는 중입니다.</div></div></main>
+    <footer id="footer" class="rms-site-footer"><b>RMS 기업지원사업 관리시스템</b><span>기업지원사업 안내 · 신청 · 관리</span></footer>
+  </div>
+  <div id="rms-dialog-host" class="rms-enhance"></div><div id="rms-toast" class="rms-enhance rms-toast" role="status" aria-live="polite"></div>
+  <noscript>이 사이트는 JavaScript를 사용합니다. 브라우저에서 JavaScript를 허용해 주세요.</noscript>
+</body>
+</html>

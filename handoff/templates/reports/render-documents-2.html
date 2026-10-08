@@ -1,0 +1,21 @@
+<!-- @template reports/render-documents-2 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: ui/mydata-report.js#renderDocuments -->
+<div class="rms-report-documents">
+  <nav class="rms-report-docnav" aria-label="문서별 수신정보">{{{itemsHtml}}}</nav>
+  <section class="rms-report-document">
+  <div class="rms-report-documenthead">
+  <div>
+  <p class="rms-report-overline">{{provider}}</p>
+  <h3>{{name}}</h3>
+  </div>{{{statusHtml}}}</div>
+  <div class="rms-report-documentmeta">
+  <span>전체 <b>{{{fieldCount}}}</b>
+  </span>
+  <span>수신값 <b>{{{populatedCount}}}</b>
+  </span>
+  <span>공란 <b>{{{emptyCount}}}</b>
+  </span>{{{value}}}</div>
+  <label class="rms-report-filter">수신항목 검색<input type="search" data-report-query placeholder="항목명 또는 수신값 검색" value="{{value2}}">
+  </label>
+  <div data-report-fields>{{{renderFieldsHtml}}}</div>
+  </section>
+  </div>

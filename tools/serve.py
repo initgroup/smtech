@@ -3,8 +3,13 @@ from http.server import SimpleHTTPRequestHandler, HTTPServer
 from socketserver import ThreadingMixIn
 from pathlib import Path
 import argparse
+import json
 
-ROOT = Path(__file__).resolve().parents[1] / 'prototype'
+BASE = Path(__file__).resolve().parents[1]
+CONFIG = json.loads((BASE/'tools/project-config.json').read_text(encoding='utf-8'))
+ROOT = (BASE/CONFIG['serveRoot']).resolve()
+ROOT.relative_to(BASE.resolve())
+ENTRY = CONFIG['servePath']
 
 class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
@@ -25,9 +30,9 @@ class Handler(SimpleHTTPRequestHandler):
         return str(target)
 
     def do_GET(self):
-        if self.path in ('/', '/region/rms'):
+        if self.path in ('/', ENTRY.rstrip('/')):
             self.send_response(302)
-            self.send_header('Location', '/region/rms/')
+            self.send_header('Location', ENTRY)
             self.end_headers()
             return
         super().do_GET()
@@ -39,10 +44,10 @@ class Handler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--port', type=int, default=8080)
+    parser.add_argument('--port', type=int, default=CONFIG['defaultPort'])
     args = parser.parse_args()
     server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
-    print(f'RMS prototype: http://127.0.0.1:{args.port}/region/rms/', flush=True)
+    print(f'RMS prototype: http://127.0.0.1:{args.port}{ENTRY}', flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

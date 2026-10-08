@@ -1,123 +1,94 @@
 param(
     [string]$Message,
-    [string]$RemoteUrl = 'https://github.com/initgroup/smtech.git',
-    [switch]$Push
+    [string]$RemoteUrl,
+    [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9._-]*$')][string]$Remote = 'origin',
+    [switch]$Push,
+    [switch]$Check,
+    [switch]$PrepareOnly
 )
-
 $ErrorActionPreference = 'Stop'
-Set-Location -LiteralPath $PSScriptRoot
-
-function Invoke-Git {
-    param([string[]]$GitArgs)
-    & git @GitArgs
-    if ($LASTEXITCODE -ne 0) {
-        throw "Git command failed: git $($GitArgs -join ' ')"
+. (Join-Path $PSScriptRoot 'tools/project-common.ps1')
+Push-Location -LiteralPath $PSScriptRoot
+$releaseLock = $null
+try {
+    if ($Check -and $PrepareOnly) { throw 'Choose either -Check or -PrepareOnly.' }
+    if (($Check -or $PrepareOnly) -and $Push) { throw '-Push cannot be combined with -Check or -PrepareOnly.' }
+    if (-not (Get-Command git -CommandType Application -ErrorAction SilentlyContinue)) { throw 'Install Git first.' }
+    $config = Get-ProjectConfig -Root $PSScriptRoot
+    $python = Resolve-ProjectPython -Root $PSScriptRoot -Config $config
+    $node = Resolve-ProjectNode -Config $config
+    $build = Resolve-ProjectFile -Root $PSScriptRoot -RelativePath $config.build
+    $packager = Resolve-ProjectFile -Root $PSScriptRoot -RelativePath $config.packager
+    $guard = Resolve-ProjectFile -Root $PSScriptRoot -RelativePath 'tools/git_guard.py'
+    function Invoke-Git {
+        param([string[]]$GitArgs)
+        Invoke-ProjectCommand -Executable 'git' -Arguments $GitArgs -Failure "Git failed: $($GitArgs[0])"
     }
-}
-
-if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-    throw 'Install Git and reopen the terminal first.'
-}
-if (-not (Test-Path -LiteralPath '.git')) {
-    Invoke-Git -GitArgs @('init', '-b', 'main')
-}
-
-# Keep every directory named local out of future commits.
-$ignoreFile = Join-Path $PSScriptRoot '.gitignore'
-$ignoreLines = @(Get-Content -LiteralPath $ignoreFile -ErrorAction SilentlyContinue)
-if ($ignoreLines -notcontains 'local/') {
-    Add-Content -LiteralPath $ignoreFile -Value "`nlocal/" -Encoding UTF8
-}
-if ($ignoreLines -notcontains '/deliverables/') {
-    Add-Content -LiteralPath $ignoreFile -Value "`n/deliverables/" -Encoding UTF8
-}
-
-if ($RemoteUrl) {
+    Invoke-ProjectCommand -Executable $python -Arguments @($guard) -Failure 'Git preflight failed'
     $remotes = @(& git remote)
     if ($LASTEXITCODE -ne 0) { throw 'Cannot read Git remotes.' }
-    if ($remotes -contains 'origin') {
-        $existingUrl = & git remote get-url origin
-        if ($LASTEXITCODE -ne 0) { throw 'Cannot read origin URL.' }
-        if ($existingUrl -ne $RemoteUrl) {
-            throw "origin already points to $existingUrl. Check it before changing the remote."
-        }
-    } else {
-        Invoke-Git -GitArgs @('remote', 'add', 'origin', $RemoteUrl)
+    $remoteExists = $remotes -contains $Remote
+    if ($remoteExists -and $RemoteUrl) {
+        $existing = & git remote get-url $Remote
+        if ($LASTEXITCODE -ne 0) { throw 'Cannot read remote URL.' }
+        if ($existing -ne $RemoteUrl) { throw "Remote '$Remote' already has a different URL. Change it explicitly with git remote set-url." }
     }
-}
-if ($Push) {
-    & git remote get-url origin
-    if ($LASTEXITCODE -ne 0) { throw 'Supply -RemoteUrl for the first push.' }
-}
+    if ($Push -and -not $remoteExists -and -not $RemoteUrl) { throw "No remote '$Remote'. Supply -RemoteUrl or configure it with git remote add." }
+    if ($Check) { Write-Host 'Preflight passed. No build, staging, commit, remote changes or push performed.'; return }
 
-# Resolve the packager; build only after source files have been staged.
-$sourcePackager = Join-Path $PSScriptRoot 'tools/package_source.py'
-if (Test-Path -LiteralPath $sourcePackager) {
-    $projectPython = Join-Path $PSScriptRoot '.venv/Scripts/python.exe'
-    if (-not (Test-Path -LiteralPath $projectPython)) { $projectPython = 'python' }
-}
+    # Prevent concurrent release writers in this checkout. Lock files are ignored.
+    $lockDirectory = Join-Path $PSScriptRoot 'tmp'
+    [void][IO.Directory]::CreateDirectory($lockDirectory)
+    $releaseLock = [IO.File]::Open((Join-Path $lockDirectory 'git-upload.lock'), [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
+    Invoke-ProjectCommand -Executable $node -Arguments @($build) -Failure 'Business/demo build failed'
+    Invoke-ProjectCommand -Executable $python -Arguments @($packager) -Failure 'Developer release preparation failed'
+    if ($PrepareOnly) { Write-Host 'Release prepared. Git index, commits and remotes were left unchanged.'; return }
 
-# Remove private files and generated delivery archives from the index only.
-Invoke-Git -GitArgs @('rm', '-r', '--cached', '--ignore-unmatch', '--', ':(glob)local/**', ':(glob)**/local/**', ':(glob)deliverables/**')
-Invoke-Git -GitArgs @('add', '--all')
-$trackedLocal = @(& git ls-files -- ':(glob)local/**' ':(glob)**/local/**' ':(glob)deliverables/**')
-if ($LASTEXITCODE -ne 0) { throw 'Cannot verify excluded files.' }
-if ($trackedLocal.Count -gt 0) { throw 'Excluded local or deliverables files are still tracked. Aborting.' }
-
-if (Test-Path -LiteralPath $sourcePackager) {
-    & $projectPython $sourcePackager --index
-    if ($LASTEXITCODE -ne 0) { throw 'Cannot build the ZIP from staged Git source.' }
-    Invoke-Git -GitArgs @('add', '--', 'prototype/region/rms/downloads/smtech-source.zip')
-    & $projectPython $sourcePackager --verify-index
-    if ($LASTEXITCODE -ne 0) { throw 'Source ZIP differs from staged Git files. Commit stopped.' }
-}
-
-& git diff --cached --quiet
-$diffExit = $LASTEXITCODE
-if ($diffExit -eq 1) {
-    if ([string]::IsNullOrWhiteSpace($Message)) {
-        $projectName = Split-Path -Leaf $PSScriptRoot
-        $dateStamp = Get-Date -Format 'yyyyMMdd'
-        $messagePrefix = "$projectName-$dateStamp-"
-        $pattern = '^' + [regex]::Escape($messagePrefix) + '(\d+)$'
-        # --all includes locally available branches and remote-tracking refs.
-        # An empty repository has no refs, so skip git log until one exists.
-        $refs = @(& git for-each-ref --format='%(refname)')
-        if ($LASTEXITCODE -ne 0) { throw 'Cannot read Git refs.' }
-        [long]$highest = 0
-        if ($refs.Count -gt 0) {
-            $subjects = @(& git log --all --format=%s)
-            if ($LASTEXITCODE -ne 0) { throw 'Cannot read commit messages.' }
-            foreach ($subject in $subjects) {
-                if ($subject -match $pattern) {
-                    [long]$sequence = 0
-                    if (-not [long]::TryParse($Matches[1], [ref]$sequence)) {
-                        throw 'Commit sequence is too large.'
+    # Honor every current ignore rule, including files tracked before the rule existed.
+    Invoke-ProjectCommand -Executable $python -Arguments @($guard, '--prune-index') -Failure 'Cannot remove ignored files from index'
+    # Attribute changes do not invalidate Git's cached stat information for existing files.
+    # Reapply current clean/text rules before collecting new files; -text -eol assets retain their exact bytes.
+    Invoke-Git -GitArgs @('add', '--renormalize', '--', '.')
+    Invoke-Git -GitArgs @('add', '--all', '--', '.')
+    # Read staged bytes without rebuilding the ZIP or modifying staged contents.
+    Invoke-ProjectCommand -Executable $python -Arguments @($packager, '--verify-index') -Failure 'Staged release verification failed; commit stopped'
+    & git diff --cached --quiet
+    $diffExit = $LASTEXITCODE
+    if ($diffExit -eq 1) {
+        if ([string]::IsNullOrWhiteSpace($Message)) {
+            $projectName = Split-Path -Leaf $PSScriptRoot
+            $dateStamp = Get-Date -Format 'yyyyMMdd'
+            $messagePrefix = "$projectName-$dateStamp-"
+            $pattern = '^' + [regex]::Escape($messagePrefix) + '(\d+)$'
+            [long]$highest = 0
+            $refs = @(& git for-each-ref --format='%(refname)')
+            if ($LASTEXITCODE -ne 0) { throw 'Cannot read Git refs.' }
+            if ($refs.Count -gt 0) {
+                $subjects = @(& git log --all --format=%s)
+                if ($LASTEXITCODE -ne 0) { throw 'Cannot read commit history.' }
+                foreach ($subject in $subjects) {
+                    if ($subject -match $pattern) {
+                        [long]$sequence = 0
+                        if (-not [long]::TryParse($Matches[1], [ref]$sequence)) { throw 'Commit sequence is too large.' }
+                        if ($sequence -gt $highest) { $highest = $sequence }
                     }
-                    if ($sequence -gt $highest) { $highest = $sequence }
                 }
             }
+            if ($highest -eq [long]::MaxValue) { throw 'Commit sequence is exhausted.' }
+            $Message = $messagePrefix + ($highest + 1).ToString('D3')
         }
-        if ($highest -eq [long]::MaxValue) { throw 'Commit sequence is exhausted.' }
-        $Message = $messagePrefix + ($highest + 1).ToString('D3')
         Write-Host "Commit message: $Message"
-    }
-    Invoke-Git -GitArgs @('commit', '-m', $Message)
-} elseif ($diffExit -eq 0) {
-    Write-Host 'No changes to commit.'
-} else {
-    throw 'Cannot inspect staged changes.'
-}
-
-if (Test-Path -LiteralPath $sourcePackager) {
-    & $projectPython $sourcePackager --verify-ref HEAD
-    if ($LASTEXITCODE -ne 0) { throw 'Source ZIP differs from committed Git files. Push stopped.' }
-}
-
-if ($Push) {
-    $branch = & git symbolic-ref --quiet --short HEAD
-    if ($LASTEXITCODE -ne 0) { throw 'Check out a branch before pushing.' }
-    Invoke-Git -GitArgs @('push', '--set-upstream', 'origin', $branch)
-} else {
-    Write-Host 'Local commit complete. Add -Push to upload to origin.'
+        Invoke-Git -GitArgs @('commit', '-m', $Message)
+    } elseif ($diffExit -eq 0) { Write-Host 'No changes to commit.' }
+    else { throw 'Cannot inspect staged changes.' }
+    Invoke-ProjectCommand -Executable $python -Arguments @($packager, '--verify-ref', 'HEAD') -Failure 'Committed release verification failed; push stopped'
+    if ($Push) {
+        if (-not $remoteExists) { Invoke-Git -GitArgs @('remote', 'add', $Remote, $RemoteUrl) }
+        $branch = & git symbolic-ref --quiet --short HEAD
+        if ($LASTEXITCODE -ne 0) { throw 'Check out a branch before pushing.' }
+        Invoke-Git -GitArgs @('push', '--set-upstream', $Remote, $branch)
+    } else { Write-Host 'Local commit complete. Add -Push to upload to the configured remote.' }
+} finally {
+    if ($releaseLock) { $releaseLock.Dispose() }
+    Pop-Location
 }

@@ -1,0 +1,13 @@
+<!-- @template screens/doctor-detail | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#doctorDetail -->
+{{{headHtml}}}{{{tabsHtml}}}<section class="rms-panel">
+  <div class="rms-panelhead">
+  <h2>전문가 기본정보</h2>{{{badgeHtml}}}</div>
+  <div class="rms-note">등록기관: {{owner}}TP · {{{value}}}</div>
+  <dl class="rms-profile">{{{itemsHtml}}}</dl>
+  <div class="rms-actions">
+  <a href="#doctors" class="rms-btn">목록</a>{{{value2}}}{{{btnHtml}}}</div>
+  </section>
+  <section class="rms-panel">
+  <div class="rms-panelhead">
+  <h2>등록정보 변경이력</h2>
+  </div>{{{value3}}}</section>

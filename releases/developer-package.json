@@ -1,0 +1,62 @@
+{
+  "formatVersion": 1,
+  "trees": [
+    {
+      "source": "prototype/region/rms/static",
+      "target": "web/static"
+    },
+    {
+      "source": "prototype/region/rms/templates",
+      "target": "web/templates"
+    },
+    {
+      "source": "prototype/region/rms/contracts",
+      "target": "web/contracts"
+    },
+    {
+      "source": "prototype/region/rms/integration",
+      "target": "web/integration"
+    },
+    {
+      "source": "handoff/jsp-examples",
+      "target": "examples/jsp"
+    },
+    {
+      "source": "handoff/integration-examples",
+      "target": "examples/integration"
+    },
+    {
+      "source": "docs/delivery",
+      "target": ""
+    },
+    {
+      "source": "tools/delivery",
+      "target": "tools"
+    }
+  ],
+  "files": [
+    {
+      "source": "prototype/region/rms/application.html",
+      "target": "web/index.html"
+    },
+    {
+      "source": "prototype/region/rms/asset-manifest.json",
+      "target": "web/asset-manifest.json"
+    }
+  ],
+  "watch": [
+    "prototype/region/rms",
+    "tools",
+    "docs",
+    "tests",
+    "handoff/jsp-examples",
+    "handoff/integration-examples",
+    "releases/developer-package.json",
+    "releases/next.json",
+    "README.md",
+    "git-upload.ps1",
+    ".gitattributes",
+    "start.ps1",
+    ".gitignore"
+  ]
+}

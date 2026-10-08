@@ -1,0 +1,4025 @@
+[
+  {
+    "template": "dialogs/checks",
+    "source": "templates/dialogs/checks.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/checks-2",
+    "source": "templates/dialogs/checks-2.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "name2",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/code-delete",
+    "source": "templates/dialogs/code-delete.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/code-form",
+    "source": "templates/dialogs/code-form.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "kind",
+        "mode": "text"
+      },
+      {
+        "name": "fieldHtml",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/compare",
+    "source": "templates/dialogs/compare.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/compare-2",
+    "source": "templates/dialogs/compare-2.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "fValue",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/compare-3",
+    "source": "templates/dialogs/compare-3.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/doc-detail",
+    "source": "templates/dialogs/doc-detail.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "provider",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "text"
+      },
+      {
+        "name": "value4",
+        "mode": "html"
+      },
+      {
+        "name": "value5",
+        "mode": "html"
+      },
+      {
+        "name": "value6",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/doc-detail-2",
+    "source": "templates/dialogs/doc-detail-2.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "bundleId",
+        "mode": "text"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/doc-detail-3",
+    "source": "templates/dialogs/doc-detail-3.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "inputAddress",
+        "mode": "text"
+      },
+      {
+        "name": "address",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/doc-detail-4",
+    "source": "templates/dialogs/doc-detail-4.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/doc-detail-5",
+    "source": "templates/dialogs/doc-detail-5.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/doc-detail-6",
+    "source": "templates/dialogs/doc-detail-6.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "replaceHtml",
+        "mode": "text"
+      },
+      {
+        "name": "action",
+        "mode": "text"
+      },
+      {
+        "name": "reason",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/doc-type-edit",
+    "source": "templates/dialogs/doc-type-edit.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "fieldHtml",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/doctor-form",
+    "source": "templates/dialogs/doctor-form.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "selectHtml",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml4",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "checksHtml",
+        "mode": "html"
+      },
+      {
+        "name": "checksHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "checksHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "checksHtml4",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml4",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml5",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/init",
+    "source": "templates/dialogs/init.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "itemValue",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/init-4",
+    "source": "templates/dialogs/init-4.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "message",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/match-progress",
+    "source": "templates/dialogs/match-progress.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/match-request",
+    "source": "templates/dialogs/match-request.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "organization",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/modal",
+    "source": "templates/dialogs/modal.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "body",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-detail",
+    "source": "templates/dialogs/program-detail.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "intro",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value4",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-detail-2",
+    "source": "templates/dialogs/program-detail-2.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "fValue",
+        "mode": "text"
+      },
+      {
+        "name": "fValue2",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-detail-3",
+    "source": "templates/dialogs/program-detail-3.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "target",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "description",
+        "mode": "text"
+      },
+      {
+        "name": "toLocaleStringHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-detail-4",
+    "source": "templates/dialogs/program-detail-4.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "heading",
+        "mode": "text"
+      },
+      {
+        "name": "body",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-detail-5",
+    "source": "templates/dialogs/program-detail-5.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "name",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-detail-6",
+    "source": "templates/dialogs/program-detail-6.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-detail-7",
+    "source": "templates/dialogs/program-detail-7.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "v",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-detail-8",
+    "source": "templates/dialogs/program-detail-8.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "toFixedHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-form",
+    "source": "templates/dialogs/program-form.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "checksHtml",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-form-2",
+    "source": "templates/dialogs/program-form-2.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "labelsValue",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "kind",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-input",
+    "source": "templates/dialogs/program-input.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "key",
+        "mode": "text"
+      },
+      {
+        "name": "key",
+        "mode": "text"
+      },
+      {
+        "name": "field",
+        "mode": "text"
+      },
+      {
+        "name": "type",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-row",
+    "source": "templates/dialogs/program-row.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "kind",
+        "mode": "html"
+      },
+      {
+        "name": "id",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-row-2",
+    "source": "templates/dialogs/program-row-2.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "key",
+        "mode": "html"
+      },
+      {
+        "name": "fValue",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/program-row-3",
+    "source": "templates/dialogs/program-row-3.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "key",
+        "mode": "html"
+      },
+      {
+        "name": "key2",
+        "mode": "html"
+      },
+      {
+        "name": "fValue",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/question",
+    "source": "templates/dialogs/question.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "labelHtml",
+        "mode": "text"
+      },
+      {
+        "name": "date",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/receipt-report",
+    "source": "templates/dialogs/receipt-report.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "dialogs/render",
+    "source": "templates/dialogs/render.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "dialogs/render-2",
+    "source": "templates/dialogs/render-2.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "namesValue",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/render-3",
+    "source": "templates/dialogs/render-3.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "dialogs/submit",
+    "source": "templates/dialogs/submit.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "bHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/supplement",
+    "source": "templates/dialogs/supplement.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "reports/button",
+    "source": "templates/reports/button.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "attribute",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "reports/kv",
+    "source": "templates/reports/kv.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-documents",
+    "source": "templates/reports/render-documents.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "reports/render-documents-2",
+    "source": "templates/reports/render-documents-2.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "provider",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "statusHtml",
+        "mode": "html"
+      },
+      {
+        "name": "fieldCount",
+        "mode": "html"
+      },
+      {
+        "name": "populatedCount",
+        "mode": "html"
+      },
+      {
+        "name": "emptyCount",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "text"
+      },
+      {
+        "name": "renderFieldsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-documents-3",
+    "source": "templates/reports/render-documents-3.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "code",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "padStartHtml",
+        "mode": "html"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "populatedCount",
+        "mode": "html"
+      },
+      {
+        "name": "fieldCount",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-documents-4",
+    "source": "templates/reports/render-documents-4.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "resultCode",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-fields",
+    "source": "templates/reports/render-fields.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "reports/render-fields-2",
+    "source": "templates/reports/render-fields-2.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-fields-3",
+    "source": "templates/reports/render-fields-3.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "tag",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-index",
+    "source": "templates/reports/render-index.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-index-2",
+    "source": "templates/reports/render-index-2.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "audience",
+        "mode": "text"
+      },
+      {
+        "name": "purpose",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-report",
+    "source": "templates/reports/render-report.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "reports/render-report-2",
+    "source": "templates/reports/render-report-2.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "renderIndexHtml",
+        "mode": "html"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "fileName",
+        "mode": "text"
+      },
+      {
+        "name": "kvHtml",
+        "mode": "html"
+      },
+      {
+        "name": "kvHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "kvHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "kvHtml4",
+        "mode": "html"
+      },
+      {
+        "name": "kvHtml5",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "id2",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-report-3",
+    "source": "templates/reports/render-report-3.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "originalPath",
+        "mode": "text"
+      },
+      {
+        "name": "xml",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-summary",
+    "source": "templates/reports/render-summary.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "length",
+        "mode": "html"
+      },
+      {
+        "name": "populatedCount",
+        "mode": "html"
+      },
+      {
+        "name": "emptyCount",
+        "mode": "html"
+      },
+      {
+        "name": "fieldCount",
+        "mode": "html"
+      },
+      {
+        "name": "roundHtml",
+        "mode": "html"
+      },
+      {
+        "name": "kvHtml",
+        "mode": "html"
+      },
+      {
+        "name": "kvHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "kvHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "kvHtml4",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-summary-2",
+    "source": "templates/reports/render-summary-2.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "code",
+        "mode": "text"
+      },
+      {
+        "name": "padStartHtml",
+        "mode": "html"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "provider",
+        "mode": "text"
+      },
+      {
+        "name": "statusHtml",
+        "mode": "html"
+      },
+      {
+        "name": "populatedCount",
+        "mode": "html"
+      },
+      {
+        "name": "fieldCount",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/render-summary-3",
+    "source": "templates/reports/render-summary-3.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "reports/status",
+    "source": "templates/reports/status.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/mydata-report.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/board-detail",
+    "source": "templates/screens/board-detail.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemValue",
+        "mode": "text"
+      },
+      {
+        "name": "category",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "date",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "body",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      },
+      {
+        "name": "type",
+        "mode": "text"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/board-detail-2",
+    "source": "templates/screens/board-detail-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/board-detail-3",
+    "source": "templates/screens/board-detail-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "homeIconHtml",
+        "mode": "html"
+      },
+      {
+        "name": "url",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "name2",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/board-rows",
+    "source": "templates/screens/board-rows.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "date",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/board-rows-2",
+    "source": "templates/screens/board-rows-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "status",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/board-rows-3",
+    "source": "templates/screens/board-rows-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/boards",
+    "source": "templates/screens/boards.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "type",
+        "mode": "html"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "q",
+        "mode": "text"
+      },
+      {
+        "name": "length",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "tableHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/boards-2",
+    "source": "templates/screens/boards-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "t",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "itemValue",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/boards-3",
+    "source": "templates/screens/boards-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "category",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      },
+      {
+        "name": "date",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/boards-4",
+    "source": "templates/screens/boards-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/doctor-detail",
+    "source": "templates/screens/doctor-detail.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "tabsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "owner",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/doctor-detail-2",
+    "source": "templates/screens/doctor-detail-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "fValue",
+        "mode": "html"
+      },
+      {
+        "name": "fValue2",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/doctor-detail-3",
+    "source": "templates/screens/doctor-detail-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "replaceHtml",
+        "mode": "text"
+      },
+      {
+        "name": "by",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/doctor-detail-4",
+    "source": "templates/screens/doctor-detail-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/doctors",
+    "source": "templates/screens/doctors.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "fieldHtml",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml4",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml5",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml6",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/doctors-2",
+    "source": "templates/screens/doctors-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "id2",
+        "mode": "text"
+      },
+      {
+        "name": "name2",
+        "mode": "text"
+      },
+      {
+        "name": "year",
+        "mode": "text"
+      },
+      {
+        "name": "organization",
+        "mode": "text"
+      },
+      {
+        "name": "nameHtml",
+        "mode": "html"
+      },
+      {
+        "name": "owner",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "acquiredTechnology",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "sliceHtml",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/doctors-3",
+    "source": "templates/screens/doctors-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/doctors-4",
+    "source": "templates/screens/doctors-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "tabsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "metricHtml",
+        "mode": "html"
+      },
+      {
+        "name": "metricHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "metricHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "metricHtml4",
+        "mode": "html"
+      },
+      {
+        "name": "form",
+        "mode": "html"
+      },
+      {
+        "name": "length",
+        "mode": "html"
+      },
+      {
+        "name": "size",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents",
+    "source": "templates/screens/documents.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "emptyHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-10",
+    "source": "templates/screens/documents-10.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "top",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "companyName",
+        "mode": "text"
+      },
+      {
+        "name": "representative",
+        "mode": "text"
+      },
+      {
+        "name": "inputAddress",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "tableHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-11",
+    "source": "templates/screens/documents-11.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-12",
+    "source": "templates/screens/documents-12.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-13",
+    "source": "templates/screens/documents-13.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "k",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "length",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-14",
+    "source": "templates/screens/documents-14.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "provider",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value4",
+        "mode": "html"
+      },
+      {
+        "name": "value5",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value6",
+        "mode": "html"
+      },
+      {
+        "name": "value7",
+        "mode": "html"
+      },
+      {
+        "name": "value8",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-15",
+    "source": "templates/screens/documents-15.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/documents-16",
+    "source": "templates/screens/documents-16.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "reason",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-17",
+    "source": "templates/screens/documents-17.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "name",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-2",
+    "source": "templates/screens/documents-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-3",
+    "source": "templates/screens/documents-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      },
+      {
+        "name": "value4",
+        "mode": "html"
+      },
+      {
+        "name": "label",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-4",
+    "source": "templates/screens/documents-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "top",
+        "mode": "html"
+      },
+      {
+        "name": "companyName",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-5",
+    "source": "templates/screens/documents-5.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "region",
+        "mode": "text"
+      },
+      {
+        "name": "category",
+        "mode": "text"
+      },
+      {
+        "name": "start",
+        "mode": "text"
+      },
+      {
+        "name": "end",
+        "mode": "text"
+      },
+      {
+        "name": "end2",
+        "mode": "text"
+      },
+      {
+        "name": "deadlineTime",
+        "mode": "text"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-6",
+    "source": "templates/screens/documents-6.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "top",
+        "mode": "html"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "region",
+        "mode": "text"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value4",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-7",
+    "source": "templates/screens/documents-7.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/documents-8",
+    "source": "templates/screens/documents-8.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "top",
+        "mode": "html"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "companyName",
+        "mode": "text"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "tableHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/documents-9",
+    "source": "templates/screens/documents-9.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "text"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/faq",
+    "source": "templates/screens/faq.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "tabsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml",
+        "mode": "html"
+      },
+      {
+        "name": "faqQuery",
+        "mode": "text"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/faq-2",
+    "source": "templates/screens/faq-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "faqListHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/faq-list",
+    "source": "templates/screens/faq-list.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/faq-list-2",
+    "source": "templates/screens/faq-list-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "answer",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/global-search",
+    "source": "templates/screens/global-search.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "homeIconHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/head",
+    "source": "templates/screens/head.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/head-2",
+    "source": "templates/screens/head-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "description",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/home",
+    "source": "templates/screens/home.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "globalSearchHtml",
+        "mode": "html"
+      },
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "homeMainBlocksHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-boards",
+    "source": "templates/screens/home-boards.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-boards-2",
+    "source": "templates/screens/home-boards-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemValue",
+        "mode": "text"
+      },
+      {
+        "name": "type",
+        "mode": "html"
+      },
+      {
+        "name": "itemValue2",
+        "mode": "text"
+      },
+      {
+        "name": "homeIconHtml",
+        "mode": "html"
+      },
+      {
+        "name": "boardRowsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-icon",
+    "source": "templates/screens/home-icon.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-10",
+    "source": "templates/screens/home-icon-10.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-11",
+    "source": "templates/screens/home-icon-11.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-12",
+    "source": "templates/screens/home-icon-12.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-13",
+    "source": "templates/screens/home-icon-13.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-14",
+    "source": "templates/screens/home-icon-14.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-icon-2",
+    "source": "templates/screens/home-icon-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-3",
+    "source": "templates/screens/home-icon-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-4",
+    "source": "templates/screens/home-icon-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-5",
+    "source": "templates/screens/home-icon-5.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-6",
+    "source": "templates/screens/home-icon-6.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-7",
+    "source": "templates/screens/home-icon-7.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-8",
+    "source": "templates/screens/home-icon-8.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-icon-9",
+    "source": "templates/screens/home-icon-9.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-login",
+    "source": "templates/screens/home-login.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "value3",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "value4",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-login-2",
+    "source": "templates/screens/home-login-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-login-3",
+    "source": "templates/screens/home-login-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "displayName",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-login-4",
+    "source": "templates/screens/home-login-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-login-5",
+    "source": "templates/screens/home-login-5.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-login-6",
+    "source": "templates/screens/home-login-6.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-login-7",
+    "source": "templates/screens/home-login-7.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/home-main-blocks",
+    "source": "templates/screens/home-main-blocks.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "programSectionHtml",
+        "mode": "html"
+      },
+      {
+        "name": "homeLoginHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-main-blocks-2",
+    "source": "templates/screens/home-main-blocks-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "homeLoginHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-main-blocks-3",
+    "source": "templates/screens/home-main-blocks-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "homeShortcutsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "homeLoginHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-main-blocks-4",
+    "source": "templates/screens/home-main-blocks-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-shortcuts",
+    "source": "templates/screens/home-shortcuts.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-shortcuts-2",
+    "source": "templates/screens/home-shortcuts-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "xValue",
+        "mode": "html"
+      },
+      {
+        "name": "homeIconHtml",
+        "mode": "html"
+      },
+      {
+        "name": "xValue2",
+        "mode": "html"
+      },
+      {
+        "name": "homeIconHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/home-two",
+    "source": "templates/screens/home-two.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "globalSearchHtml",
+        "mode": "html"
+      },
+      {
+        "name": "headHtml",
+        "mode": "html"
+      },
+      {
+        "name": "homeMainBlocksHtml",
+        "mode": "html"
+      },
+      {
+        "name": "homeIconHtml",
+        "mode": "html"
+      },
+      {
+        "name": "homeIconHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "homeIconHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "homeIconHtml4",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage",
+    "source": "templates/screens/manage.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "tableHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage-10",
+    "source": "templates/screens/manage-10.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "nameHtml",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage-2",
+    "source": "templates/screens/manage-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage-3",
+    "source": "templates/screens/manage-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage-4",
+    "source": "templates/screens/manage-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/manage-5",
+    "source": "templates/screens/manage-5.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "id",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage-6",
+    "source": "templates/screens/manage-6.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "tableHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage-7",
+    "source": "templates/screens/manage-7.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "html"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "provider",
+        "mode": "text"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage-8",
+    "source": "templates/screens/manage-8.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "tableHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/manage-9",
+    "source": "templates/screens/manage-9.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "xValue",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "xValue2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/matches",
+    "source": "templates/screens/matches.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/matches-2",
+    "source": "templates/screens/matches-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "date",
+        "mode": "text"
+      },
+      {
+        "name": "companyName",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "owner",
+        "mode": "text"
+      },
+      {
+        "name": "request",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "badgeHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/matches-3",
+    "source": "templates/screens/matches-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "result",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/metric",
+    "source": "templates/screens/metric.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "count",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/program-layout",
+    "source": "templates/screens/program-layout.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/program-section",
+    "source": "templates/screens/program-section.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "length",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "programLayoutHtml",
+        "mode": "html"
+      },
+      {
+        "name": "contentHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/program-section-3",
+    "source": "templates/screens/program-section-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/program-section-4",
+    "source": "templates/screens/program-section-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "region",
+        "mode": "text"
+      },
+      {
+        "name": "category",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "start",
+        "mode": "text"
+      },
+      {
+        "name": "end",
+        "mode": "text"
+      },
+      {
+        "name": "deadlineTime",
+        "mode": "text"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/program-section-5",
+    "source": "templates/screens/program-section-5.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/program-section-6",
+    "source": "templates/screens/program-section-6.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "region",
+        "mode": "text"
+      },
+      {
+        "name": "category",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "start",
+        "mode": "text"
+      },
+      {
+        "name": "end",
+        "mode": "text"
+      },
+      {
+        "name": "end2",
+        "mode": "text"
+      },
+      {
+        "name": "deadlineTime",
+        "mode": "text"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/question-table",
+    "source": "templates/screens/question-table.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "nameHtml",
+        "mode": "html"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "date",
+        "mode": "text"
+      },
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/receipt-page",
+    "source": "templates/screens/receipt-page.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "headHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/receipt-panel",
+    "source": "templates/screens/receipt-panel.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "bundleId",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "value2",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/receipt-panel-2",
+    "source": "templates/screens/receipt-panel-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/receipt-panel-3",
+    "source": "templates/screens/receipt-panel-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/search",
+    "source": "templates/screens/search.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "length",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/search-2",
+    "source": "templates/screens/search-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "badgeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "region",
+        "mode": "text"
+      },
+      {
+        "name": "category",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "start",
+        "mode": "text"
+      },
+      {
+        "name": "end",
+        "mode": "text"
+      },
+      {
+        "name": "deadlineTime",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/search-3",
+    "source": "templates/screens/search-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "length",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/search-4",
+    "source": "templates/screens/search-4.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemValue",
+        "mode": "text"
+      },
+      {
+        "name": "category",
+        "mode": "text"
+      },
+      {
+        "name": "date",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "title",
+        "mode": "text"
+      },
+      {
+        "name": "sliceHtml",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/search-5",
+    "source": "templates/screens/search-5.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "length",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/search-6",
+    "source": "templates/screens/search-6.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "organization",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "acquiredTechnology",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/stats",
+    "source": "templates/screens/stats.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "selectHtml",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "selectHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml",
+        "mode": "html"
+      },
+      {
+        "name": "fieldHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "metricHtml",
+        "mode": "html"
+      },
+      {
+        "name": "metricHtml2",
+        "mode": "html"
+      },
+      {
+        "name": "metricHtml3",
+        "mode": "html"
+      },
+      {
+        "name": "metricHtml4",
+        "mode": "html"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "btnHtml",
+        "mode": "html"
+      },
+      {
+        "name": "tableHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/stats-2",
+    "source": "templates/screens/stats-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "region",
+        "mode": "text"
+      },
+      {
+        "name": "registered",
+        "mode": "html"
+      },
+      {
+        "name": "maxHtml",
+        "mode": "html"
+      },
+      {
+        "name": "region2",
+        "mode": "text"
+      },
+      {
+        "name": "registered2",
+        "mode": "html"
+      },
+      {
+        "name": "registered3",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/stats-3",
+    "source": "templates/screens/stats-3.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "region",
+        "mode": "text"
+      },
+      {
+        "name": "registered",
+        "mode": "html"
+      },
+      {
+        "name": "active",
+        "mode": "html"
+      },
+      {
+        "name": "matched",
+        "mode": "html"
+      },
+      {
+        "name": "completed",
+        "mode": "html"
+      },
+      {
+        "name": "cross",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/tabs",
+    "source": "templates/screens/tabs.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/tabs-2",
+    "source": "templates/screens/tabs-2.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "xValue",
+        "mode": "html"
+      },
+      {
+        "name": "value",
+        "mode": "html"
+      },
+      {
+        "name": "xValue2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "shared/badge",
+    "source": "templates/shared/badge.html",
+    "presenters": [
+      "static/js/rms-enhance/common/components.js"
+    ],
+    "slots": [
+      {
+        "name": "color",
+        "mode": "text"
+      },
+      {
+        "name": "text",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "shared/button",
+    "source": "templates/shared/button.html",
+    "presenters": [
+      "static/js/rms-enhance/common/components.js"
+    ],
+    "slots": [
+      {
+        "name": "classes",
+        "mode": "text"
+      },
+      {
+        "name": "action",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "text",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "shared/empty",
+    "source": "templates/shared/empty.html",
+    "presenters": [
+      "static/js/rms-enhance/common/components.js"
+    ],
+    "slots": [
+      {
+        "name": "message",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "shared/field",
+    "source": "templates/shared/field.html",
+    "presenters": [
+      "static/js/rms-enhance/common/components.js"
+    ],
+    "slots": [
+      {
+        "name": "classes",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "type",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "shared/option",
+    "source": "templates/shared/option.html",
+    "presenters": [
+      "static/js/rms-enhance/common/components.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "selected",
+        "mode": "html"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "shared/select",
+    "source": "templates/shared/select.html",
+    "presenters": [
+      "static/js/rms-enhance/common/components.js"
+    ],
+    "slots": [
+      {
+        "name": "classes",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "name",
+        "mode": "text"
+      },
+      {
+        "name": "optionsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "shared/table",
+    "source": "templates/shared/table.html",
+    "presenters": [
+      "static/js/rms-enhance/common/components.js"
+    ],
+    "slots": [
+      {
+        "name": "caption",
+        "mode": "text"
+      },
+      {
+        "name": "classes",
+        "mode": "text"
+      },
+      {
+        "name": "caption",
+        "mode": "text"
+      },
+      {
+        "name": "headingsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "rowsHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "shared/table-heading",
+    "source": "templates/shared/table-heading.html",
+    "presenters": [
+      "static/js/rms-enhance/common/components.js"
+    ],
+    "slots": [
+      {
+        "name": "contentHtml",
+        "mode": "html"
+      }
+    ]
+  }
+]
