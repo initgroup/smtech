@@ -8,7 +8,7 @@ const implementation = JSON.parse(fs.readFileSync(path.join(base, 'docs/sfr-impl
 const implementationById = new Map(implementation.requirements.map(r => [r.id, r]));
 if (implementationById.size !== 15 || implementation.requirements.length !== 15) throw Error('Incomplete SFR implementation notes');
 for (const [id, menu] of Object.entries(implementation.menus)) {
-  if (!/^[a-z-]+$/.test(id) || !menu.label || !['home','doctors','matches','stats','manage','manage/home','manage/documents','documents','faq','questions'].includes(menu.route) || !Array.isArray(menu.roles) || menu.roles.some(role => !['company','tp','admin'].includes(role)) || (menu.step && !['1','2','3','4'].includes(menu.step)) || (menu.record && menu.record !== 'doctor') || (menu.codeKind && !['technology','work'].includes(menu.codeKind))) throw Error('Invalid SFR menu: ' + id);
+  if (!/^[a-z-]+$/.test(id) || !menu.label || !['home','doctors','matches','stats','manage','manage/home','manage/documents','documents','faq','questions','mydata'].includes(menu.route) || !Array.isArray(menu.roles) || menu.roles.some(role => !['company','tp','admin'].includes(role)) || (menu.step && !['1','2','3','4'].includes(menu.step)) || (menu.record && menu.record !== 'doctor') || (menu.codeKind && !['technology','work'].includes(menu.codeKind))) throw Error('Invalid SFR menu: ' + id);
 }
 const coverage = new Map(doc.split(/\r?\n/).filter(line => /^\| SFR-\d\d \|/.test(line)).map(line => {
   const columns = line.split('|').map(s => s.trim());

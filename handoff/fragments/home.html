@@ -1,5 +1,17 @@
 <!-- Publisher fragment generated from RMSViews. Synthetic data; attach your controller handlers to data-action. -->
 <section class="rms-enhance" data-rms-screen="home">
+<div class="rms-home-refresh rms-home-concept1">
+<form id="rms-global-search" class="rms-global-search" role="search">
+<label for="rms-global-query">통합검색</label>
+<input id="rms-global-query" name="q" value="" placeholder="사업공고, 기술닥터, 공지사항 등 필요한 정보를 검색하세요" autocomplete="off">
+<button class="rms-btn rms-btn-primary" type="submit">
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<circle cx="10.5" cy="10.5" r="6.5"/>
+<path d="m16 16 5 5"/>
+</svg>
+<span>검색</span>
+</button>
+</form>
 <div class="rms-pagehead">
 <div>
 <p class="rms-eyebrow">REGIONAL MANAGEMENT SYSTEM</p>
@@ -7,71 +19,98 @@
 <p class="rms-subtitle">사업 신청부터 기술애로 해결까지, 필요한 업무를 한곳에서 확인하세요.</p>
 </div>
 <div class="rms-pagecontext">
-<div class="rms-home-tools">
-<button type="button" class="rms-mydata-launch" data-action="mydata-open" aria-haspopup="dialog">
-<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-<rect x="5" y="4" width="14" height="17" rx="2"/>
-<path d="M9 4V2h6v2M8 10l2 2 5-5M8 16h8"/>
-</svg>
-<span>공공 마이데이터 API 연계</span>
-<small>샘플</small>
-</button>
-<a class="rms-design-switch" href="#home/2">메인 시안 2 보기 <svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-<path d="M3 7h16l-4-4M21 17H5l4 4M19 7l-4 4M5 17l4-4"/>
-</svg>
-</a>
-</div>
 <p class="rms-breadcrumb">홈 &nbsp;›&nbsp; 사업공고</p>
 </div>
 </div>
-<div class="rms-homegrid">
+<div class="rms-home-main-blocks">
+<div class="rms-home-feature">
 <div>
-<section class="rms-panel">
+<section id="rms-home2-programs" class="rms-public-programs rms-panel" tabindex="-1">
 <div class="rms-panelhead">
+<div class="rms-section-title">
 <h2>모집 중인 사업공고</h2>
-<span class="rms-count">전체 <strong>3</strong>건</span>
+<span>전체 <b>3</b>건</span>
 </div>
-<div class="rms-announcements">
-<article class="rms-announcement">
+<div class="rms-program-controls">
+<div class="rms-layout-switch" role="group" aria-label="사업공고 보기 방식">
+<button type="button" data-action="program-layout" data-id="cards" aria-pressed="true">
+<span aria-hidden="true">▦</span> 박스형</button>
+<button type="button" data-action="program-layout" data-id="list" aria-pressed="false">
+<span aria-hidden="true">☰</span> 목록형</button>
+</div>
+</div>
+</div>
+<div class="rms-program-cards">
+<article>
+<div class="rms-program-card-meta">
+<span class="rms-badge rms-badge-green">모집중</span>
+<span>충남</span>
+</div>
+<p class="rms-program-category">사업화 지원</p>
+<h3>
+<button type="button" data-action="program" data-id="B001">2026년 지역기업 성장사다리 지원사업</button>
+</h3>
+<dl>
 <div>
-<span class="rms-badge rms-badge-green">모집중</span> <span class="rms-muted">충남</span>
+<dt>접수기간</dt>
+<dd>2026-09-01 ~ 2026-09-30</dd>
 </div>
-<h3>2026년 지역기업 성장사다리 지원사업</h3>
-<p>사업화 지원</p>
-<p>
-<strong>접수기간</strong> 2026-09-01 ~ 2026-09-30</p>
-<p class="rms-program-deadline">
-<strong>마감</strong> 2026-09-30 18:00</p>
+<div>
+<dt>접수마감</dt>
+<dd>2026-09-30 <strong>18:00</strong>
+</dd>
+</div>
+</dl>
 <div class="rms-actions">
 <button type="button" class="rms-btn rms-btn-small" data-action="program" data-id="B001">상세보기</button>
 <button type="button" class="rms-btn rms-btn-small rms-btn-primary" data-action="apply" data-id="B001">신청하기</button>
 </div>
 </article>
-<article class="rms-announcement">
-<div>
-<span class="rms-badge rms-badge-green">모집중</span> <span class="rms-muted">대전</span>
+<article>
+<div class="rms-program-card-meta">
+<span class="rms-badge rms-badge-green">모집중</span>
+<span>대전</span>
 </div>
-<h3>2026년 스마트공정 전환 기술지원사업</h3>
-<p>기술 지원</p>
-<p>
-<strong>접수기간</strong> 2026-09-03 ~ 2026-09-18</p>
-<p class="rms-program-deadline">
-<strong>마감</strong> 2026-09-18 18:00</p>
+<p class="rms-program-category">기술 지원</p>
+<h3>
+<button type="button" data-action="program" data-id="B002">2026년 스마트공정 전환 기술지원사업</button>
+</h3>
+<dl>
+<div>
+<dt>접수기간</dt>
+<dd>2026-09-03 ~ 2026-09-18</dd>
+</div>
+<div>
+<dt>접수마감</dt>
+<dd>2026-09-18 <strong>18:00</strong>
+</dd>
+</div>
+</dl>
 <div class="rms-actions">
 <button type="button" class="rms-btn rms-btn-small" data-action="program" data-id="B002">상세보기</button>
 <button type="button" class="rms-btn rms-btn-small rms-btn-primary" data-action="apply" data-id="B002">신청하기</button>
 </div>
 </article>
-<article class="rms-announcement">
-<div>
-<span class="rms-badge rms-badge-green">모집중</span> <span class="rms-muted">충북</span>
+<article>
+<div class="rms-program-card-meta">
+<span class="rms-badge rms-badge-green">모집중</span>
+<span>충북</span>
 </div>
-<h3>지역 바이오기업 품질·인증 지원사업</h3>
-<p>품질·인증</p>
-<p>
-<strong>접수기간</strong> 2026-09-02 ~ 2026-09-25</p>
-<p class="rms-program-deadline">
-<strong>마감</strong> 2026-09-25 18:00</p>
+<p class="rms-program-category">품질·인증</p>
+<h3>
+<button type="button" data-action="program" data-id="B003">지역 바이오기업 품질·인증 지원사업</button>
+</h3>
+<dl>
+<div>
+<dt>접수기간</dt>
+<dd>2026-09-02 ~ 2026-09-25</dd>
+</div>
+<div>
+<dt>접수마감</dt>
+<dd>2026-09-25 <strong>18:00</strong>
+</dd>
+</div>
+</dl>
 <div class="rms-actions">
 <button type="button" class="rms-btn rms-btn-small" data-action="program" data-id="B003">상세보기</button>
 <button type="button" class="rms-btn rms-btn-small rms-btn-primary" data-action="apply" data-id="B003">신청하기</button>
@@ -79,119 +118,276 @@
 </article>
 </div>
 </section>
-<section class="rms-panel">
-<div class="rms-panelhead">
-<h2>무엇을 도와드릴까요?</h2>
-<a href="#faq">FAQ 더보기 ›</a>
+<nav class="rms-public-shortcuts" aria-label="자주 찾는 서비스">
+<a href="#doctors">
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="M5 3v6a5 5 0 0 0 10 0V3M3 3h4M13 3h4M10 14v2a5 5 0 0 0 10 0v-3"/>
+<circle cx="20" cy="10" r="2"/>
+</svg>
+<span>기술닥터 찾기</span>
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="m9 5 7 7-7 7"/>
+</svg>
+</a>
+<a href="#documents">
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<rect x="5" y="4" width="14" height="17" rx="2"/>
+<path d="M9 4V2h6v2M8 10l2 2 5-5M8 16h8"/>
+</svg>
+<span>서류제출현황</span>
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="m9 5 7 7-7 7"/>
+</svg>
+</a>
+<a href="#matches">
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="M3 7h16l-4-4M21 17H5l4 4M19 7l-4 4M5 17l4-4"/>
+</svg>
+<span>매칭·지원 현황</span>
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="m9 5 7 7-7 7"/>
+</svg>
+</a>
+<a href="#guide">
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1zM12 5v15"/>
+</svg>
+<span>이용 가이드</span>
+<svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="m9 5 7 7-7 7"/>
+</svg>
+</a>
+</nav>
 </div>
-<form id="rms-faq-search" class="rms-searchbar">
-<label class="rms-muted" for="rms-home-query">FAQ 검색</label>
-<input id="rms-home-query" name="q" placeholder="궁금한 내용을 검색해 주세요" aria-label="궁금한 내용">
-<button class="rms-btn rms-btn-primary" type="submit">검색</button>
-</form>
-<div class="rms-chips">
-<button type="button" class="rms-chip" data-action="faq-work" data-id="W01">로그인</button>
-<button type="button" class="rms-chip" data-action="faq-work" data-id="W02">사업신청</button>
-<button type="button" class="rms-chip" data-action="faq-work" data-id="W03">사업관리</button>
-<button type="button" class="rms-chip" data-action="faq-work" data-id="W04">기술닥터</button>
-</div>
-<div class="rms-faqs">
-<details>
-<summary>
-<span>로그인 비밀번호를 잊어버렸어요.</span>
-</summary>
-<p>SMTECH의 비밀번호 찾기에서 본인확인 후 변경할 수 있습니다. RMS에서도 같은 계정을 사용합니다.</p>
-</details>
-<details>
-<summary>
-<span>사업 신청은 어떻게 진행하나요?</span>
-</summary>
-<p>사업공고에서 신청할 사업을 선택한 후 신청기업 정보와 접수서류를 확인하고 제출합니다.</p>
-</details>
-<details>
-<summary>
-<span>서류 조회에 실패하면 어떻게 하나요?</span>
-</summary>
-<p>실패사유를 확인한 후 다시 조회하거나 해당 증빙 파일을 직접 첨부할 수 있습니다.</p>
-</details>
-</div>
-</section>
-<section class="rms-panel">
-<div class="rms-panelhead">
-<h2>최근 질문과 답변</h2>
-<a href="#questions">소통하기 더보기 ›</a>
-</div>
-<div class="rms-tablewrap" tabindex="0" role="region" aria-label="소통하기 공개 질문 (표 가로 스크롤)">
-<table class="rms-table rms-compact">
-<caption>소통하기 공개 질문</caption>
-<thead>
-<tr>
-<th scope="col">업무유형</th>
-<th scope="col">질문 제목</th>
-<th scope="col">등록일</th>
-<th scope="col">답변상태</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>사업관리</td>
-<td>
-<button type="button" class="rms-link" data-action="question" data-id="P003">서류 보완 제출기한이 궁금합니다.</button>
-</td>
-<td>2026-09-08</td>
-<td>
-<span class="rms-badge rms-badge-orange">답변대기</span>
-</td>
-</tr>
-<tr>
-<td>사업신청</td>
-<td>
-<button type="button" class="rms-link" data-action="question" data-id="P001">사업 신청서 임시저장 방법을 알려주세요.</button>
-</td>
-<td>2026-09-07</td>
-<td>
-<span class="rms-badge rms-badge-green">답변완료</span>
-</td>
-</tr>
-<tr>
-<td>기술닥터</td>
-<td>
-<button type="button" class="rms-link" data-action="question" data-id="P002">기술닥터 지원가능 지역은 어디서 확인하나요?</button>
-</td>
-<td>2026-09-06</td>
-<td>
-<span class="rms-badge rms-badge-green">답변완료</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</div>
-<aside class="rms-homeaside">
-<div class="rms-loginbox">
-<h2>RMS 로그인</h2>
-<p>로그인하고 신청한 사업과<br>서류 제출현황을 확인하세요.</p>
-<button type="button" class="rms-btn " data-action="login" data-id="">로그인</button>
-<div class="rms-loginlinks">
+<aside class="rms-public-login ">
+<p class="rms-login-eyebrow">MY RMS</p>
+<h2>로그인하고<br>
+<strong>맞춤 지원을 확인하세요</strong>
+</h2>
+<p>신청한 사업과 서류 제출현황을<br>한곳에서 편리하게 확인할 수 있습니다.</p>
+<button type="button" class="rms-btn rms-btn-primary" data-action="login" data-id="">로그인</button>
+<div class="rms-public-account">
 <button type="button" data-action="account-help">아이디 찾기</button>
-<span>│</span>
+<span>·</span>
 <button type="button" data-action="account-help">비밀번호 찾기</button>
 </div>
-</div>
-<div class="rms-quick">
-<a href="#doctors">
-<b aria-hidden="true">⌕</b>기술닥터 찾기</a>
-<a href="#documents">
-<b aria-hidden="true">▤</b>서류제출현황</a>
-<a href="#matches">
-<b aria-hidden="true">⇄</b>매칭현황</a>
-<a href="#faq">
-<b aria-hidden="true">?</b>자주하는 질문</a>
-</div>
-<div class="rms-asidenote">중소기업 통합콜센터<strong>1357</strong>
-<small>이 화면은 가상 데이터 시연입니다.</small>
+<div class="rms-login-call">
+<span>중소기업 통합콜센터</span>
+<strong>1357</strong>
 </div>
 </aside>
+</div>
+<div class="rms-home-boards" aria-label="공개 게시판">
+<section class="rms-board-panel">
+<div class="rms-board-panelhead">
+<h2>공지사항</h2>
+<a href="#boards/notice" aria-label="공지사항 더보기">더보기 <svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="M4 12h16m-6-6 6 6-6 6"/>
+</svg>
+</a>
+</div>
+<ul class="rms-board-preview">
+<li>
+<button type="button" data-action="board-detail" data-id="notice/N001" aria-haspopup="dialog">
+<span class="rms-board-row-title">2026년 지역기업 지원사업 온라인 신청 안내</span>
+<span class="rms-board-row-meta">
+<time>2026-10-08</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="notice/N002" aria-haspopup="dialog">
+<span class="rms-board-row-title">공공 마이데이터 수신자료 확인 및 서류제출 안내</span>
+<span class="rms-board-row-meta">
+<time>2026-10-07</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="notice/N003" aria-haspopup="dialog">
+<span class="rms-board-row-title">기술닥터 초광역권 검색·매칭 서비스 이용 안내</span>
+<span class="rms-board-row-meta">
+<time>2026-10-06</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="notice/N004" aria-haspopup="dialog">
+<span class="rms-board-row-title">사업신청 마감일 및 최종 제출 유의사항</span>
+<span class="rms-board-row-meta">
+<time>2026-10-05</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="notice/N005" aria-haspopup="dialog">
+<span class="rms-board-row-title">공지사항·Q&amp;A·FAQ·자료실 공개 열람 안내</span>
+<span class="rms-board-row-meta">
+<time>2026-10-02</time>
+</span>
+</button>
+</li>
+</ul>
+</section>
+<section class="rms-board-panel">
+<div class="rms-board-panelhead">
+<h2>Q&amp;A</h2>
+<a href="#boards/qna" aria-label="Q&amp;A 더보기">더보기 <svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="M4 12h16m-6-6 6 6-6 6"/>
+</svg>
+</a>
+</div>
+<ul class="rms-board-preview">
+<li>
+<button type="button" data-action="board-detail" data-id="qna/P005" aria-haspopup="dialog">
+<span class="rms-board-row-title">공공마이데이터 수신 서류는 어디에서 확인하나요?</span>
+<span class="rms-board-row-meta">
+<span class="rms-board-answer is-complete">답변완료</span>
+<time>2026-10-08</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="qna/P006" aria-haspopup="dialog">
+<span class="rms-board-row-title">우대가점 증빙서류도 확인할 수 있나요?</span>
+<span class="rms-board-row-meta">
+<span class="rms-board-answer is-complete">답변완료</span>
+<time>2026-10-07</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="qna/P007" aria-haspopup="dialog">
+<span class="rms-board-row-title">정보 제공에 동의하지 않으면 어떻게 신청하나요?</span>
+<span class="rms-board-row-meta">
+<span class="rms-board-answer is-complete">답변완료</span>
+<time>2026-10-06</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="qna/P003" aria-haspopup="dialog">
+<span class="rms-board-row-title">서류 보완 제출기한이 궁금합니다.</span>
+<span class="rms-board-row-meta">
+<span class="rms-board-answer is-waiting">답변대기</span>
+<time>2026-09-08</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="qna/P001" aria-haspopup="dialog">
+<span class="rms-board-row-title">사업 신청서 임시저장 방법을 알려주세요.</span>
+<span class="rms-board-row-meta">
+<span class="rms-board-answer is-complete">답변완료</span>
+<time>2026-09-07</time>
+</span>
+</button>
+</li>
+</ul>
+</section>
+<section class="rms-board-panel">
+<div class="rms-board-panelhead">
+<h2>FAQ</h2>
+<a href="#boards/faq" aria-label="FAQ 더보기">더보기 <svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="M4 12h16m-6-6 6 6-6 6"/>
+</svg>
+</a>
+</div>
+<ul class="rms-board-preview">
+<li>
+<button type="button" data-action="board-detail" data-id="faq/Q001" aria-haspopup="dialog">
+<span class="rms-board-row-title">로그인 비밀번호를 잊어버렸어요.</span>
+<span class="rms-board-row-meta">
+<time>상시</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="faq/Q002" aria-haspopup="dialog">
+<span class="rms-board-row-title">사업 신청은 어떻게 진행하나요?</span>
+<span class="rms-board-row-meta">
+<time>상시</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="faq/Q003" aria-haspopup="dialog">
+<span class="rms-board-row-title">서류 조회에 실패하면 어떻게 하나요?</span>
+<span class="rms-board-row-meta">
+<time>상시</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="faq/Q004" aria-haspopup="dialog">
+<span class="rms-board-row-title">첨부파일을 여러 개 제출할 수 있나요?</span>
+<span class="rms-board-row-meta">
+<time>상시</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="faq/Q005" aria-haspopup="dialog">
+<span class="rms-board-row-title">보완 요청을 받았어요.</span>
+<span class="rms-board-row-meta">
+<time>상시</time>
+</span>
+</button>
+</li>
+</ul>
+</section>
+<section class="rms-board-panel">
+<div class="rms-board-panelhead">
+<h2>자료실</h2>
+<a href="#boards/resources" aria-label="자료실 더보기">더보기 <svg class="rms-home2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+<path d="M4 12h16m-6-6 6 6-6 6"/>
+</svg>
+</a>
+</div>
+<ul class="rms-board-preview">
+<li>
+<button type="button" data-action="board-detail" data-id="resources/R001" aria-haspopup="dialog">
+<span class="rms-board-row-title">지역기업 지원사업 온라인 신청 가이드</span>
+<span class="rms-board-row-meta">
+<time>2026-10-08</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="resources/R002" aria-haspopup="dialog">
+<span class="rms-board-row-title">공공 마이데이터 수신결과 확인 가이드</span>
+<span class="rms-board-row-meta">
+<time>2026-10-07</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="resources/R003" aria-haspopup="dialog">
+<span class="rms-board-row-title">기업 기본정보 및 증빙서류 준비 체크리스트</span>
+<span class="rms-board-row-meta">
+<time>2026-10-06</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="resources/R004" aria-haspopup="dialog">
+<span class="rms-board-row-title">기술닥터 검색 및 매칭 요청 이용 가이드</span>
+<span class="rms-board-row-meta">
+<time>2026-10-05</time>
+</span>
+</button>
+</li>
+<li>
+<button type="button" data-action="board-detail" data-id="resources/R005" aria-haspopup="dialog">
+<span class="rms-board-row-title">접수서류 보완 제출 안내문</span>
+<span class="rms-board-row-meta">
+<time>2026-10-02</time>
+</span>
+</button>
+</li>
+</ul>
+</section>
+</div>
+</div>
 </div>
 </section>

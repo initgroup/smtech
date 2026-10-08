@@ -1,8 +1,8 @@
 # 화면 퍼블리싱 인계본
 
-`fragments`에는 프로토타입과 동일한 템플릿에서 생성한 12개 HTML 조각이 있습니다. 모두 가상 데이터이며 HTML/CSS 디자인 검토와 기존 JSP 이식의 출발점입니다.
+`fragments`에는 프로토타입과 동일한 템플릿에서 생성한 20개 HTML 조각이 있습니다. 업무 기초자료와 제공된 XML 수신 샘플을 사용하며 HTML/CSS 디자인 검토와 기존 JSP 이식의 출발점입니다.
 
-- 기존 `ui.css → uiCustom.css` 다음에 `static/css/rms-enhance.css`를 추가합니다.
+- 기존 `ui.css → uiCustom.css` 다음에 `static/css/rms-enhance.css`, `rms-home-refresh.css`, `rms-mydata-report.css`를 추가합니다.
 - 기존 본문 안에 필요한 `.rms-enhance` 조각을 넣습니다.
 - 실제 데이터는 서버 DTO/JSP 출력 또는 별도 비동기 어댑터로 바꿉니다.
 - `data-action`, 폼의 `name`은 연결 지점입니다. 기존 전체 문서를 대상으로 이벤트를 덮어쓰지 않습니다.
@@ -12,3 +12,7 @@
 - 원본 운영 스타일과 라이브러리는 기존 사용 환경을 유지합니다.
 
 자세한 대응표: `docs/04-developer-handoff.md`. 재생성: `node tools/package_handoff.cjs`.
+
+`board-data.js`는 공개 게시판 예시 자료, `mydata-report.js`는 수신 XML 파싱·매핑·리포트 모듈입니다. 둘 다 `views.js`보다 먼저 로드합니다. `RMSMydata.load()` 후 `RMSCore.createStore(seed, storage, RMSMydata)`로 연결합니다. 이동 가능한 레이어에서 `RMSMydata.mount(element, bundleId, documentCode)`를 호출합니다.
+
+`data/mydata/`에 원본 CP949 TXT와 UTF-8 XML 4종을 포함합니다. 자료실 내려받기 예시는 `downloads/boards/`에 있습니다. 운영 반영 시 샘플을 운영 데이터로 교체해야 합니다.

@@ -69,3 +69,11 @@ body.rms-demo.rms-home-design2{background:#f7f9fc}
 .rms-demo.rms-home-design2 #body{padding-top:22px;padding-bottom:48px}
 @media(max-width:740px){.rms-demo.rms-home-design2 #header.rms-demo-header{padding:20px 16px 0;gap:0 15px}.rms-demo.rms-home-design2 .rms-demo-brand{padding-bottom:18px}.rms-demo.rms-home-design2 .rms-demo-brand img{width:176px}.rms-demo.rms-home-design2 .rms-demo-user{padding-bottom:18px;font-size:12px}.rms-demo.rms-home-design2 .rms-demo-nav{justify-content:space-between;gap:12px;padding:0}.rms-demo.rms-home-design2 .rms-demo-nav a{font-size:14px;gap:9px;padding:14px 0}.rms-demo.rms-home-design2 #body{padding-top:18px}}
 @media(max-width:420px){.rms-demo.rms-home-design2 #header.rms-demo-header{padding-left:12px;padding-right:12px}.rms-demo.rms-home-design2 .rms-demo-brand img{width:162px}.rms-demo.rms-home-design2 .rms-demo-user{margin:0;max-width:140px;gap:5px}.rms-demo.rms-home-design2 .rms-demo-user button{padding:7px 10px;font-size:12px}.rms-demo.rms-home-design2 .rms-demo-user>span{font-size:11px}.rms-demo.rms-home-design2 .rms-demo-nav{gap:8px}.rms-demo.rms-home-design2 .rms-demo-nav a{font-size:13px;gap:7px}.rms-demo.rms-home-design2 .rms-demo-nav a::after{width:5px;height:5px}}
+
+/* Design links remain available when demonstration tools are collapsed. */
+.rms-demo .rms-demo-toolbar{position:relative}
+.rms-demo .rms-demo-toggle{padding-right:310px}
+.rms-demo .rms-demo-designs{position:absolute;right:max(28px,calc((100vw - 1440px)/2));top:13px;display:flex;gap:8px}
+.rms-demo .rms-demo-designs a{display:inline-flex;align-items:center;min-height:32px;padding:0 13px;border:1px solid #8572b1;border-radius:6px;background:#fff;color:#51416e;text-decoration:none;font-weight:700}
+.rms-demo .rms-demo-designs a[aria-current]{background:#64518d;color:#fff;border-color:#64518d}
+@media(max-width:700px){.rms-demo .rms-demo-toggle{padding-right:0}.rms-demo .rms-demo-designs{position:static;flex-wrap:wrap;margin-top:9px}.rms-demo .rms-demo-designs a{flex:1;justify-content:center}}

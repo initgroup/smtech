@@ -1,9 +1,37 @@
 {
-  "generatedAt": "2026-10-07T08:59:35.215Z",
+  "generatedAt": "2026-10-08T05:49:58.111Z",
   "source": "prototype/region/rms",
   "screens": [
     {
       "screen": "home",
+      "role": "visitor"
+    },
+    {
+      "screen": "home-two",
+      "role": "visitor"
+    },
+    {
+      "screen": "board-notice",
+      "role": "visitor"
+    },
+    {
+      "screen": "board-qna",
+      "role": "visitor"
+    },
+    {
+      "screen": "board-faq",
+      "role": "visitor"
+    },
+    {
+      "screen": "board-resources",
+      "role": "visitor"
+    },
+    {
+      "screen": "search",
+      "role": "visitor"
+    },
+    {
+      "screen": "mydata-report",
       "role": "visitor"
     },
     {
@@ -62,6 +90,96 @@
       "sha256": "a2956e25b5c0871da37755d45f6f2e5d798934128d57a7688a743f4b581147df"
     },
     {
+      "path": "data/mydata/company-application.xml",
+      "bytes": 21539,
+      "sha256": "0376869f879bede1befdd2ca728ef9261dd92a113f06e9d3c54ee25b65bae11d"
+    },
+    {
+      "path": "data/mydata/company-preference.xml",
+      "bytes": 3281,
+      "sha256": "015e83937644c7eb89887cebfcad01e95261d2420e561cd63613867dbfd8e81a"
+    },
+    {
+      "path": "data/mydata/personal-application.xml",
+      "bytes": 23603,
+      "sha256": "2b49d831703ac63b0ebde401d164a955f233565d112be3c4bdef54fe193b39a9"
+    },
+    {
+      "path": "data/mydata/personal-preference.xml",
+      "bytes": 8049,
+      "sha256": "8712ecf90c579b301d7d35f0ae8cb5bed37ce6ab569ce2056dc91a67b9934bbc"
+    },
+    {
+      "path": "data/mydata/묶음정보(개인용-신청)_수신결과(샘플).txt",
+      "bytes": 20092,
+      "sha256": "e349d3a71e6087b30c13f1108408a14f2cfd8dedc4937921951274d69e3f6aac"
+    },
+    {
+      "path": "data/mydata/묶음정보(개인용-우대가점)_수신결과(샘플).txt",
+      "bytes": 6772,
+      "sha256": "09cba96121860ab12300d7c0cee6b0426397384e52ec96141acbded6cd5bab5e"
+    },
+    {
+      "path": "data/mydata/묶음정보(기업용-신청)_수신결과(샘플).txt",
+      "bytes": 18265,
+      "sha256": "869ba006183a26cc4624e6e807957dc37caaae197c9ca5f7ee8ce5f1a183ba31"
+    },
+    {
+      "path": "data/mydata/묶음정보(기업용-우대가점)_수신결과(샘플).txt",
+      "bytes": 2801,
+      "sha256": "797b1a98a7caa36e5bac86d8838b8eaa627f5b5e0f969dd5322a5346b643f12b"
+    },
+    {
+      "path": "downloads/boards/board-guide.txt",
+      "bytes": 408,
+      "sha256": "23925ba132ddd241c47d2b5695456d3d815118cd5e52bae59f54f27533e0c871"
+    },
+    {
+      "path": "downloads/boards/doctor-matching-guide.txt",
+      "bytes": 439,
+      "sha256": "99eefb1ef0a3a57ea06e62b6c1966f58df4f7906fc041d8128d52653cbb8b425"
+    },
+    {
+      "path": "downloads/boards/document-checklist.txt",
+      "bytes": 391,
+      "sha256": "017615c57f4dce1c7e75e2d25d7b27fceb94b8ee5fcfb30d284e49a4b88c123b"
+    },
+    {
+      "path": "downloads/boards/mydata-report-guide.txt",
+      "bytes": 414,
+      "sha256": "f772a6c6851185e06cfba385418dadd43d33bd1683e6f1096ab6cae05fa9c105"
+    },
+    {
+      "path": "downloads/boards/online-application-guide.txt",
+      "bytes": 463,
+      "sha256": "d6f67d487df3ea2e5678f10deee394d82b5801920d92e2a029e3281aaaf56a7c"
+    },
+    {
+      "path": "downloads/boards/supplement-guide.txt",
+      "bytes": 379,
+      "sha256": "3022d42b1b1dd16f9ba84ae12391d641ca065050d6f72274e47873a5a337371c"
+    },
+    {
+      "path": "fragments/board-faq.html",
+      "bytes": 3441,
+      "sha256": "20e2e79bd9aba509f30a615de6299c4ad9358f3cd7b791a7a74086af9780757d"
+    },
+    {
+      "path": "fragments/board-notice.html",
+      "bytes": 3136,
+      "sha256": "7458808b0c550ab8c5c00a31462e27dff7cbac36fbe7107c91da1a199fab2cd6"
+    },
+    {
+      "path": "fragments/board-qna.html",
+      "bytes": 3557,
+      "sha256": "333b7cf57a70fb098c0ab6661b991d5b4ac15f1687cd1ec7cd312ecac58a00b7"
+    },
+    {
+      "path": "fragments/board-resources.html",
+      "bytes": 3090,
+      "sha256": "e29c91e64dbb075dd109964fe7a1520488526a14c07bfc3b016f58e5288256ad"
+    },
+    {
       "path": "fragments/classifications.html",
       "bytes": 4850,
       "sha256": "5115e791ff95e335702eb157c446a27bcc896e270adcf776650dc52f59a7f19a"
@@ -83,13 +201,13 @@
     },
     {
       "path": "fragments/documents-company.html",
-      "bytes": 9204,
-      "sha256": "3327e7fea51f5516f61f8e61ba8caaf987d84e0ee2107e651a314186b38836c3"
+      "bytes": 11149,
+      "sha256": "b13ba72440f587008b41bdd1baccb38a2f39c2b7ca597822b5f0de6a3af92a8a"
     },
     {
       "path": "fragments/documents-manager.html",
-      "bytes": 8591,
-      "sha256": "eb849fe6b6d43e12608664583137d34e60b6fe3b1fc14f724756cec1f7af2eb4"
+      "bytes": 10406,
+      "sha256": "613b84de53080f7339439aea50db01551af7a1984b284817f15d10395b41446e"
     },
     {
       "path": "fragments/faq.html",
@@ -98,18 +216,23 @@
     },
     {
       "path": "fragments/guide.html",
-      "bytes": 73025,
-      "sha256": "ea24456b1b3a1d8d7e2d24d9ce1001f1fd8190e0cd7e723e09319b5d9c0617d8"
+      "bytes": 85074,
+      "sha256": "429d24df27565485115816de7eadc9373e8a2cb678f4c35d55f83d0fe6b0d8aa"
     },
     {
       "path": "fragments/home-settings.html",
-      "bytes": 4304,
-      "sha256": "0a96c05deadbf94297e604070b91b9ac5b3df0795a6d721bfd400d65d9d44a7a"
+      "bytes": 4861,
+      "sha256": "223a91b8f76bab15677adebc2f06fa683984a2ba26f4c2e80e2eae5a80a5ffcb"
+    },
+    {
+      "path": "fragments/home-two.html",
+      "bytes": 13953,
+      "sha256": "aa950ecd672e76a99d9b6cc91b9f47f1b9ed6313ec8da8c13f03626b648cf096"
     },
     {
       "path": "fragments/home.html",
-      "bytes": 7521,
-      "sha256": "1d3ae67f24eb8fbeb09e0e8f8c97d276fedfb1876a429b0a4355a82cddcc8524"
+      "bytes": 14924,
+      "sha256": "5033dbdc1882206b8e27072bcb7f61e57072c1aca15223df62378b357c1f567c"
     },
     {
       "path": "fragments/matches.html",
@@ -117,9 +240,19 @@
       "sha256": "1007be7d3091ccac0e0235919eeca50e1a6e2845c962e1d21b38a66838b73995"
     },
     {
+      "path": "fragments/mydata-report.html",
+      "bytes": 7434,
+      "sha256": "90ce7346d4348fe8f37ef9738b57335bfe9777250aaf2fb1bd8096480117ab6e"
+    },
+    {
       "path": "fragments/questions.html",
-      "bytes": 2697,
-      "sha256": "4331d59b059ba2d138d41b18ebdaa593afa12c07e06d191235edf4624288d70c"
+      "bytes": 3550,
+      "sha256": "f2f50f7b28d3a706135d3c850548ae6b75bdf9616b4a02114a72d947775a4279"
+    },
+    {
+      "path": "fragments/search.html",
+      "bytes": 10039,
+      "sha256": "2e7a2d7e19b192a58d937455a3c61712ebb937d9fda5bb2e35f4423c85beead8"
     },
     {
       "path": "fragments/statistics.html",
@@ -128,28 +261,48 @@
     },
     {
       "path": "README.md",
-      "bytes": 1288,
-      "sha256": "cc366a9c31fffa431f8b87950ac87237406d897044cea8ac864529f3799d830a"
+      "bytes": 1962,
+      "sha256": "7bc7dffeac0848bbbdc5140c87e814f5b4092417ee29978e9cfa64eaea2fadc7"
     },
     {
       "path": "static/css/rms-enhance.css",
-      "bytes": 57865,
-      "sha256": "4debbda388c5eea0181cbeda13c86410e467c644e183143aaaedd742d076d2a1"
+      "bytes": 60918,
+      "sha256": "91283b48c7e563f852983e258e714f91875407e37998b408c1deca0aa02b19d9"
+    },
+    {
+      "path": "static/css/rms-home-refresh.css",
+      "bytes": 19045,
+      "sha256": "b32fdc7a4311947149de021935810b4ec22bfdcdd7d48805954fa1d904a90517"
+    },
+    {
+      "path": "static/css/rms-mydata-report.css",
+      "bytes": 14257,
+      "sha256": "2c3731ab43f63cc9b9fb91c13b17485ad0a0af6174cdbe6b7339e799fc6a0526"
     },
     {
       "path": "static/js/rms-enhance/app.js",
-      "bytes": 56101,
-      "sha256": "db7676bdf62ae58493b2488611b57729357cc361bbc60c312abb4690827cdc34"
+      "bytes": 54235,
+      "sha256": "bcfbe11dd5981657aa37cf4bbc35c838d53461c6e5d330888bebcdddc42a69d0"
+    },
+    {
+      "path": "static/js/rms-enhance/board-data.js",
+      "bytes": 8793,
+      "sha256": "55e399d3648fd855246d6c383ed27817690adcd570888eafffa45147c0f9662a"
     },
     {
       "path": "static/js/rms-enhance/core.js",
-      "bytes": 35612,
-      "sha256": "f907ede5e7e2860305710b0ef9f6a86d1fb99a0165c5ecc190566bf457a608e1"
+      "bytes": 39818,
+      "sha256": "6299ab686316676bbe3309bd3cc7df2992e0b7d2ba93293bd8ad2ddc01829743"
+    },
+    {
+      "path": "static/js/rms-enhance/mydata-report.js",
+      "bytes": 21137,
+      "sha256": "75cfb8b21a90a9702364e4190bae34f7f8564db04dd84991c9c8231b01014497"
     },
     {
       "path": "static/js/rms-enhance/views.js",
-      "bytes": 112644,
-      "sha256": "8a603a873db1ca9de102ac9f8b43183f4570f9c3634b00f02f7fe6c6b0e4a821"
+      "bytes": 112514,
+      "sha256": "8193ff924c7dbb7533ed91ed0905fd0899b76b2d2d924b5143603e70734ca492"
     }
   ]
 }

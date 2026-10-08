@@ -5,7 +5,7 @@
 ```powershell
 node tools/package_handoff.cjs
 python tools/package_source.py
-node --test tests/core.test.cjs tests/backup.test.cjs tests/announcement.test.cjs tests/static.test.cjs
+node --test tests/core.test.cjs tests/backup.test.cjs tests/announcement.test.cjs tests/mydata.test.cjs tests/static.test.cjs
 python tests/source_package_test.py
 ```
 
@@ -25,3 +25,7 @@ SFR 검증은 `dom.test.cjs`에 포함됩니다. 15개 상세 설명과 메뉴 �
 시연 백업 검증은 `smtech` 전용 키 이관과 다른 앱 데이터 보존, 독립 저장소 간 JSON 복원 및 기존 PC의 추가자료 제거, 파일 선택 창의 저장·취소·실패 동작을 포함합니다. 파일 선택 API는 테스트에서 모의 실행합니다. 16개 화면·단계 × 4개 역할로 렌더링 및 공통 안내 동작을 검사하며, SFR 레이어의 이동·크기 조절·배경 조작과 기존 업무 이벤트 테스트도 함께 실행하세요. `source_package_test.py`는 소스 ZIP의 최신 파일 일치·제외 대상·재현성과 실제 HTTP 다운로드, 임시 Git 저장소에서 업로드 스크립트가 커밋한 바이트와 ZIP의 일치 여부를 확인합니다. 후자는 Windows PowerShell과 Git이 필요하며 실제 GitHub에는 업로드하지 않습니다.
 
 `review-core-behavior.cjs` 및 `review-core-findings.json`은 구현 중 발견사항의 최초 재현 기록입니다. 현재 회귀검증 기준은 `core.test.cjs`, `dom.test.cjs`, `static.test.cjs`입니다.
+
+2026-10-08 검증: Node 전체 82개 통과. XML 11개, DOM 이벤트 38개, 정적 파일 5개, 기존 업무규칙 28개입니다. 신규 XML 검증은 원본 인코딩 보존, 4개 묶음의 공란·미수신·반복 항목, F01 신청정보 출처, 동일 파일 재조회, 이전 가상 조회 이관, 동의·제출잠금 및 JSON 왕복을 검사합니다. DOM은 4게시판 각 5줄, 공개 열람·검색·별도 페이지, 레이어 이동, 공고 보기 전환, 통합검색과 XML 리포트 탐색·다운로드를 검사합니다. 인계 화면은 20개입니다. 실제 브라우저 연결은 사용할 수 없어 이번 변경의 시각 검수는 수행하지 못했습니다.
+
+시연 안내 접힘 개선: DOM·정적 검증 44개 통과. 요구사항 15개의 기본 접힘, 개별 제목 클릭 토글, 전체 펼침·닫힘, 특정 SFR 직접 접근 시 자동 펼침, 상세 메뉴의 권한별 이동과 원문 보존을 확인했습니다. 개별 summary의 브라우저 기본 동작은 linkedom 테스트에서 표준 동작으로 보완합니다.

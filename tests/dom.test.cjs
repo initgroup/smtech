@@ -12,7 +12,7 @@ const {parseHTML} = require('../tmp/qa/node_modules/linkedom');
 const base = path.join(__dirname, '../prototype/region/rms');
 const seed = JSON.parse(fs.readFileSync(path.join(base, 'data/seed.json'), 'utf8'));
 const html = fs.readFileSync(path.join(base, 'index.html'), 'utf8');
-const scripts = ['core.js', 'views.js', 'app.js'].map(name => ({name, text: fs.readFileSync(path.join(base, 'static/js/rms-enhance', name), 'utf8')}));
+const scripts = [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map(([,file]) => ({name:path.basename(file), text:fs.readFileSync(path.join(base,file),'utf8')}));
 
 async function browser(options={}) {
   const {window} = parseHTML(html);
@@ -62,7 +62,7 @@ async function browser(options={}) {
   const sandbox={
     window,document,location,FormData:BrowserFormData,Blob,URL:{createObjectURL(blob){downloads.push(blob);return 'blob:qa-download';},revokeObjectURL(){}},
     console:{log(){},warn(){},error(...args){errors.push(args.join(' '));}},
-    fetch:async url=>{assert.equal(url,'data/seed.json','QA must not contact production');return {ok:true,json:async()=>JSON.parse(JSON.stringify(seed))};},
+    fetch:async url=>{if(url==='data/seed.json')return {ok:true,json:async()=>JSON.parse(JSON.stringify(seed))};assert.match(String(url),/^data\/mydata\/[a-z-]+\.xml$/,'QA must read only local XML assets');return {ok:true,text:async()=>fs.readFileSync(path.join(base,String(url)),'utf8')};},
     setTimeout:(fn,ms)=>{const timer=setTimeout(fn,ms);timer.unref();return timer;},clearTimeout,
     requestAnimationFrame:fn=>fn(0)
   };
@@ -70,8 +70,17 @@ async function browser(options={}) {
   scripts.forEach(script=>vm.runInContext(script.text,sandbox,{filename:script.name}));
   await new Promise(resolve=>setImmediate(resolve));
   function one(selector){const el=document.querySelector(selector);assert.ok(el,'Missing DOM element: '+selector);return el;}
-  function dispatch(el,type){el.dispatchEvent(new window.Event(type,{bubbles:true,cancelable:true}));}
-  function click(selector){dispatch(typeof selector==='string'?one(selector):selector,'click');}
+  function dispatch(el,type){return el.dispatchEvent(new window.Event(type,{bubbles:true,cancelable:true}));}
+  function click(selector){
+    const el=typeof selector==='string'?one(selector):selector,allowed=dispatch(el,'click');
+    // linkedom does not implement the browser's native summary default action.
+    const summary=el.closest('summary');
+    if(allowed&&summary&&summary.parentElement.localName==='details'){
+      const details=summary.parentElement;
+      if(details.hasAttribute('open'))details.removeAttribute('open');else details.setAttribute('open','');
+      dispatch(details,'toggle');
+    }
+  }
   function change(selector,value){const el=one(selector);if(el.type==='checkbox')el.checked=!!value;else el.value=value;dispatch(el,'change');}
   function submit(selector){dispatch(one(selector),'submit');}
   function set(selector,value){one(selector).value=value;}
@@ -163,7 +172,7 @@ test('guide displays all extracted SFR details and screen badges open a layer wi
     const row=b.one('[data-sfr-row="'+r.sourceId+'"]');
     assert.ok(row.textContent.includes(r.definition));
     r.details.forEach(detail=>assert.ok(row.textContent.includes(detail),r.sourceId+': '+detail));
-    assert.equal(row.closest('details'),null);
+    assert.equal(row.localName,'details');assert.equal(row.hasAttribute('open'),false);assert.ok(row.querySelector('summary'));
   }
   b.role('admin');
   const expected={home:['06','07','08','09','10'],doctors:['01','02','03','04'],'doctor/D001':['01','02','03','04'],matches:['03'],stats:['05'],faq:['07','08'],questions:['08','09'],manage:['02','08'],'manage/home':['08','09','10'],'manage/documents':['12'],'documents/A001/2':['13'],'documents/A001/3':['11','12','13','14','15'],'documents/A001/4':['14','15']};
@@ -175,6 +184,25 @@ test('guide displays all extracted SFR details and screen badges open a layer wi
   assert.equal(b.one('h1'),page);
   assert.match(b.one('#rms-sfr-layer-title').textContent,/SFR-14/);
   assert.equal(b.one('#rms-sfr-layer').getAttribute('aria-modal'),'false');
+});
+
+test('guide requirements start collapsed and support individual, global and direct-link expansion',async()=>{
+  const b=await browser();b.route('guide');
+  const opened=()=>Array.from(b.document.querySelectorAll('.rms-requirement-card[open]'));
+  assert.equal(opened().length,0);
+  const summary=b.one('#SFR-11 > summary');
+  assert.match(summary.textContent,/SFR-11/);assert.match(summary.textContent,/핵심/);
+  assert.ok(!summary.textContent.includes('실서비스 후속 구현'));
+  b.click(summary);assert.deepEqual(opened().map(el=>el.id),['SFR-11']);
+  b.click(summary);assert.equal(opened().length,0);
+  b.click('[data-action="requirements-expand"]');assert.equal(opened().length,15);
+  b.click('[data-action="requirements-collapse"]');assert.equal(opened().length,0);
+  b.route('guide/SFR-13');assert.deepEqual(opened().map(el=>el.id),['SFR-13']);
+  assert.ok(b.one('#SFR-13').classList.contains('rms-sfr-selected'));
+  b.click('#SFR-13 [data-id="SFR-13/company-info"]');
+  assert.ok(b.document.querySelector('dialog'));b.click('[data-action="sfr-role-login"][data-id="company"]');
+  assert.match(b.currentRoute(),/^#documents\/[^/]+\/2$/);b.healthy();
+  b.route('guide');assert.equal(opened().length,0);
 });
 
 test('SFR layer preserves unsaved inputs, allows background saves and supports drag and both resize axes',async()=>{
@@ -204,7 +232,7 @@ const sfrNotes=JSON.parse(fs.readFileSync(path.join(__dirname,'../docs/sfr-imple
 test('all 15 SFR rows show concrete design, screen, technology, data and planned work with bullet menu links',async()=>{
   const b=await browser();b.route('guide');
   for(const r of sfrNotes.requirements){
-    const row=b.one('[data-sfr-row="'+r.id+'"]'),cell=row.querySelector('td:last-child');
+    const row=b.one('[data-sfr-row="'+r.id+'"]'),cell=row.querySelector('[data-sfr-coverage]');
     for(const field of ['design','screen','technology','data'])assert.ok(cell.textContent.includes(r[field]),r.id+' '+field);
     for(const paragraph of r.followup)assert.ok(cell.textContent.includes(paragraph),r.id+' implementation plan');
     assert.equal(cell.querySelectorAll('.rms-sfr-bullet[aria-hidden="true"]').length,r.menus.length);
@@ -350,9 +378,9 @@ test('final step supports file submission, locked review, supplement and resubmi
 test('real scripts bootstrap home without errors and preserve the public shell',async()=>{
   const b=await browser();
   assert.match(b.one('h1').textContent,/기업의 성장/);
-  assert.equal(b.document.querySelectorAll('.rms-announcement').length,seed.programs.length);
+  assert.equal(b.document.querySelectorAll('.rms-program-cards>article').length,seed.programs.length);
   assert.ok(b.document.querySelector('#header .rms-demo-nav'));
-  assert.ok(b.document.querySelector('#rms-faq-search'));
+  assert.ok(b.document.querySelector('#rms-global-search'));
   b.click('[data-shell="login"]');
   assert.ok(b.one('dialog').hasAttribute('open'));
   b.click('[data-action="role-login"][data-id="company"]');
@@ -366,7 +394,7 @@ test('prototype role, backup tools, instructions and SFR context are isolated ab
   const toolbar=b.one('#rms-demo-tools'),header=b.one('#header');
   assert.equal(toolbar.nextElementSibling,header);
   assert.match(toolbar.textContent,/기능개선 시연/);
-  assert.match(toolbar.textContent,/실제 업무 화면에 포함되지 않습니다/);
+  assert.match(toolbar.textContent,/제공된 XML 수신 샘플/);
   for(const id of ['rms-role','rms-export','rms-storage-info','rms-import','rms-source-download','rms-reset','rms-storage-help','rms-demo-sfr']){
     assert.ok(toolbar.contains(b.one('#'+id)),id+' must stay inside the dedicated prototype toolbar');
     assert.equal(header.querySelector('#'+id),null);
@@ -379,7 +407,7 @@ test('prototype role, backup tools, instructions and SFR context are isolated ab
 test('announcement cards identify the reception period and closing date; details display all saved public information',async()=>{
   const b=await browser();
   for(const program of seed.programs){
-    const card=b.one('[data-action="program"][data-id="'+program.id+'"]').closest('.rms-announcement');
+    const card=b.one('[data-action="program"][data-id="'+program.id+'"]').closest('article');
     assert.match(card.textContent,/접수기간/);assert.match(card.textContent,/마감/);
     assert.ok(card.textContent.includes(program.start));assert.ok(card.textContent.includes(program.end));
     assert.ok(card.textContent.includes(program.deadlineTime));
@@ -532,15 +560,15 @@ test('hash routes and role changes render company, TP and administrator screens'
   ['manage/home','manage/documents','questions','faq','matches','guide'].forEach(route=>{b.route(route);b.healthy();assert.ok(b.document.querySelector('h1'));});
 });
 
-test('home FAQ search form navigates and renders actual matching answers',async()=>{
-  const b=await browser();
+test('public FAQ board search finds actual answers and opens the detailed layer',async()=>{
+  const b=await browser();b.route('boards/faq');
   const faq=seed.faqs.find(f=>f.published);
-  b.set('#rms-home-query',faq.title);
-  b.submit('#rms-faq-search');
-  assert.match(b.one('h1').textContent,/자주하는 질문/);
-  assert.ok([...b.document.querySelectorAll('.rms-faqs summary')].some(el=>el.textContent===faq.title));
-  assert.match(b.text(),/검색결과/);
-  b.healthy();
+  b.set('#rms-board-query',faq.title);b.submit('#rms-board-search');
+  assert.equal(b.currentRoute(),'#boards/faq');
+  assert.ok(b.one('[data-action="board-detail"][data-id="faq/'+faq.id+'"]'));
+  b.click('[data-action="board-detail"][data-id="faq/'+faq.id+'"]');
+  assert.ok(b.one('dialog').textContent.includes(faq.answer));
+  assert.ok(b.one('[data-dialog-move]'));close(b);b.healthy();
 });
 
 test('doctor search submit filters rows and checkbox comparison opens selected expert table',async()=>{
@@ -591,7 +619,7 @@ test('TP detail edit saves changed fields while another region remains read-only
   b.healthy();
 });
 
-test('document consent, batch query, mismatch choice and failed-query retry run through delegated events',async()=>{
+test('document consent, actual XML batch query, address choice and missing-document retry run through delegated events',async()=>{
   const b=await browser();openDocs(b);
   b.click('[data-action="query-required"]');assert.match(b.one('#rms-toast').textContent,/동의한 후/);
   const before=app(b).inputAddress;
@@ -602,16 +630,19 @@ test('document consent, batch query, mismatch choice and failed-query retry run 
   assert.match(b.one('dialog').textContent,/신청서 주소/);
   b.click('[data-action="mismatch-apply"]');
   assert.equal(app(b).inputAddress,app(b).address);assert.equal(doc(b,'F01').status,'조회완료');
-  close(b);b.click('[data-action="doc-retry"][data-id="F06"]');
-  assert.equal(doc(b,'F06').status,'조회완료');
-  assert.match(b.one('dialog').textContent,/재조회/);
+  close(b);assert.equal(doc(b,'F06').status,'조회완료');
+  assert.equal(doc(b,'F04').issue,'empty');
+  b.click('[data-action="doc-query"][data-id="F07"]');close(b);
+  assert.equal(doc(b,'F07').status,'조회실패');
+  b.click('[data-action="doc-retry"][data-id="F07"]');
+  assert.equal(doc(b,'F07').issue,'unavailable');assert.match(b.one('dialog').textContent,/수신 묶음에 이 서류가 없습니다/);
   b.healthy();
 });
 
 test('file form, submit confirmation, locked controls, institution supplement and resubmission work',async()=>{
   const b=await browser();queryNeeded(b);
   b.click('[data-action="doc-detail"][data-id="F01"]');b.click('[data-action="mismatch-apply"]');close(b);
-  b.click('[data-action="doc-retry"][data-id="F06"]');close(b);
+  assert.equal(doc(b,'F06').status,'조회완료');
   const program=seed.programs.find(p=>p.id===app(b).programId);
   program.requiredDocs.forEach(id=>{if(doc(b,id).status!=='조회완료')attach(b,id);});close(b);
   b.click('[data-action="submit"]');b.click('[data-action="submit-confirm"]');
@@ -633,7 +664,7 @@ test('administrator code form persists changes and main visibility affects only 
   assert.match(b.text(),/DOM 가상 기술분류/);
   b.route('manage/home');const q=seed.questions.find(q=>q.public&&q.mainVisible);
   b.change('[data-question-visible="'+q.id+'"]',false);
-  b.route('home');assert.equal(b.document.querySelector('[data-action="question"][data-id="'+q.id+'"]'),null);
+  b.route('home');assert.equal(b.document.querySelector('[data-action="board-detail"][data-id="qna/'+q.id+'"]'),null);
   b.route('questions');b.click('[data-action="question"][data-id="'+q.id+'"]');
   assert.match(b.one('dialog').textContent,new RegExp(q.title.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
   b.healthy();
@@ -651,99 +682,103 @@ test('statistics form reports reversed dates and applies a valid region filter',
 });
 
 
-test('both home designs switch without changing data and alternate styling ends on business pages', async()=>{
+test('demo tools start collapsed and both design links remain outside the disclosure on every page',async()=>{
   const b=await browser();
-  const before=b.state();
-  assert.equal(b.one('.rms-design-switch').getAttribute('href'),'#home/2');
-  b.route(b.one('.rms-design-switch').getAttribute('href'));
-  assert.ok(b.document.body.classList.contains('rms-home-design2'));
-  assert.equal(b.document.querySelectorAll('.rms-home2-shortcuts>a').length,8);
-  assert.equal(b.document.querySelectorAll('.rms-home2-program').length,seed.programs.length);
-  b.click('.rms-home2-program h3 button');
-  assert.match(b.one('dialog').textContent,new RegExp(seed.programs[0].title));
-  close(b);
-  assert.equal(b.one('.rms-design-switch').getAttribute('href'),'#home');
-  b.route(b.one('.rms-design-switch').getAttribute('href'));
-  assert.equal(b.document.body.classList.contains('rms-home-design2'),false);
-  assert.equal(b.document.querySelectorAll('.rms-announcement').length,seed.programs.length);
-  for(const role of ['visitor','company','tp','admin']){
-    b.role(role);b.route('home/2');b.healthy();
-    b.route('doctors');b.healthy();
-    assert.equal(b.document.body.classList.contains('rms-home-design2'),false);
+  assert.equal(b.one('#rms-demo-disclosure').hasAttribute('open'),false);
+  const links=Array.from(b.document.querySelectorAll('.rms-demo-designs a'));
+  assert.equal(links.length,2);
+  for(const link of links){assert.equal(link.closest('details'),null);assert.ok(b.one('#rms-demo-tools').contains(link));}
+  b.route('documents');assert.ok(b.one('[data-home-design="2"]'));
+  b.route('home/2');assert.equal(b.one('[data-home-design="2"]').getAttribute('aria-current'),'page');
+  assert.equal(b.document.querySelector('[data-action="mydata-open"]'),null);
+  b.route('home');assert.equal(b.one('[data-home-design="1"]').getAttribute('aria-current'),'page');
+  assert.equal(b.document.querySelector('[data-action="mydata-open"]'),null);b.healthy();
+});
+
+test('both home concepts offer matching card and list announcements without changing application data',async()=>{
+  const b=await browser(),before=b.state();
+  for(const route of ['home','home/2']){
+    b.route(route);b.click('[data-action="program-layout"][data-id="cards"]');
+    assert.equal(b.document.querySelectorAll('.rms-program-cards>article').length,seed.programs.length);
+    assert.equal(b.one('[data-action="program-layout"][data-id="cards"]').getAttribute('aria-pressed'),'true');
+    const cardTitles=Array.from(b.document.querySelectorAll('.rms-program-cards h3')).map(el=>el.textContent);
+    b.click('[data-action="program-layout"][data-id="list"]');
+    assert.equal(b.document.querySelectorAll('.rms-program-cards').length,0);
+    assert.deepEqual(Array.from(b.document.querySelectorAll('.rms-program-list h3')).map(el=>el.textContent),cardTitles);
+    b.click('.rms-program-list h3 button');assert.ok(b.one('dialog').textContent.includes(seed.programs[0].title));close(b);
+    assert.equal(b.document.body.classList.contains('rms-home-design2'),route==='home/2');
   }
+  for(const role of ['visitor','company','tp','admin']){b.role(role);b.route('home/2');b.healthy();b.route('doctors');assert.equal(b.document.body.classList.contains('rms-home-design2'),false);}
   assert.deepEqual(b.state(),before);
 });
 
-test('alternate home keeps existing FAQ search and its route survives JSON backup', async()=>{
-  let backup;
-  const first=await browser({picker:async()=>({name:'design-2.json',createWritable:async()=>({write:async text=>{backup=text;},close:async()=>{}})})});
-  first.route('home/2');
-  first.set('#rms-home-query','서류');first.submit('#rms-faq-search');
-  assert.equal(first.currentRoute(),'#faq');
-  assert.equal(first.one('#rms-faq-search [name=q]').value,'서류');
-  first.route('home/2');first.click('#rms-export');await flush();
-  assert.equal(JSON.parse(backup).presentation.route,'home/2');
-  const second=await browser();await importFile(second,backup);second.click('#rms-confirm-import');
-  assert.equal(second.currentRoute(),'#home/2');
-  assert.ok(second.document.body.classList.contains('rms-home-design2'));
-  second.healthy();
-});
-
-
-test('MyData sample is available on both home designs and requires consent plus a selected document',async()=>{
-  for(const route of ['home','home/2']){
-    const b=await browser();b.route(route);const before=b.state();
-    b.click('[data-action="mydata-open"]');
-    assert.match(b.one('dialog').textContent,/실제 공공 API 호출이나 개인정보 전송은 없습니다/);
-    assert.equal(b.one('[data-action="mydata-query"]').disabled,true);
-    b.click('[data-action="mydata-query"]');
-    assert.ok(b.document.querySelector('#rms-mydata-consent'));
-    b.change('#rms-mydata-consent',true);
-    assert.equal(b.one('[data-action="mydata-query"]').disabled,false);
-    b.document.querySelectorAll('[data-mydata-document]').forEach(el=>b.change('[data-mydata-document="'+el.dataset.mydataDocument+'"]',false));
-    assert.equal(b.one('[data-action="mydata-query"]').disabled,true);
-    b.click('[data-action="mydata-query"]');
-    assert.match(b.one('#rms-mydata-hint').textContent,/1개 이상/);
-    b.change('[data-mydata-document="F01"]',true);
-    b.click('[data-action="mydata-query"]');
-    assert.ok(b.one('.rms-mydata-loading'));
-    await new Promise(resolve=>setTimeout(resolve,750));
-    assert.equal(b.document.querySelectorAll('[data-mydata-result]').length,1);
-    assert.match(b.one('[data-mydata-result="F01"]').textContent,/조회완료/);
-    close(b);assert.equal(b.currentRoute(),'#'+route);assert.deepEqual(b.state(),before);b.healthy();
+test('four public boards show five recent rows before and after login; more opens full real board pages',async()=>{
+  const b=await browser();
+  for(const route of ['home','home/2'])for(const role of ['visitor','company']){
+    b.role(role);b.route(route);
+    const panels=Array.from(b.document.querySelectorAll('.rms-board-panel'));
+    assert.equal(panels.length,4);
+    assert.deepEqual(panels.map(el=>el.querySelector('h2').textContent),['공지사항','Q&A','FAQ','자료실']);
+    for(const panel of panels){
+      assert.equal(panel.querySelectorAll('.rms-board-preview li').length,5,panel.textContent);
+      const href=panel.querySelector('a').getAttribute('href');
+      assert.match(href,/^#boards\/(notice|qna|faq|resources)$/);
+    }
+  }
+  b.role('visitor');
+  for(const type of ['notice','qna','faq','resources']){
+    b.route('home');const link=b.one('a[href="#boards/'+type+'"]');b.route(link.getAttribute('href'));
+    assert.equal(b.currentRoute(),'#boards/'+type);assert.ok(b.one('#rms-board-search'));
+    assert.ok(b.document.querySelectorAll('[data-action="board-detail"]').length>5);
+    b.click('[data-action="board-detail"]');assert.ok(b.one('dialog').hasAttribute('open'));
+    const dialog=b.one('dialog');dialog.getBoundingClientRect=()=>({left:40,top:60,width:800,height:500});
+    const title=b.one('[data-dialog-move]');pointer(b,title,'pointerdown',100,100);pointer(b,title,'pointermove',115,112);pointer(b,title,'pointerup',115,112);
+    assert.equal(parseFloat(dialog.style.left),55);assert.equal(parseFloat(dialog.style.top),72);
+    if(type==='resources'){const file=b.one('.rms-board-attachment a');assert.ok(fs.existsSync(path.join(base,file.getAttribute('href'))));assert.ok(file.hasAttribute('download'));}
+    close(b);assert.equal(b.one('#rms-role').value,'visitor');b.healthy();
   }
 });
 
-test('MyData sample shows mixed results, retries, file guidance and preview without saving or changing roles',async()=>{
-  const b=await browser();const before=b.state();const saved=[...b.values];
-  b.click('[data-action="mydata-open"]');b.change('#rms-mydata-consent',true);b.click('[data-action="mydata-query"]');
-  await new Promise(resolve=>setTimeout(resolve,750));
-  assert.equal(b.document.querySelectorAll('[data-mydata-result]').length,4);
-  assert.match(b.one('[data-mydata-result="F01"] details').textContent,/가상 한빛정밀/);
-  assert.match(b.one('[data-mydata-result="F06"]').textContent,/조회실패/);
-  assert.match(b.one('[data-mydata-result="F08"]').textContent,/미제공 예시/);
-  b.click('[data-action="mydata-file"]');assert.match(b.one('.rms-mydata-file-guide').textContent,/파일을 선택하거나 전송하지 않습니다/);
-  b.click('[data-action="mydata-preview"]');assert.ok(b.one('.rms-mydata-preview'));
-  b.click('[data-action="mydata-retry"]');assert.match(b.one('[data-mydata-result="F06"]').textContent,/재조회 중/);
-  assert.equal(b.one('[data-action="mydata-preview"]').disabled,true);
-  await new Promise(resolve=>setTimeout(resolve,550));
-  assert.match(b.one('[data-mydata-result="F06"]').textContent,/조회완료/);
-  b.click('[data-action="mydata-preview"]');assert.equal(b.document.querySelectorAll('.rms-mydata-preview li').length,4);
-  assert.match(b.one('.rms-mydata-preview').textContent,/직접 제출 필요/);
-  assert.deepEqual(b.state(),before);assert.deepEqual([...b.values],saved);assert.equal(b.one('#rms-role').value,'visitor');
-  b.click('[data-action="mydata-reset"]');assert.equal(b.one('#rms-mydata-consent').checked,false);
-  assert.equal(b.document.querySelector('.rms-mydata-preview'),null);b.healthy();
+test('the integrated search on both home concepts finds programs, doctors and public board posts',async()=>{
+  const b=await browser();
+  for(const route of ['home','home/2']){
+    b.route(route);assert.equal(b.document.querySelectorAll('#rms-global-search').length,1);
+    b.set('#rms-global-query','사업');b.submit('#rms-global-search');
+    assert.equal(b.currentRoute(),'#search');assert.match(b.one('h1').textContent,/통합검색 결과/);
+    assert.ok(b.document.querySelector('[data-action="program"]'));assert.ok(b.document.querySelector('[data-action="board-detail"]'));
+    b.set('#rms-global-query',seed.doctors[0].name);b.submit('#rms-global-search');
+    assert.ok(b.one('a[href="#doctor/'+seed.doctors[0].id+'"]'));
+    b.set('#rms-global-query','없는검색결과_999');b.submit('#rms-global-search');assert.match(b.text(),/검색된 정보가 없습니다/);b.healthy();
+  }
 });
 
-test('closing, navigating or reopening cancels pending MyData sample work',async()=>{
-  const b=await browser();
-  b.click('[data-action="mydata-open"]');b.change('#rms-mydata-consent',true);b.click('[data-action="mydata-query"]');
-  b.one('dialog').dispatchEvent(new b.window.Event('cancel',{cancelable:true}));
-  assert.equal(b.document.querySelector('dialog'),null);
-  b.click('[data-action="mydata-open"]');
-  await new Promise(resolve=>setTimeout(resolve,750));
-  assert.equal(b.one('#rms-mydata-consent').checked,false);assert.equal(b.document.querySelector('[data-mydata-result]'),null);
-  b.change('#rms-mydata-consent',true);b.click('[data-action="mydata-query"]');b.route('doctors');
-  await new Promise(resolve=>setTimeout(resolve,750));
-  assert.equal(b.document.querySelector('dialog'),null);b.healthy();
+test('alternate home route survives full JSON backup with its government-service visual concept',async()=>{
+  let backup;const first=await browser({picker:async()=>({name:'design-2.json',createWritable:async()=>({write:async text=>{backup=text;},close:async()=>{}})})});
+  first.route('home/2');assert.ok(first.one('.rms-home-gov'));first.click('#rms-export');await flush();
+  assert.equal(JSON.parse(backup).presentation.route,'home/2');
+  const second=await browser();await importFile(second,backup);second.click('#rms-confirm-import');
+  assert.equal(second.currentRoute(),'#home/2');assert.ok(second.one('.rms-home-gov'));second.healthy();
+});
+
+test('received XML report opens from actual document evidence and offers four bundles, searchable fields and raw XML',async()=>{
+  const b=await browser();queryNeeded(b);b.click('[data-action="doc-detail"][data-id="F01"]');
+  assert.match(b.one('dialog').textContent,/XML 수신 근거/);b.click('dialog [data-action="receipt-report"]');
+  assert.equal(b.document.querySelectorAll('[data-report-bundle]').length,4);
+  assert.equal(b.one('[data-report-current]').dataset.reportCurrent,'company-application');
+  assert.match(b.one('dialog').textContent,/브런치카페광주가산점/);
+  for(const id of ['personal-application','personal-preference','company-application','company-preference']){
+    b.click('[data-report-bundle="'+id+'"]');assert.equal(b.one('[data-report-current]').dataset.reportCurrent,id);
+    assert.ok(b.one('.rms-report-document'));
+  }
+  b.click('[data-report-bundle="company-application"]');b.click('[data-report-document="사업자등록증명-기업용"]');
+  const search=b.one('[data-report-query]');search.value='브런치카페';search.dispatchEvent(new b.window.Event('input',{bubbles:true}));
+  assert.match(b.one('[data-report-fields]').textContent,/브런치카페광주가산점/);
+  assert.doesNotMatch(b.one('[data-report-fields]').textContent,/대표유형/);
+  b.click('[data-report-tab="xml"]');assert.match(b.one('.rms-report-raw code').textContent,/<Envelope>/);
+  assert.equal(b.one('.rms-report-raw code').querySelector('Envelope'),null);
+  const downloadCount=b.downloads.length;b.click('[data-report-download]');assert.equal(b.downloads.length,downloadCount+1);
+  assert.match(await b.downloads.at(-1).text(),/브런치카페광주가산점/);
+  const dialog=b.one('dialog');dialog.getBoundingClientRect=()=>({left:40,top:60,width:800,height:500});
+  key(b,'[data-dialog-move]','ArrowRight');assert.ok(parseFloat(dialog.style.left)>40);
+  close(b);b.route('mydata/personal-preference');assert.ok(b.one('#rms-receipt-page'));assert.equal(b.document.querySelectorAll('[data-report-bundle]').length,4);b.healthy();
 });

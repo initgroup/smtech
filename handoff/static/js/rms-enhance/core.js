@@ -104,12 +104,13 @@
   function validatePresentation(value) {
     safeTree(value,0);
     assert(value && roles.includes(value.role),'시연 역할 형식 오류');
-    assert(typeof value.route==='string' && /^(home(?:\/2)?|doctors|doctor\/[A-Za-z0-9_-]+|matches|stats|documents(?:\/[A-Za-z0-9_-]+(?:\/[1-4])?)?|faq|questions|manage(?:\/(?:home|documents))?|guide(?:\/SFR-\d{2})?)$/.test(value.route),'시연 화면 경로 오류');
+    assert(typeof value.route==='string' && /^(home(?:\/2)?|doctors|doctor\/[A-Za-z0-9_-]+|matches|stats|documents(?:\/[A-Za-z0-9_-]+(?:\/[1-4])?)?|faq|questions|manage(?:\/(?:home|documents))?|guide(?:\/SFR-\d{2})?|boards\/(?:notice|qna|faq|resources)|search|mydata(?:\/(?:personal-application|personal-preference|company-application|company-preference))?)$/.test(value.route),'시연 화면 경로 오류');
     var source=value.ui;assert(source && typeof source==='object' && !Array.isArray(source),'시연 화면 설정 오류');
     var result={role:value.role,route:value.route,ui:{}};
     ['faqQuery','faqWork','docStatus','codeKind','appId'].forEach(function(k){assert(typeof source[k]==='string' && source[k].length<=500,'시연 검색조건 오류');result.ui[k]=source[k];});
     assert(Array.isArray(source.selected)&&source.selected.length<=3&&source.selected.every(function(id){return typeof id==='string'&&id.length<=80;}),'비교 선택 오류');result.ui.selected=source.selected.slice();
     [['doctorFilters',['q','region','owner','industry','technology','institution','year','available','stale','sort']],['statsFilters',['region','technology','industry','start','end']]].forEach(function(pair){var f=source[pair[0]];assert(f&&typeof f==='object'&&!Array.isArray(f),'검색조건 형식 오류');var next={};Object.keys(f).forEach(function(k){var valid=['available','stale'].includes(k)?typeof f[k]==='boolean':typeof f[k]==='string'&&f[k].length<=500;assert(pair[1].includes(k)&&valid,'검색조건 값 오류');next[k]=f[k];});result.ui[pair[0]]=next;});
+    ['programLayout','globalQuery','boardQuery'].forEach(function(k){if(source[k]!==undefined){assert(typeof source[k]==='string'&&source[k].length<=500,'화면 검색조건 오류');result.ui[k]=source[k];}});
     return result;
   }
   function parseBackup(text) {
@@ -121,7 +122,7 @@
     }
     return {data:validate(value),presentation:null};
   }
-  function createStore(seed, storage) {
+  function createStore(seed, storage, receiptSource) {
     validate(seed);
     var state = clone(seed), session = {role:'visitor', region:'충남', companyId:'CO001'}, loadWarning='';
     if (storage) {
@@ -138,6 +139,11 @@
         }
       } catch(error) { loadWarning='저장 데이터를 읽지 못해 가상 초기자료를 불러왔습니다. ' + error.message; }
     }
+    function normalizeReceiptEvidence(data) {
+      if(!receiptSource)return false;var changed=false;
+      data.applications.forEach(function(a){var reset=false;a.docs.forEach(function(d){if(d.status==='조회완료'&&!d.receipt){d.status='미제출';d.queriedAt=null;d.issue='';d.reason='이전 가상 조회입니다. XML 수신 샘플을 다시 확인해 주세요.';reset=true;changed=true;}});if(reset){a.consent=false;a.consentAt=null;if(a.submission==='제출완료')a.submission='작성중';}});return changed;
+    }
+    if(normalizeReceiptEvidence(state))loadWarning='이전 가상 조회의 수신 근거를 다시 확인해야 합니다. XML 수신 동의·확인 후 제출해 주세요.';
     function update(action, fn) { var next=clone(state); var result=fn(next); next.audit.unshift({at:now(),role:session.role,action:action});next.audit=next.audit.slice(0,300);validate(next);if(storage) storage.setItem(KEY,JSON.stringify(next));state=next;return result; }
     function signed() { assert(session.role!=='visitor','사용자 역할에서 지원기업 또는 관리기관으로 전환해 주세요.'); }
     function manager() { assert(['tp','admin'].indexOf(session.role)>=0,'관리기관 또는 관리자만 처리할 수 있습니다.'); }
@@ -153,6 +159,15 @@
       assert(a.consent,'정보 제공에 동의한 후 조회할 수 있습니다.');
       assert(s.documentTypes.some(function(t){return t.id===d.specId&&t.active;}),'사용 중지된 서류입니다.');
       d.queriedAt=now();d.issue='';
+      if(receiptSource){
+        var received=receiptSource.mapDocument(d.specId,a.mydataBundle||'company-application');
+        d.receipt={bundleId:received.bundleId,documentCode:received.documentCode||'',documentName:received.documentName||'',provider:received.provider||'',resultCode:received.resultCode||'',resultMessage:received.resultMessage||'',fields:clone(received.fields||[])};
+        if(!received.available){d.status='조회실패';d.issue='unavailable';d.reason='선택한 XML 수신 묶음에 이 서류가 없습니다. 해당 증빙파일을 직접 제출하거나 다른 수신 묶음을 선택해 주세요.';}
+        else if(!d.receipt.fields.some(function(f){return String(f[1]||'').trim();})){d.status='보완필요';d.issue='empty';d.reason='서류 태그는 수신되었지만 값이 비어 있습니다. 리포트 확인 후 증빙파일을 제출해 주세요.';}
+        else {d.status='조회완료';d.reason='첨부 XML 수신 정보 확인 완료 · '+(received.documentName||d.specId)+' (수신값의 자격·유효성 판정은 별도 검토)';}
+        if(d.specId==='F01'&&received.available){var info=receiptSource.companyInfo(a.mydataBundle||'company-application');if(info.address){a.address=info.address;if(a.inputAddress!==info.address){d.status='보완필요';d.issue='mismatch';d.reason='신청서 주소와 XML 수신 주소가 다릅니다. 비교 후 반영 여부를 선택하세요.';}}}
+        log(d,retry?'재조회':'조회',d.reason);return;
+      }
       if(d.specId==='F06'&&!retry){d.status='조회실패';d.issue='timeout';d.reason='제공기관 응답 지연 (가상). 재조회하거나 파일을 첨부해 주세요.';}
       else if(d.specId==='F09'){d.status='조회실패';d.issue='unavailable';d.reason='가상 연계기관에서 정보를 제공하지 않습니다. 파일로 제출해 주세요.';}
       else if(d.specId==='F01'&&a.inputAddress!==a.address){d.status='보완필요';d.issue='mismatch';d.reason='신청서 주소와 조회 주소가 다릅니다. 비교 후 반영 여부를 선택하세요.';}
@@ -181,18 +196,20 @@
       startApplication:function(programId){var existing=state.applications.find(function(a){return a.programId===programId&&a.companyId===session.companyId;});assert(session.role==='company','지원기업 역할에서 신청하세요.');if(existing)return existing.id;return update('가상 신청서 생성',function(s){assert(s.programs.some(function(p){return p.id===programId;}),'사업이 없습니다.');var a=clone(s.applications.find(function(x){return x.companyId===session.companyId;}));assert(a,'가상 기업 기본정보가 없습니다.');a.id='A'+Date.now();a.programId=programId;a.consent=false;a.consentAt=null;a.submission='작성중';a.docs=s.documentTypes.map(function(t){return {specId:t.id,status:'미제출',queriedAt:null,reason:'',file:null,history:[]};});s.applications.push(a);return a.id;});},
       saveApplicationInfo:function(id,input){return update('신청기업 정보 저장',function(s){assert(session.role==='company','지원기업만 신청기업 정보를 수정할 수 있습니다.');var a=application(s,id);writable(a);var address=clean(input.inputAddress,500);a.companyName=clean(input.companyName,200);a.representative=clean(input.representative,200);if(a.inputAddress!==address){var d=a.docs.find(function(x){return x.specId==='F01';});if(d&&d.status!=='미제출'){d.status='보완필요';d.issue='manual';d.reason='신청서 주소가 변경되었습니다. 다시 조회하거나 증빙파일을 제출해 주세요.';log(d,'신청정보 변경',d.reason);}}a.inputAddress=address;});},
       consent:function(id,yes){return update(yes?'정보제공 동의':'정보제공 동의 철회',function(s){assert(session.role==='company','지원기업 역할에서 정보제공 동의를 선택하세요.');var a=application(s,id);writable(a);a.consent=!!yes;a.consentAt=yes?now():null;});},
+      selectMydataBundle:function(id,bundleId){return update('XML 수신 묶음 선택',function(s){assert(session.role==='company','지원기업 역할에서 수신 묶음을 선택하세요.');var a=application(s,id);writable(a);assert(receiptSource&&receiptSource.getBundle(bundleId),'수신 묶음을 찾을 수 없습니다.');if(a.mydataBundle===bundleId)return;a.mydataBundle=bundleId;a.consent=false;a.consentAt=null;a.docs.forEach(function(d){delete d.receipt;d.queriedAt=null;if(!d.file){d.status='미제출';d.issue='';d.reason='수신 묶음 변경. 동의 후 다시 확인해 주세요.';}log(d,'수신 묶음 변경',bundleId);});});},
+      applyReceiptInfo:function(id){return update('XML 신청정보 반영',function(s){assert(session.role==='company','지원기업만 수신 정보를 반영할 수 있습니다.');var a=application(s,id);writable(a);assert(a.consent,'정보 제공에 동의한 후 수신 정보를 반영하세요.');assert(receiptSource,'XML 수신 모듈을 읽지 못했습니다.');var info=receiptSource.companyInfo(a.mydataBundle||'company-application');assert(info.companyName||info.representative||info.address,'이 묶음에서 반영할 신청정보가 없습니다.');if(info.companyName)a.companyName=info.companyName;if(info.representative)a.representative=info.representative;if(info.address){a.address=info.address;a.inputAddress=info.address;}if(info.businessNumber)a.businessNumber=info.businessNumber;a.mydataAppliedAt=now();var d=a.docs.find(function(row){return row.specId==='F01';});if(d)queryOne(s,a,d,false);});},
       queryDocument:function(appId,id,retry){return update(retry?'증빙서류 재조회':'증빙서류 조회',function(s){var v=doc(s,appId,id);queryOne(s,v.a,v.d,retry);});},
       queryRequired:function(appId){return update('필수서류 일괄조회',function(s){var a=application(s,appId),p=s.programs.find(function(x){return x.id===a.programId;});p.requiredDocs.forEach(function(id){queryOne(s,a,a.docs.find(function(d){return d.specId===id;}),false);});});},
       resolveMismatch:function(appId,apply){return update('주소 불일치 확인',function(s){assert(session.role==='company','지원기업만 입력값을 선택할 수 있습니다.');var v=doc(s,appId,'F01');writable(v.a);assert(v.a.consent&&v.d.queriedAt&&v.d.issue==='mismatch','현재 조회에서 주소 불일치가 확인된 항목만 처리할 수 있습니다.');v.d.issue='';if(apply){v.a.inputAddress=v.a.address;v.d.status='조회완료';v.d.reason='사용자가 조회 주소 반영을 선택함';}else{v.d.status='보완필요';v.d.issue='manual';v.d.reason='기존 주소 유지. 별도 증빙 파일을 제출해 주세요.';}log(v.d,apply?'조회값 반영':'기존값 유지',v.d.reason);});},
       attachFile:function(appId,id,file){return update('증빙 파일 제출',function(s){assert(session.role==='company','지원기업만 증빙파일을 제출할 수 있습니다.');var v=doc(s,appId,id);writable(v.a);assert(file&&/\.(pdf|hwp|hwpx|jpg|jpeg|png|zip)$/i.test(file.name),'PDF, HWP, HWPX, 이미지 또는 ZIP을 선택하세요.');assert(file.size>0&&file.size<=10*1024*1024,'파일은 0바이트 초과, 10MB 이하로 선택하세요.');v.d.file={name:clean(file.name,255),size:file.size};v.d.status='제출완료';v.d.issue='';v.d.reason='파일명·크기만 저장하는 시연입니다.';log(v.d,'파일 제출',file.name);});},
       requestSupplement:function(appId,id,reason){return update('보완 요청',function(s){manager();var v=doc(s,appId,id);v.d.status='보완필요';v.d.issue='supplement';v.d.reason=clean(reason,1000);v.a.submission='작성중';log(v.d,'보완 요청',v.d.reason);});},
-      submitApplication:function(id,draft){return update(draft?'신청서 임시저장':'사업 신청서 제출',function(s){assert(session.role==='company','지원기업 역할에서 제출하세요.');var a=application(s,id);writable(a);if(!draft){var p=s.programs.find(function(x){return x.id===a.programId;});var missing=p.requiredDocs.filter(function(k){var d=a.docs.find(function(x){return x.specId===k;});return !d||!((d.status==='조회완료'&&a.consent)||d.status==='제출완료');});assert(!missing.length,'필수서류를 확인하세요. 조회완료 또는 제출완료 상태여야 합니다. 동의 철회 시 파일 제출이 필요합니다.');}a.submission=draft?'임시저장':'제출완료';});},
+      submitApplication:function(id,draft){return update(draft?'신청서 임시저장':'사업 신청서 제출',function(s){assert(session.role==='company','지원기업 역할에서 제출하세요.');var a=application(s,id);writable(a);if(!draft){var p=s.programs.find(function(x){return x.id===a.programId;});var missing=p.requiredDocs.filter(function(k){var d=a.docs.find(function(x){return x.specId===k;});return !d||!((d.status==='조회완료'&&a.consent&&(!receiptSource||d.receipt))||d.status==='제출완료');});assert(!missing.length,'필수서류를 확인하세요. 조회완료 또는 제출완료 상태여야 합니다. 동의 철회 시 파일 제출이 필요합니다.');}a.submission=draft?'임시저장':'제출완료';});},
       updateQuestion:function(id,mainVisible){return update('소통 메인노출 변경',function(s){admin();var q=s.questions.find(function(x){return x.id===id;});assert(q,'게시물이 없습니다.');assert(!mainVisible||q.public,'비공개 게시물은 메인에 노출할 수 없습니다.');q.mainVisible=!!mainVisible;});},
       updateSettings:function(settings){return update('메인화면 배치 설정',function(s){admin();s.settings=clone(settings);});},
       saveDocumentType:function(input){return update('증빙서류 대상 설정',function(s){admin();var d=s.documentTypes.find(function(x){return x.id===input.id;});if(d){d.name=clean(input.name,100);d.provider=clean(input.provider,100);d.active=!!input.active;}else{var id='F'+Date.now();s.documentTypes.push({id:id,name:clean(input.name,100),provider:clean(input.provider,100),active:true});s.applications.forEach(function(a){a.docs.push({specId:id,status:'미제출',queriedAt:null,reason:'',file:null,history:[]});});}});},
       exportJson:function(){return JSON.stringify(state,null,2);},
       exportBackup:function(presentation){return JSON.stringify({format:'smtech-demo',version:1,exportedAt:now(),data:state,presentation:validatePresentation(presentation)},null,2);},
-      importJson:function(text){var parsed=parseBackup(text),next=parsed.data;if(storage)storage.setItem(KEY,JSON.stringify(next));state=clone(next);return parsed.presentation;},
+      importJson:function(text){var parsed=parseBackup(text),next=parsed.data;normalizeReceiptEvidence(next);if(storage)storage.setItem(KEY,JSON.stringify(next));state=clone(next);return parsed.presentation;},
       reset:function(){if(storage)storage.setItem(KEY,JSON.stringify(seed));state=clone(seed);session.role='visitor';}
     };
   }

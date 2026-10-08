@@ -28,18 +28,18 @@ test('entrypoint loads only local required assets and independent custom JavaScr
   const html=fs.readFileSync(path.join(web,'index.html'),'utf8');
   for(const m of html.matchAll(/(?:src|href)="([^"]+)"/g)) {const value=m[1];if(value.startsWith('#'))continue;assert(!/^(?:https?:)?\/\//.test(value));assert(fs.existsSync(path.join(web,value)),value);}
   const scripts=[...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map(x=>x[1]);
-  assert.equal(scripts.length,3);
+  assert.equal(scripts.length,5);
   scripts.forEach(s=>{assert(s.startsWith('static/js/rms-enhance/'));new vm.Script(fs.readFileSync(path.join(web,s),'utf8'));});
   assert(!/\son(?:click|change|submit)\s*=/.test(html));
   assert(html.includes("connect-src 'self'"));assert(html.includes("form-action 'none'"));
 });
 
-test('handoff contains 13 unique screen fragments and matching generated source copies', () => {
+test('handoff contains 20 unique screen fragments and matching generated source copies', () => {
   const target=path.join(base,'handoff'),m=JSON.parse(fs.readFileSync(path.join(target,'manifest.json'),'utf8'));
-  assert.equal(m.screens.length,13);
+  assert.equal(m.screens.length,20);
   for(const file of m.files)assert.equal(hash(path.join(target,file.path)),file.sha256,file.path);
   for(const {screen} of m.screens){const html=fs.readFileSync(path.join(target,'fragments',screen+'.html'),'utf8');assert(html.includes('class="rms-enhance"'));const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(x=>x[1]);assert.equal(new Set(ids).size,ids.length,screen+' duplicate IDs');for(const match of html.matchAll(/<label[^>]+for="([^"]+)"/g))assert(ids.includes(match[1]),screen+' missing labelled input');}
-  for(const name of ['core.js','views.js','app.js'])assert.equal(hash(path.join(target,'static/js/rms-enhance',name)),hash(path.join(web,'static/js/rms-enhance',name)));
+  for(const name of ['core.js','board-data.js','mydata-report.js','views.js','app.js'])assert.equal(hash(path.join(target,'static/js/rms-enhance',name)),hash(path.join(web,'static/js/rms-enhance',name)));
 });
 
 test('all archived successful resources match the collection manifest', () => {
