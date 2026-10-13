@@ -159,7 +159,7 @@ test('all pages and application steps render for every demo role with working gl
     for(const page of pages){
       b.route(page);b.healthy();assert.ok(b.one('h1').textContent,role+' '+page);
       assert.equal(b.one('#rms-export').textContent,'시연내용 JSON 내보내기');
-      assert.equal(b.one('#rms-source-download').getAttribute('href'),'downloads/smtech-source.zip');
+      assert.equal(b.one('[data-source-design="1"]').getAttribute('href'),'downloads/smtech-source-design1.zip');
       assert.equal(b.document.querySelector('#rms-enhance-app .rms-sfr-highlight'),null,'SFR tools must remain outside the actual page');
       if(page!=='guide')assert.ok(b.one('#rms-demo-sfr .rms-sfr-highlight'),role+' '+page+' must identify its requirements in the demo toolbar');
       b.click('#rms-storage-info');assert.match(b.one('dialog').textContent,/smtech.rms.prototype.v1/);close(b);
@@ -358,8 +358,8 @@ test('screen saves stay in browser until full JSON export; toolbar explains fold
   assert.equal(exported.data.applications.find(a=>a.id==='A001').representative,'가상 저장 검증');
   assert.match(b.one('#rms-storage-help').textContent,/Ctrl\+J/);
   b.click('#rms-storage-info');assert.match(b.one('dialog').textContent,/폴더에 표시/);close(b);
-  assert.equal(b.one('#rms-import').parentElement.nextElementSibling.id,'rms-source-download');
-  assert.equal(b.one('#rms-source-download').nextElementSibling.id,'rms-release-history');
+  assert.equal(b.one('#rms-import').parentElement.nextElementSibling.id,'rms-source-downloads');
+  assert.equal(b.one('#rms-source-downloads').nextElementSibling.id,'rms-release-history');
   b.click('#rms-reset');assert.equal(app(b).representative,'가상 저장 검증');
   close(b);assert.equal(app(b).representative,'가상 저장 검증');
   b.click('#rms-reset');b.click('[data-action="reset"]');
@@ -410,9 +410,27 @@ test('final step supports file submission, locked review, supplement and resubmi
   assert.equal(app(b).submission,'제출완료');b.healthy();
 });
 
+test('all three home designs hide the main navigation until login and after logout',async()=>{
+  for(const route of ['home','home/2','home/3']){
+    const b=await browser();
+    b.route(route);
+    const nav=b.one('#header .rms-site-nav');
+    assert.equal(nav.hidden,true);
+    assert.ok(b.one('[data-shell="login"]'));
+    for(const role of ['company','tp','admin']){
+      b.click('[data-shell="login"]');b.click('[data-action="role-login"][data-id="'+role+'"]');
+      assert.equal(nav.hidden,false,route+' '+role);
+      b.route('boards/notice');assert.equal(nav.hidden,false);
+      b.click('[data-shell="logout"]');assert.equal(b.currentRoute(),'#'+route);assert.equal(nav.hidden,true);
+      b.route('boards/notice');assert.equal(nav.hidden,true);b.route(route);assert.equal(nav.hidden,true);
+    }
+    b.healthy();
+  }
+});
+
 test('real scripts bootstrap home without errors and preserve the public shell',async()=>{
   const b=await browser();
-  assert.match(b.one('h1').textContent,/기업의 성장/);
+  assert.match(b.one('h1').textContent,/사업공고·업무 현황/);
   assert.equal(b.document.querySelectorAll('.rms-program-cards>article').length,seed.programs.length);
   assert.ok(b.document.querySelector('#header .rms-site-nav'));
   assert.ok(b.document.querySelector('#rms-global-search'));
@@ -430,7 +448,7 @@ test('prototype role, backup tools, instructions and SFR context are isolated ab
   assert.equal(toolbar.nextElementSibling,header);
   assert.match(toolbar.textContent,/기능개선 시연/);
   assert.match(toolbar.textContent,/제공된 XML 수신 샘플/);
-  for(const id of ['rms-role','rms-export','rms-storage-info','rms-import','rms-source-download','rms-reset','rms-storage-help','rms-demo-sfr']){
+  for(const id of ['rms-role','rms-export','rms-storage-info','rms-import','rms-source-downloads','rms-reset','rms-storage-help','rms-demo-sfr']){
     assert.ok(toolbar.contains(b.one('#'+id)),id+' must stay inside the dedicated prototype toolbar');
     assert.equal(header.querySelector('#'+id),null);
     assert.equal(b.document.querySelector('#rms-enhance-app #'+id),null);
@@ -441,6 +459,7 @@ test('prototype role, backup tools, instructions and SFR context are isolated ab
 
 test('announcement cards identify the reception period and closing date; details display all saved public information',async()=>{
   const b=await browser();
+  b.click('[data-action="program-layout"][data-id="cards"]');
   for(const program of seed.programs){
     const card=b.one('[data-action="program"][data-id="'+program.id+'"]').closest('article');
     assert.match(card.textContent,/접수기간/);assert.match(card.textContent,/마감/);
@@ -717,11 +736,11 @@ test('statistics form reports reversed dates and applies a valid region filter',
 });
 
 
-test('demo tools start collapsed and both design links remain outside the disclosure on every page',async()=>{
+test('demo tools start collapsed and all three design links remain outside the disclosure on every page',async()=>{
   const b=await browser();
   assert.equal(b.one('#rms-demo-disclosure').hasAttribute('open'),false);
   const links=Array.from(b.document.querySelectorAll('.rms-demo-designs a'));
-  assert.equal(links.length,2);
+  assert.equal(links.length,3);
   for(const link of links){assert.equal(link.closest('details'),null);assert.ok(b.one('#rms-demo-tools').contains(link));}
   b.route('documents');assert.ok(b.one('[data-home-design="2"]'));
   b.route('home/2');assert.equal(b.one('[data-home-design="2"]').getAttribute('aria-current'),'page');
@@ -730,9 +749,9 @@ test('demo tools start collapsed and both design links remain outside the disclo
   assert.equal(b.document.querySelector('[data-action="mydata-open"]'),null);b.healthy();
 });
 
-test('both home concepts offer matching card and list announcements without changing application data',async()=>{
+test('all three home concepts offer matching card and list announcements without changing application data',async()=>{
   const b=await browser(),before=b.state();
-  for(const route of ['home','home/2']){
+  for(const route of ['home','home/2','home/3']){
     b.route(route);b.click('[data-action="program-layout"][data-id="cards"]');
     assert.equal(b.document.querySelectorAll('.rms-program-cards>article').length,seed.programs.length);
     assert.equal(b.one('[data-action="program-layout"][data-id="cards"]').getAttribute('aria-pressed'),'true');
@@ -749,7 +768,7 @@ test('both home concepts offer matching card and list announcements without chan
 
 test('four public boards show five recent rows before and after login; more opens full real board pages',async()=>{
   const b=await browser();
-  for(const route of ['home','home/2'])for(const role of ['visitor','company']){
+  for(const route of ['home','home/2','home/3'])for(const role of ['visitor','company']){
     b.role(role);b.route(route);
     const panels=Array.from(b.document.querySelectorAll('.rms-board-panel'));
     assert.equal(panels.length,4);
@@ -774,9 +793,9 @@ test('four public boards show five recent rows before and after login; more open
   }
 });
 
-test('the integrated search on both home concepts finds programs, doctors and public board posts',async()=>{
+test('the integrated search on all three home concepts finds programs, doctors and public board posts',async()=>{
   const b=await browser();
-  for(const route of ['home','home/2']){
+  for(const route of ['home','home/2','home/3']){
     b.route(route);assert.equal(b.document.querySelectorAll('#rms-global-search').length,1);
     b.set('#rms-global-query','사업');b.submit('#rms-global-search');
     assert.equal(b.currentRoute(),'#search');assert.match(b.one('h1').textContent,/통합검색 결과/);
@@ -787,12 +806,95 @@ test('the integrated search on both home concepts finds programs, doctors and pu
   }
 });
 
-test('alternate home route survives full JSON backup with its government-service visual concept',async()=>{
-  let backup;const first=await browser({picker:async()=>({name:'design-2.json',createWritable:async()=>({write:async text=>{backup=text;},close:async()=>{}})})});
-  first.route('home/2');assert.ok(first.one('.rms-home-gov'));first.click('#rms-export');await flush();
-  assert.equal(JSON.parse(backup).presentation.route,'home/2');
+test('every home design renders identical business markup for CSS-only selection',async()=>{
+  const b=await browser();
+  for(const role of ['visitor','company','tp','admin']){
+    b.role(role);b.route('home');const markup=b.one('#rms-enhance-app').innerHTML;
+    for(const route of ['home/2','home/3']){b.route(route);assert.equal(b.one('#rms-enhance-app').innerHTML,markup,role+' '+route);b.healthy();}
+  }
+});
+
+test('three business concepts share their structure and useful defaults and continuous modal themes',async()=>{
+  const b=await browser();
+  const concepts=[['home','1','.rms-work-ledger','cards'],['home/2','2','.rms-workbench','cards'],['home/3','3','.rms-work-dashboard','cards']];
+  for(const [route,design,selector,layout] of concepts){
+    b.route(route);assert.ok(b.one(selector));
+    assert.equal(b.one('[data-home-design="'+design+'"]').getAttribute('aria-current'),'page');
+    assert.ok(b.document.body.classList.contains('rms-design'+design));
+    assert.equal(b.one('[data-action="program-layout"][data-id="'+layout+'"]').getAttribute('aria-pressed'),'true');
+    assert.equal(b.document.querySelectorAll('.rms-public-shortcuts a').length,4);
+    assert.equal(b.document.querySelectorAll('.rms-board-panel').length,4);
+    assert.equal(b.document.querySelector('.rms-gov-bottom'),null);
+    assert.doesNotMatch(b.text(),/기업의 성장을 함께|우리 기업에 맞는 기술닥터|기업지원에 대해 궁금/);
+    b.click('[data-action="program"]');assert.ok(b.one('dialog').hasAttribute('open'));close(b);
+    b.route('boards/notice');assert.ok(b.document.body.classList.contains('rms-design'+design));
+    b.click('[data-action="board-detail"]');assert.ok(b.one('dialog').hasAttribute('open'));close(b);
+    b.route(route);b.healthy();
+  }
+  b.route('home/3');assert.match(b.one('.rms-dashboard-status').textContent,/로그인 필요/);
+  b.role('company');assert.match(b.one('.rms-dashboard-status dl:last-child dd').textContent,/^\d+건$/);
+  b.click('[data-shell="logout"]');assert.equal(b.currentRoute(),'#home/3');assert.equal(b.one('.rms-site-nav').hidden,true);
+});
+
+test('all roles use all three themes in search results and announcement and board dialogs without data changes',async()=>{
+  const b=await browser(),before=b.state(),faq=seed.faqs.find(f=>f.published);
+  for(const role of ['visitor','company','tp','admin'])for(const [route,design] of [['home','1'],['home/2','2'],['home/3','3']]){
+    b.role(role);b.route(route);assert.equal(b.one('.rms-site-nav').hidden,role==='visitor',route+' '+role);
+    b.set('#rms-global-query',seed.programs[0].title);b.submit('#rms-global-search');
+    assert.equal(b.currentRoute(),'#search');assert.ok(b.document.body.classList.contains('rms-design'+design));
+    assert.equal(b.document.body.classList.contains('rms-home-design'+design),false);
+    b.click('[data-action="program"][data-id="'+seed.programs[0].id+'"]');
+    assert.ok(b.one('dialog').textContent.includes(seed.programs[0].intro));
+    assert.equal(!!b.document.querySelector('dialog [data-action="program-edit"]'),role==='admin');close(b);
+    b.route('boards/faq');b.set('#rms-board-query',faq.title);b.submit('#rms-board-search');
+    assert.ok(b.document.body.classList.contains('rms-design'+design));
+    b.click('[data-action="board-detail"][data-id="faq/'+faq.id+'"]');
+    assert.ok(b.one('dialog').hasAttribute('open'));assert.ok(b.one('dialog').textContent.includes(faq.answer));close(b);
+    assert.equal(b.one('#rms-role').value,role);b.healthy();
+  }
+  assert.deepEqual(b.state(),before);
+});
+
+test('design3, selected layout, edited records and home settings roundtrip through full JSON backup',async()=>{
+  let backup;const first=await browser({picker:async()=>({name:'design-3.json',createWritable:async()=>({write:async text=>{backup=text;},close:async()=>{}})})});
+  first.role('company');first.route('documents/A001/2');first.set('#rms-representative','Design review representative');first.submit('#rms-company-form');assert.equal(app(first).representative,'Design review representative');
+  first.role('admin');first.route('manage/home');first.click('[data-action="home-up"][data-id="questions"]');
+  first.role('company');const before=first.state();
+  for(const route of ['home','home/2','home/3']){
+    first.route(route);assert.ok(first.one('.rms-home-main-blocks').firstElementChild.classList.contains('rms-home-boards'));
+  }
+  assert.deepEqual(first.state(),before);
+  first.route('home/3');first.click('[data-action="program-layout"][data-id="list"]');first.click('#rms-export');await flush();
+  assert.equal(JSON.parse(backup).presentation.route,'home/3');assert.equal(JSON.parse(backup).presentation.ui.design,'3');
   const second=await browser();await importFile(second,backup);second.click('#rms-confirm-import');
-  assert.equal(second.currentRoute(),'#home/2');assert.ok(second.one('.rms-home-gov'));second.healthy();
+  assert.equal(second.currentRoute(),'#home/3');assert.ok(second.one('.rms-work-dashboard'));
+  assert.equal(second.one('[data-action="program-layout"][data-id="list"]').getAttribute('aria-pressed'),'true');
+  assert.equal(second.one('#rms-role').value,'company');assert.deepEqual(second.state(),before);second.healthy();
+});
+
+test('legacy alternate home backup infers its workbench theme and preserves the chosen announcement layout',async()=>{
+  let backup;const first=await browser({picker:async()=>({name:'design-2.json',createWritable:async()=>({write:async text=>{backup=text;},close:async()=>{}})})});
+  first.route('home/2');assert.ok(first.one('.rms-workbench'));first.click('[data-action="program-layout"][data-id="list"]');
+  first.click('#rms-export');await flush();const legacy=JSON.parse(backup);
+  assert.equal(legacy.presentation.route,'home/2');delete legacy.presentation.ui.design;
+  const second=await browser();await importFile(second,JSON.stringify(legacy));second.click('#rms-confirm-import');
+  assert.equal(second.currentRoute(),'#home/2');assert.ok(second.one('.rms-workbench'));
+  assert.ok(second.document.body.classList.contains('rms-design2'));
+  assert.equal(second.one('[data-action="program-layout"][data-id="list"]').getAttribute('aria-pressed'),'true');second.healthy();
+});
+
+test('backups from a subpage retain the selected theme and doctor search and comparison settings',async()=>{
+  for(const [route,design] of [['home','1'],['home/2','2'],['home/3','3']]){
+    let backup;const first=await browser({picker:async()=>({name:'subpage.json',createWritable:async()=>({write:async text=>{backup=text;},close:async()=>{}})})});
+    first.role('company');first.route(route);first.route('doctors');
+    first.set('#rms-q',seed.doctors[0].name);first.submit('#rms-doctor-search');first.change('[data-compare="'+seed.doctors[0].id+'"]',true);
+    first.click('#rms-export');await flush();assert.equal(JSON.parse(backup).presentation.ui.design,design);
+    const second=await browser();await importFile(second,backup);second.click('#rms-confirm-import');
+    assert.equal(second.currentRoute(),'#doctors');assert.ok(second.document.body.classList.contains('rms-design'+design));
+    assert.equal(second.document.body.classList.contains('rms-home-design'+design),false);
+    assert.equal(second.one('#rms-q').value,seed.doctors[0].name);assert.ok(second.one('[data-compare="'+seed.doctors[0].id+'"]').checked);
+    assert.equal(second.one('#rms-role').value,'company');assert.deepEqual(second.state(),first.state());second.healthy();
+  }
 });
 
 test('received XML report opens from actual document evidence and offers four bundles, searchable fields and raw XML',async()=>{
@@ -835,3 +937,26 @@ test('server adapter waits before application-step navigation and preserves unsa
 });
 
  test('release history opens a movable version list from the demo toolbar',async()=>{const b=await browser();b.click('#rms-release-history');assert.match(b.one('dialog').textContent,/배포내역/);assert.ok(b.one('[data-dialog-move]'));assert.ok(b.one('.rms-release-item'));const dialog=b.one('dialog');dialog.getBoundingClientRect=()=>({left:50,top:60,width:800,height:500});key(b,'[data-dialog-move]','ArrowRight');assert.ok(parseFloat(dialog.style.getPropertyValue('--rms-layer-left'))>50);close(b);b.healthy();});
+
+
+test('three ZIP buttons replace the original download control and keep their respective design links on every route',async()=>{
+  const b=await browser();
+  const group=b.one('#rms-source-downloads');
+  assert.equal(group.parentElement,b.one('.rms-demo-controls'));
+  assert.equal(group.previousElementSibling,b.one('#rms-import').parentElement);
+  assert.equal(group.nextElementSibling,b.one('#rms-release-history'));
+  assert.equal(b.document.querySelectorAll('.rms-demo-downloads').length,1);
+  assert.equal(b.document.querySelector('#rms-source-download'),null);
+  for(const route of ['home','home/2','home/3','programs']){
+    b.route(route);
+    const links=Array.from(b.document.querySelectorAll('[data-source-design]'));
+    assert.equal(links.length,3);
+    for(const [index,link] of links.entries()){
+      const design=String(index+1);
+      assert.equal(link.closest('details'),b.one('#rms-demo-disclosure'));
+      assert.equal(link.getAttribute('href'),'downloads/smtech-source-design'+design+'.zip');
+      assert.match(link.getAttribute('download'),new RegExp('-design'+design+'\\.zip$'));
+    }
+    b.healthy();
+  }
+});

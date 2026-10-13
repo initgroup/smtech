@@ -85,6 +85,10 @@ body.rms-site  {
   align-items: center;
 }
 
+.rms-site .rms-site-nav[hidden]  {
+  display: none;
+}
+
 .rms-site .rms-site-nav a  {
   font-size: 17px;
   font-weight: 700;
@@ -409,3 +413,11 @@ body.rms-site.rms-home-design2  {
 
 }
 
+
+/* Keep the visitor account action beside the brand on narrow screens. */
+@media (max-width:420px) {
+  .rms-site #header.rms-site-header:has(.rms-site-nav[hidden]) .rms-site-user {
+    flex-basis: auto;
+    margin-left: auto;
+  }
+}

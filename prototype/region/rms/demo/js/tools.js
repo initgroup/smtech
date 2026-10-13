@@ -13,9 +13,9 @@
             var release=(window.RMSReleaseHistory||{}).releases?.[0];
             if(release&&!release.legacy){
                 document.getElementById('rms-release-history').textContent='배포내역 · v'+release.version;
-                var sourceLink=document.getElementById('rms-source-download');
-                sourceLink.textContent='개발자 소스 · v'+release.version+' ZIP';
-                sourceLink.setAttribute('download','rms-developer-v'+release.version+'.zip');
+                document.querySelectorAll('[data-source-design]').forEach(function (link) {
+                    link.setAttribute('download', 'rms-developer-v' + release.version + '-design' + link.dataset.sourceDesign + '.zip');
+                });
             }
             var sfrUI = window.RMSSfrLayer.create({
                 onAction: eventClick
@@ -57,7 +57,7 @@
             function clearUi() {
                 closeSfrLayer();
                 Object.assign(ui, {
-                    doctorFilters: {}, statsFilters: {}, selected: new Set(), faqQuery: '', faqWork: '', docStatus: '', codeKind: 'technology', appId: '', programLayout: 'cards', globalQuery: '', boardQuery: ''
+                    doctorFilters: {}, statsFilters: {}, selected: new Set(), faqQuery: '', faqWork: '', docStatus: '', codeKind: 'technology', appId: '', programLayout: '', design: '1', globalQuery: '', boardQuery: ''
                 });
             }
             function presentation() {
@@ -75,7 +75,7 @@
                 }
                 store.setRole(saved.role);
                 Object.assign(ui, saved.ui, {
-                    selected: new Set(saved.ui.selected)
+                    selected: new Set(saved.ui.selected), design: saved.ui.design || (saved.route === 'home/3' ? '3' : saved.route === 'home/2' ? '2' : '1')
                 });
             }
             function exportFallback() {
@@ -212,6 +212,8 @@
                         commit(function () {
                             restored = store.importJson(text);
                             restorePresentation(restored);
+                            // Set the destination before commit renders the restored design and layout.
+                            location.hash = '#' + (restored ? restored.route : 'home');
                         }, 'JSON 시연 데이터를 불러왔습니다.', false, function (result) { go(restored ? restored.route : 'home'); });
                     });
                 }
@@ -235,7 +237,8 @@
                 return p[0] === 'questions' ? [8, 9] : [7, 8]; if (p[0] === 'manage')
                 return p[1] === 'home' ? [8, 9, 10] : p[1] === 'documents' ? [12] : [2, 8]; return []; }
             ;
-            return { actions: actions, login: login, logout: function () { store.setRole('visitor'); go('home'); render(); toast('로그아웃했습니다.'); }, route: function (p) { return p[0] === 'guide' ? guideViews.guide() : null; }, onRender: function (p) { var bar = document.getElementById('rms-demo-sfr'); bar.innerHTML = guideViews.markup(idsFor(p)); bar.hidden = false; repositionSfrLayer(); document.getElementById('rms-role').value = store.getSession().role; document.querySelectorAll('[data-home-design]').forEach(function (link) { if (p[0] === 'home' && link.dataset.homeDesign === (p[1] === '2' ? '2' : '1'))
+            return { actions: actions, login: login, logout: function () { store.setRole('visitor'); go(ui.design === '1' ? 'home' : 'home/' + ui.design); render(); toast('로그아웃했습니다.'); }, route: function (p) { return p[0] === 'guide' ? guideViews.guide() : null; }, onRender: function (p) {
+                var bar = document.getElementById('rms-demo-sfr'); bar.innerHTML = guideViews.markup(idsFor(p)); bar.hidden = false; repositionSfrLayer(); document.getElementById('rms-role').value = store.getSession().role; document.querySelectorAll('[data-home-design]').forEach(function (link) { if (p[0] === 'home' && link.dataset.homeDesign === (['2', '3'].includes(p[1]) ? p[1] : '1'))
                     link.setAttribute('aria-current', 'page');
                 else
                     link.removeAttribute('aria-current'); }); if (p[0] === 'guide' && /^SFR-\d{2}$/.test(p[1] || '')) {

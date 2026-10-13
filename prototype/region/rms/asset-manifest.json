@@ -21,7 +21,13 @@
     "static/css/rms-tokens.css",
     "static/css/rms-enhance.css",
     "static/css/rms-home-refresh.css",
-    "static/css/rms-mydata-report.css"
+    "static/css/rms-mydata-report.css",
+    "static/css/rms-selected-design.css"
   ],
-  "contractVersion": 1
+  "contractVersion": 1,
+  "themes": [
+    "static/css/themes/rms-design1.css",
+    "static/css/themes/rms-design2.css",
+    "static/css/themes/rms-design3.css"
+  ]
 }

@@ -47,17 +47,16 @@
                 value: query || '', homeIconHtml: homeIcon('search')
             });
         }
-        function programLayout() {
-            var layout = ui.programLayout === 'list' ? 'list' : 'cards';
+        function programLayout(layout) {
             return T.render("screens/program-layout", {
                 value: (layout === 'cards'), value2: (layout === 'list')
             });
         }
         function programSection(variant) {
-            var s = store.getState(), role = store.getSession().role, layout = ui.programLayout === 'list' ? 'list' : 'cards';
+            var s = store.getState(), role = store.getSession().role, layout = ['list', 'cards'].includes(ui.programLayout) ? ui.programLayout : 'cards';
             var programs = s.programs.filter(function (p) { return store.programStatus(p.id).state === 'open'; });
             var header = {
-                length: programs.length, value: (role === 'admin' ? btn('공고 등록', 'program-edit', '', 'rms-btn-small') : ''), programLayoutHtml: programLayout()
+                length: programs.length, value: (role === 'admin' ? btn('공고 등록', 'program-edit', '', 'rms-btn-small') : ''), programLayoutHtml: programLayout(layout)
             };
             if (!programs.length)
                 return T.render('screens/program-section', Object.assign(header, {
@@ -179,26 +178,26 @@
         }
         function homeMainBlocks(variant) {
             var settings = store.getState().settings, order = settings.homeOrder || [], showPrograms = !settings.homeVisible || settings.homeVisible.announcements !== false;
-            var primary = variant === '2' ? (showPrograms ? T.render("screens/home-main-blocks", {
-                programSectionHtml: programSection('2'), homeLoginHtml: homeLogin('2')
-            }) : T.render("screens/home-main-blocks-2", {
-                homeLoginHtml: homeLogin('2')
-            })) : T.render("screens/home-main-blocks-3", {
-                value: (showPrograms ? programSection('1') : ''), homeShortcutsHtml: homeShortcuts(), homeLoginHtml: homeLogin('1')
-            });
+            var primary = showPrograms ? T.render("screens/home-main-blocks", { programSectionHtml: programSection(variant) }) : '';
             var boards = homeBoards(), programIndex = order.indexOf('announcements'), boardIndex = order.indexOf('questions'), boardsFirst = boardIndex >= 0 && programIndex >= 0 && boardIndex < programIndex;
             return T.render("screens/home-main-blocks-4", {
                 value: (boardsFirst ? boards + primary : primary + boards)
             });
         }
-        function home(variant) {
-            if (variant === '2')
-                return homeTwo();
+        function renderHome(variant) {
+            var role = store.getSession().role, programs = store.getState().programs.filter(function (p) { return store.programStatus(p.id).state === 'open'; });
+            var statusHtml = T.render("screens/home-main-blocks-2", {
+                programCount: programs.length, noticeCount: root.RMSBoards.list('notice', store).length, applicationLabel: role === 'tp' || role === 'admin' ? '관리 신청' : '나의 신청', applicationCount: role === 'visitor' ? '로그인 필요' : store.getApplications().length, applicationUnit: role === 'visitor' ? '' : '건', accountClass: role === 'visitor' ? 'rms-status-login rms-dashboard-login-required' : ''
+            });
             return T.render("screens/home", {
-                globalSearchHtml: globalSearch(''), headHtml: head('기업의 성장을 함께 지원합니다', '사업공고', '사업 신청부터 기술애로 해결까지, 필요한 업무를 한곳에서 확인하세요.'), homeMainBlocksHtml: homeMainBlocks('1')
+                globalSearchHtml: globalSearch(''), headHtml: head('사업공고·업무 현황', '사업공고'),
+                homeMainBlocksHtml: T.render("screens/home-main-blocks-3", { homeLoginHtml: homeLogin('1'), homeShortcutsHtml: homeShortcuts(), statusHtml: statusHtml, homeMainBlocksHtml: homeMainBlocks(variant) })
             });
         }
-        // A second home concept shares the same data and existing business screens.
+        function home(variant) {
+            return variant === '2' ? homeTwo() : variant === '3' ? homeThree() : renderHome('1');
+        }
+        // Three visual concepts share the same data and existing business screens.
         function homeIcon(kind) {
             var paths = {
                 search: T.render("screens/home-icon", {}),
@@ -219,11 +218,8 @@
                 value: (paths[kind] || paths.notice)
             });
         }
-        function homeTwo() {
-            return T.render("screens/home-two", {
-                globalSearchHtml: globalSearch(''), headHtml: head('기업지원 사업공고', '사업공고'), homeMainBlocksHtml: homeMainBlocks('2'), homeIconHtml: homeIcon('doctor'), homeIconHtml2: homeIcon('arrow'), homeIconHtml3: homeIcon('chat'), homeIconHtml4: homeIcon('arrow')
-            });
-        }
+        function homeTwo() { return T.render("screens/home-two", { homeHtml: renderHome('2') }); }
+        function homeThree() { return T.render("screens/home-three", { homeHtml: renderHome('3') }); }
         function doctors() {
             var f = ui.doctorFilters || {}, all = store.getState().doctors, list = store.searchDoctors(f), role = store.getSession().role;
             var form = T.render("screens/doctors", {

@@ -21,12 +21,12 @@ const views = sandbox.window.RMSViews.create(store, ui);
 const target = path.join(base, 'handoff');
 fs.mkdirSync(path.join(target, 'fragments'), { recursive: true });
 // Generated outputs only: reject links and remove stale files individually inside the verified handoff root.
-const allowedAssets=new Set(assets.scripts.concat(assets.styles));
+const allowedAssets=new Set(assets.scripts.concat(assets.styles,assets.themes||[]));
 function pruneGenerated(dir){if(!fs.existsSync(dir))return;for(const ent of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,ent.name);if(ent.isSymbolicLink())throw Error('Symlink in generated mirror');if(ent.isDirectory())pruneGenerated(file);else if(!allowedAssets.has(path.relative(target,file).replace(/\\/g,'/')))fs.unlinkSync(file);}}
 pruneGenerated(path.join(target,'static'));pruneGenerated(path.join(target,'data'));
 if(fs.existsSync(path.join(target,'fragments/guide.html')))fs.unlinkSync(path.join(target,'fragments/guide.html'));
 const pages = [
-  ['home', 'visitor', () => views.home()], ['home-two','visitor',()=>views.home('2')],
+  ['home', 'visitor', () => views.home()], ['home-two','visitor',()=>views.home('2')], ['home-three','visitor',()=>views.home('3')],
   ...['notice','qna','faq','resources'].map(type=>['board-'+type,'visitor',()=>views.boards(type,'')]),
   ['search','visitor',()=>views.search('사업')],['mydata-report','visitor',()=>sandbox.window.RMSMydata.renderReport('company-application')], ['doctors', 'company', () => views.doctors()],
   ['doctor-detail', 'tp', () => views.doctorDetail('D001')], ['matches', 'tp', () => views.matches()],
@@ -41,7 +41,7 @@ for (const [name, role, render] of pages) {
   fs.writeFileSync(path.join(target, 'fragments', name + '.html'), html);
 }
 // Generated mirror; edit prototype source, never handoff/static or handoff/templates.
-for(const file of assets.scripts.concat(assets.styles)){const dest=path.join(target,file);fs.mkdirSync(path.dirname(dest),{recursive:true});fs.copyFileSync(path.join(web,file),dest);}
+for(const file of assets.scripts.concat(assets.styles,assets.themes||[])){const dest=path.join(target,file);fs.mkdirSync(path.dirname(dest),{recursive:true});fs.copyFileSync(path.join(web,file),dest);}
 for(const directory of ['templates','contracts']){
   // Remove only stale generated files whose source counterpart no longer exists.
   const mirror=path.join(target,directory);

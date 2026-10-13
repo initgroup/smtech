@@ -216,7 +216,7 @@
     function validatePresentation(value) {
         safeTree(value, 0);
         assert(value && roles.includes(value.role), '시연 역할 형식 오류');
-        assert(typeof value.route === 'string' && /^(home(?:\/2)?|doctors|doctor\/[A-Za-z0-9_-]+|matches|stats|documents(?:\/[A-Za-z0-9_-]+(?:\/[1-4])?)?|faq|questions|manage(?:\/(?:home|documents))?|guide(?:\/SFR-\d{2})?|boards\/(?:notice|qna|faq|resources)|search|mydata(?:\/(?:personal-application|personal-preference|company-application|company-preference))?)$/.test(value.route), '시연 화면 경로 오류');
+        assert(typeof value.route === 'string' && /^(home(?:\/[23])?|doctors|doctor\/[A-Za-z0-9_-]+|matches|stats|documents(?:\/[A-Za-z0-9_-]+(?:\/[1-4])?)?|faq|questions|manage(?:\/(?:home|documents))?|guide(?:\/SFR-\d{2})?|boards\/(?:notice|qna|faq|resources)|search|mydata(?:\/(?:personal-application|personal-preference|company-application|company-preference))?)$/.test(value.route), '시연 화면 경로 오류');
         var source = value.ui;
         assert(source && typeof source === 'object' && !Array.isArray(source), '시연 화면 설정 오류');
         var result = {
@@ -239,6 +239,10 @@
             });
             result.ui[pair[0]] = next;
         });
+        if (source.design !== undefined) {
+            assert(['1', '2', '3'].includes(source.design), '디자인 시안 값 오류');
+            result.ui.design = source.design;
+        }
         ['programLayout', 'globalQuery', 'boardQuery'].forEach(function (k) { if (source[k] !== undefined) {
             assert(typeof source[k] === 'string' && source[k].length <= 500, '화면 검색조건 오류');
             result.ui[k] = source[k];

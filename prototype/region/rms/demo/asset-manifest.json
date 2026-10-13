@@ -30,6 +30,9 @@
     "static/css/rms-enhance.css",
     "static/css/rms-home-refresh.css",
     "static/css/rms-mydata-report.css",
+    "static/css/rms-home-design1.css",
+    "static/css/rms-home-design2.css",
+    "static/css/rms-home-design3.css",
     "demo/css/tools.css",
     "demo/css/sfr.css"
   ]

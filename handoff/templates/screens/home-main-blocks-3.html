@@ -1,3 +1,5 @@
-<!-- @template screens/home-main-blocks-3 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#homeMainBlocks -->
-<div class="rms-home-feature">
-  <div>{{{value}}}{{{homeShortcutsHtml}}}</div>{{{homeLoginHtml}}}</div>
+<!-- @template screens/home-main-blocks-3 | @owner publisher | presenter: presenters/views.js#renderHome -->
+<div class="rms-workbench-layout rms-work-layout">
+  <aside class="rms-work-rail rms-ledger-side">{{{homeLoginHtml}}}<h2 class="rms-work-rail-title">업무 바로가기</h2>{{{homeShortcutsHtml}}}</aside>
+  <div class="rms-work-stage">{{{statusHtml}}}{{{homeMainBlocksHtml}}}</div>
+</div>

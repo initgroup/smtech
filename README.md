@@ -13,9 +13,13 @@
 | prototype/region/rms/static/css/ | 업무 디자인·반응형 배치 |
 | prototype/region/rms/static/js/rms-enhance/ | common/data/adapters/presenters/ui/app 모듈 |
 | prototype/region/rms/integration/ | 내부 개발자 전용 서버 연결 설정 |
-| handoff/fragments/ | 19개 업무 화면의 정적 참고 산출물; 실제 이식 원본은 위 경로 |
+| handoff/fragments/ | 20개 업무 화면의 정적 참고 산출물; 실제 이식 원본은 위 경로 |
 
 시연을 확인하려면 Python 정적 서버로 prototype/을 제공하고 /region/rms/에 접속하세요. 업무용 application.html은 실제 bootstrap API 연결이 필요합니다. 실제 업무 화면에는 상단 시연 도구를 넣지 않습니다.
+
+시연용 메인 시안은 상단 선택 도구 또는 #home(청색 업무 목록형), #home/2(청록 작업공간형), #home/3(남색 업무 대시보드형)에서 확인합니다. 공고·신청·게시판 데이터는 공유하며, 버튼·아이콘·블릿·배경·팝업과 업무 배치는 각 시안에 맞게 적용합니다. 로그인 전에는 상단 대메뉴를 숨깁니다.
+
+업무용 ZIP은 시안 1·2·3별로 내려받으며, 각 ZIP의 rms-selected-design.css에 해당 시안이 기본 적용됩니다. 세 ZIP은 동일 HTML·JS와 교체용 CSS 3종을 제공합니다. 공통 소스를 한 번 이식한 뒤 web/static/css/themes/rms-design1.css~rms-design3.css 중 원하는 파일로 web/static/css/rms-selected-design.css만 교체하면 시안이 적용됩니다. 공통 smtech-source.zip의 기본값은 시안 1이며, 상세 절차는 docs/delivery/02_파일경로와변경분적용.md에 있습니다.
 
 ## 수정·빌드·전달
 
@@ -30,7 +34,7 @@ python tools/package_source.py
 2. API·인증·CSRF·DTO 변환은 integration 소유 파일과 서버에서 구현합니다. 내부 소스를 후속 퍼블리싱 ZIP으로 덮어쓰지 않습니다.
 3. releases/next.json에 이번 변경 설명과 이식 주의사항을 입력합니다. 빌드와 테스트가 통과한 다음 package_source.py를 실행합니다.
 4. 소스가 변경되면 버전이 자동 증가하고 같은 소스 재빌드는 동일 버전/바이트를 유지합니다. 최초 업무 분리 배포는 v1.1.0입니다. --version X.Y.Z로 명시 버전도 지정할 수 있습니다.
-5. 개발자 ZIP은 downloads/releases/rms-developer-vX.Y.Z.zip에 누적 보관되고 downloads/smtech-source.zip은 최신 별칭입니다. 기존 버전 내용을 변경해서 덮어쓸 수 없습니다.
+5. 개발자 ZIP은 downloads/releases/rms-developer-vX.Y.Z.zip에 누적 보관되고 downloads/smtech-source.zip은 최신 별칭입니다. 시안별 최신 파일은 downloads/smtech-source-design1.zip, smtech-source-design2.zip, smtech-source-design3.zip이며, 버전별 -design1·2·3.zip과 SHA-256도 함께 보관합니다. 기존 버전 내용을 변경해서 덮어쓸 수 없습니다.
 6. releases/history.json, RELEASES.md, records/에 버전별 기록을 남깁니다. 시연 도구의 배포내역 레이어는 이 누적 기록을 사용합니다.
 
 ## 내부 개발자 안내

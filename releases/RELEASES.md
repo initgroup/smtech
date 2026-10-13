@@ -2,6 +2,62 @@
 
 최신 배포부터 기록합니다. 이 목록은 이후 버전에도 누적됩니다.
 
+## v1.1.9 · 2026-10-13 · 기존 소스 다운로드 영역을 시안별 ZIP 버튼 3개로 교체
+
+- JSON 불러오기와 배포내역 사이의 기존 소스 다운로드 버튼을 시안 1·2·3 ZIP 버튼으로 교체
+- 시연 도구 하단에 별도로 추가했던 다운로드 줄 제거
+- 각 버튼은 현재 표시된 시안과 관계없이 해당 시안의 소스 ZIP 다운로드
+- 시안별 기본 CSS와 공통 HTML·JS 구조 및 CSS 파일 하나를 통한 디자인 변경 유지
+
+이식 안내: 시연 화면의 다운로드 위치만 정리했습니다. 기존 소스 다운로드 영역에서 원하는 시안 ZIP을 선택합니다. 업무 소스 ZIP은 상단 시연·시안 선택 도구를 포함하지 않으며 기존 업무 소스 이식 방법을 유지합니다.
+
+보관 파일: rms-developer-v1.1.9.zip
+
+## v1.1.8 · 2026-10-13 · 시안 1·2·3별 기본 디자인을 적용한 소스 ZIP 다운로드
+
+- 시연 도구를 접어도 보이는 시안별 소스 ZIP 다운로드 버튼 3개 추가
+- 각 ZIP의 rms-selected-design.css에 해당 시안을 미리 적용하고 공통 HTML·JS·업무 템플릿 유지
+- 현재 시안의 소스 다운로드도 선택한 디자인을 따라가도록 연결
+- 시안별 버전 ZIP·최신 별칭·SHA-256 생성 및 배포 무결성 검증
+- 소스 ZIP에는 상단 시안 선택·시연 도구를 제외하고 이후 CSS 파일 하나로 디자인 변경 가능
+
+이식 안내: 원하는 시안의 smtech-source-design1.zip, smtech-source-design2.zip, smtech-source-design3.zip을 받아 web/ 업무 소스를 이식하세요. 각 ZIP의 기본 CSS에 해당 시안이 적용되어 있습니다. 이후 디자인 변경은 web/static/css/themes/rms-designN.css로 web/static/css/rms-selected-design.css만 교체합니다. 기존 integration/ 인증·API 연결과 데이터 계약은 유지합니다.
+
+보관 파일: rms-developer-v1.1.8.zip
+
+## v1.1.7 · 2026-10-13 · 공통 HTML·JS와 CSS 파일 하나로 선택하는 디자인 시안 3종
+
+- 세 시안의 메인 HTML·업무 JS를 동일 구조로 통합하고 배치·표시·버튼·팝업 스타일을 CSS로 분리
+- 업무용 HTML은 rms-selected-design.css 하나만 로드하며 기본값은 시안 1
+- ZIP에 themes/rms-design1.css, rms-design2.css, rms-design3.css와 파일 교체 안내 포함
+- 시안 선택에 body 클래스·JSP/HTML·JavaScript·서버 코드 수정 불필요
+- 실제 업무용 화면에서 CSS 파일만 교체하여 세 시안·세 화면 폭의 동일 HTML 및 스타일 전환 검증
+
+이식 안내: 처음에는 이번 공통 HTML·templates/·static/를 함께 이식하세요. 이후 web/static/css/themes/rms-designN.css로 web/static/css/rms-selected-design.css만 교체하면 됩니다. 기본값은 시안 1입니다. 내부 integration/ 연결과 데이터 계약은 유지합니다. 상세 절차는 02_파일경로와변경분적용.md에 있습니다.
+
+보관 파일: rms-developer-v1.1.7.zip
+
+## v1.1.6 · 2026-10-13 · 배너·홍보 문구를 줄인 업무 중심 디자인 시안 3종
+
+- 시안 1: 청색 업무 목록형 — 행 중심 공고, 우측 계정·업무 패널, 사각 버튼·블릿과 밝은 팝업
+- 시안 2: 청록 업무 작업공간형 — 좌측 업무 레일, 둥근 공고 카드·아이콘·버튼과 청록 팝업
+- 시안 3: 남색 업무 대시보드형 — 실제 업무 지표, 번호형 업무 타일, 공고·게시판 분할과 남색 팝업
+- 세 시안의 통합검색·공고·신청·게시판 기능과 모바일 배치 유지, 로그인 전 대메뉴 숨김
+- 서브페이지·팝업에 선택한 디자인 유지, 시안 3과 목록 설정의 JSON 복원 지원
+
+이식 안내: application.html, asset-manifest.json, templates/, static/css/, presenters/views.js, app.js를 함께 적용하세요. 각 시안은 #home, #home/2, #home/3에서 확인할 수 있습니다. 데이터 계약·서버 연결 설정은 동일합니다.
+
+보관 파일: rms-developer-v1.1.6.zip
+
+## v1.1.5 · 2026-10-13 · 메인 시안 1·2 로그인 전 대메뉴 숨김
+
+- 공통 헤더의 대메뉴를 로그인 전에는 숨기고 로그인 후에 표시
+- 초기 화면 로딩 및 로그아웃 시에도 대메뉴 숨김 적용
+
+이식 안내: application.html, static/css/rms-shell.css, static/js/rms-enhance/app.js를 함께 적용하세요. 데이터 계약과 서버 연결 설정은 동일합니다.
+
+보관 파일: rms-developer-v1.1.5.zip
+
 ## v1.1.4 · 2026-10-08 · Git 속성 변경 후 staged ZIP 검증 오류 수정
 
 - 원본 CSS·폰트 스타일에 -text -eol 보존 규칙을 명시하여 원본 바이트 유지

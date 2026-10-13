@@ -8,12 +8,16 @@
           <button type="button" id="rms-export" aria-describedby="rms-storage-help">시연내용 JSON 내보내기</button>
           <button type="button" id="rms-storage-info">저장 위치 안내</button>
           <label class="rms-demo-import">JSON 불러오기<input type="file" id="rms-import" accept=".json,application/json"></label>
-          <a id="rms-source-download" class="rms-source-download" href="downloads/smtech-source.zip" download="smtech-source.zip" aria-label="내부 개발자용 업무 소스 ZIP 다운로드">개발자 소스 · ZIP</a>
+          <nav id="rms-source-downloads" class="rms-demo-downloads" aria-label="시안별 업무 소스 다운로드">
+            <a class="rms-source-download" data-source-design="1" href="downloads/smtech-source-design1.zip" download="smtech-source-design1.zip">시안 1 ZIP</a>
+            <a class="rms-source-download" data-source-design="2" href="downloads/smtech-source-design2.zip" download="smtech-source-design2.zip">시안 2 ZIP</a>
+            <a class="rms-source-download" data-source-design="3" href="downloads/smtech-source-design3.zip" download="smtech-source-design3.zip">시안 3 ZIP</a>
+          </nav>
           <button type="button" id="rms-release-history">배포내역</button>
           <button type="button" id="rms-reset">가상 기초자료로 되돌리기</button>
         </div>
         <div class="rms-demo-context"><p id="rms-storage-help" class="rms-demo-storage" role="status">화면별 저장 → smtech 전용 브라우저 저장소 · 시연내용 JSON 내보내기 → 폴더 선택 후 백업 · 다른 PC에서 JSON 불러오기로 이어보기</p><div id="rms-demo-sfr" class="rms-enhance" aria-label="제안요청서 전체 SFR 및 현재 메뉴 관련 요구사항"></div></div>
       </div>
       </details>
-      <nav class="rms-demo-designs" aria-label="메인 시안 선택"><a href="#home" data-home-design="1">메인 시안 1 보기</a><a href="#home/2" data-home-design="2">메인 시안 2 보기</a></nav>
+      <nav class="rms-demo-designs" aria-label="메인 시안 선택"><a href="#home" data-home-design="1"><b>시안 1</b><span>업무 목록형</span></a><a href="#home/2" data-home-design="2"><b>시안 2</b><span>업무 작업공간형</span></a><a href="#home/3" data-home-design="3"><b>시안 3</b><span>업무 대시보드형</span></a></nav>
     </section>

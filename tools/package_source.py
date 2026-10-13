@@ -161,16 +161,44 @@ def archive_bytes(policy,sources,history):
         'files':[{'path':n,'sha256':sha(d),'bytes':len(d),'owner':owner(n)} for n,d in sorted(files.items())]})
     return zip_bytes(files)
 
-def verify(content,policy,sources,history):
-    expected=archive_bytes(policy,sources,history)
-    if content!=expected: raise ValueError('Developer ZIP differs from selected source snapshot')
+def verify_manifest(content):
     with ZipFile(BytesIO(content)) as z:
         if z.testzip(): raise ValueError('ZIP integrity failure')
         m=json.loads(z.read(MANIFEST))
         if set(z.namelist())!={r['path'] for r in m['files']}|{MANIFEST}: raise ValueError('Unexpected ZIP entry')
         for row in m['files']:
-            if sha(z.read(row['path']))!=row['sha256']: raise ValueError('ZIP hash mismatch')
+            data=z.read(row['path'])
+            if sha(data)!=row['sha256'] or len(data)!=row['bytes']: raise ValueError('ZIP hash mismatch')
     return m
+
+def verify(content,policy,sources,history):
+    expected=archive_bytes(policy,sources,history)
+    if content!=expected: raise ValueError('Developer ZIP differs from selected source snapshot')
+    return verify_manifest(content)
+
+def design_archive_bytes(content,design):
+    """Derive a deployment ZIP by changing only the selected CSS and its manifest."""
+    if design not in (1,2,3): raise ValueError('Design must be 1, 2 or 3')
+    with ZipFile(BytesIO(content)) as z:
+        files={name:z.read(name) for name in z.namelist()}
+    selected='web/static/css/rms-selected-design.css'
+    theme='web/static/css/themes/rms-design'+str(design)+'.css'
+    if selected not in files or theme not in files: raise ValueError('Missing design stylesheet: '+theme)
+    files[selected]=files[theme]
+    manifest=json.loads(files[MANIFEST]);manifest['selectedDesign']=design
+    for row in manifest['files']:
+        if row['path']==selected:
+            row['sha256']=sha(files[selected]);row['bytes']=len(files[selected])
+    files[MANIFEST]=encode(manifest)
+    result=zip_bytes(files);verify_manifest(result)
+    return result
+
+def design_variants(content):
+    with ZipFile(BytesIO(content)) as z:
+        themes=[('web/static/css/themes/rms-design'+str(n)+'.css') in z.namelist() for n in (1,2,3)]
+    if not any(themes): return []
+    if not all(themes): raise ValueError('All three design stylesheets are required')
+    return [(design,design_archive_bytes(content,design)) for design in (1,2,3)]
 
 def build(base=BASE,version=None):
     policy,sources=read_sources(base)
@@ -191,8 +219,21 @@ def build(base=BASE,version=None):
     current=history['releases'][0];content=archive_bytes(policy,sources,history);verify(content,policy,sources,history)
     archive=base/WEB/current['download'];archive.parent.mkdir(parents=True,exist_ok=True)
     if archive.exists() and archive.read_bytes()!=content: raise ValueError('Immutable archive already exists with different bytes: '+str(archive))
+    variants=[]
+    for design,data in design_variants(content):
+        download='downloads/releases/rms-developer-v'+current['version']+'-design'+str(design)+'.zip'
+        target=base/WEB/download
+        if target.exists() and target.read_bytes()!=data: raise ValueError('Immutable archive already exists with different bytes: '+str(target))
+        variants.append((design,data,download,target))
     archive.write_bytes(content)
     current['archiveSha256']=sha(content)
+    if variants:
+        current['designArchives']=[]
+        for design,data,download,target in variants:
+            target.write_bytes(data)
+            target.with_suffix('.zip.sha256').write_bytes((sha(data)+'  '+target.name+'\n').encode('ascii'))
+            alias=base/WEB/('downloads/smtech-source-design'+str(design)+'.zip');alias.write_bytes(data)
+            current['designArchives'].append({'design':design,'download':download,'archiveSha256':sha(data)})
     (base/HISTORY).write_bytes(encode(history))
     output=base/ARCHIVE_PATH;output.parent.mkdir(parents=True,exist_ok=True);output.write_bytes(content)
     archive.with_suffix('.zip.sha256').write_bytes((sha(content)+'  '+archive.name+'\n').encode('ascii'))
@@ -216,13 +257,25 @@ def verify_git_artifacts(base,mode,ref,history,content):
         if sha(archive)!=release['archiveSha256']:raise ValueError('Version ZIP hash differs: '+name)
         expected=(sha(archive)+'  '+PurePosixPath(name).name+'\n').encode('ascii')
         if blob(name+'.sha256').replace(b'\r\n',b'\n')!=expected:raise ValueError('Version ZIP sidecar differs: '+name)
+        for variant in release.get('designArchives',[]):
+            name=WEB+variant['download'];data=blob(name)
+            if sha(data)!=variant['archiveSha256']:raise ValueError('Design ZIP hash differs: '+name)
+            expected=(sha(data)+'  '+PurePosixPath(name).name+'\n').encode('ascii')
+            if blob(name+'.sha256').replace(b'\r\n',b'\n')!=expected:raise ValueError('Design ZIP sidecar differs: '+name)
+            if release is history['releases'][0]:
+                alias=WEB+'downloads/smtech-source-design'+str(variant['design'])+'.zip'
+                if data!=design_archive_bytes(content,variant['design']):raise ValueError('Design ZIP differs from selected source snapshot: '+name)
+                if blob(alias)!=data:raise ValueError('Latest design ZIP alias differs: '+alias)
     if blob(WEB+history['releases'][0]['download'])!=content:raise ValueError('Latest version ZIP differs from alias')
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);m=parser.add_mutually_exclusive_group();m.add_argument('--index',action='store_true');m.add_argument('--verify-index',action='store_true');m.add_argument('--verify-ref');parser.add_argument('--version');args=parser.parse_args()
     if args.index or args.verify_index or args.verify_ref:
         mode='ref' if args.verify_ref else 'index';policy,sources=read_sources(BASE,mode,args.verify_ref);history=json.loads(sources[HISTORY]);content=archive_bytes(policy,sources,history)
-        if args.index: (BASE/ARCHIVE_PATH).write_bytes(content)
+        if args.index:
+            (BASE/ARCHIVE_PATH).write_bytes(content)
+            for design,data in design_variants(content):
+                (BASE/WEB/('downloads/smtech-source-design'+str(design)+'.zip')).write_bytes(data)
         else:
             spec=(args.verify_ref+':'+ARCHIVE_PATH) if args.verify_ref else ':'+ARCHIVE_PATH
             content=subprocess.check_output(['git','show',spec],cwd=str(BASE))

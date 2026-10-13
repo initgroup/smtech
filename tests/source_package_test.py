@@ -57,4 +57,47 @@ class DeveloperPackageTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'Sources changed'): pkg.verify(content,policy,sources,json.loads(sources[pkg.HISTORY]))
             for file in (base/'.git').rglob('*'):
                 if file.is_file(): file.chmod(0o600)
+    def test_three_design_archives_apply_css_and_preserve_shared_sources_and_rebuild_bytes(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base=Path(folder);fixture(base)
+            for design in (1,2,3):
+                put(base,'websrc/static/css/themes/rms-design'+str(design)+'.css','body { color: color'+str(design)+'; }')
+            put(base,'websrc/static/css/rms-selected-design.css','body { color: default; }')
+            content,history=pkg.build(base);current=history['releases'][0]
+            self.assertEqual([v['design'] for v in current['designArchives']],[1,2,3])
+            with ZipFile(BytesIO(content)) as z:common={name:z.read(name) for name in z.namelist()}
+            snapshots=[]
+            for variant in current['designArchives']:
+                design=variant['design'];archive=base/pkg.WEB/variant['download'];data=archive.read_bytes();snapshots.append(data)
+                self.assertEqual(pkg.sha(data),variant['archiveSha256'])
+                self.assertEqual((base/pkg.WEB/('downloads/smtech-source-design'+str(design)+'.zip')).read_bytes(),data)
+                self.assertEqual(archive.with_suffix('.zip.sha256').read_text().split()[0],pkg.sha(data))
+                self.assertEqual(data,pkg.design_archive_bytes(content,design))
+                self.assertEqual(pkg.verify_manifest(data)['selectedDesign'],design)
+                with ZipFile(BytesIO(data)) as z:
+                    self.assertEqual(z.read('web/static/css/rms-selected-design.css'),common['web/static/css/themes/rms-design'+str(design)+'.css'])
+                    for name,source in common.items():
+                        if name not in {pkg.MANIFEST,'web/static/css/rms-selected-design.css'}:self.assertEqual(z.read(name),source,name)
+                    self.assertNotIn(b'rms-demo-tools',z.read('web/index.html'))
+            self.assertEqual(len(set(snapshots)),3)
+            again,second=pkg.build(base);self.assertEqual(content,again);self.assertEqual(current,second['releases'][0])
+            for variant,data in zip(current['designArchives'],snapshots):self.assertEqual((base/pkg.WEB/variant['download']).read_bytes(),data)
+            archive=base/pkg.WEB/current['designArchives'][1]['download'];archive.write_bytes(b'tampered')
+            with self.assertRaisesRegex(ValueError,'Immutable'):pkg.build(base)
+
+    def test_design_alias_and_sidecar_are_verified_from_the_staged_snapshot(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base=Path(folder);fixture(base)
+            for design in (1,2,3):put(base,'websrc/static/css/themes/rms-design'+str(design)+'.css','body { color: color'+str(design)+'; }')
+            put(base,'websrc/static/css/rms-selected-design.css','body {}')
+            content,history=pkg.build(base)
+            subprocess.run(['git','init','-q'],cwd=base,check=True)
+            subprocess.run(['git','add','.'],cwd=base,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+            pkg.verify_git_artifacts(base,'index',None,history,content)
+            alias=pkg.WEB+'downloads/smtech-source-design2.zip';(base/alias).write_bytes(b'tampered')
+            subprocess.run(['git','add',alias],cwd=base,check=True)
+            with self.assertRaisesRegex(ValueError,'Latest design ZIP alias differs'):pkg.verify_git_artifacts(base,'index',None,history,content)
+            for file in (base/'.git').rglob('*'):
+                if file.is_file():file.chmod(0o600)
+
 if __name__=='__main__': unittest.main()

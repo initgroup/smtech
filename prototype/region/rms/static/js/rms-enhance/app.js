@@ -6,7 +6,7 @@
     var T = window.RMSTemplates, extension = {};
     var root = document.getElementById('rms-enhance-app'), host = document.getElementById('rms-dialog-host'), store, views, modalReturnFocus, toastTimer;
     var ui = {
-        doctorFilters: {}, statsFilters: {}, selected: new Set(), faqQuery: '', faqWork: '', docStatus: '', codeKind: 'technology', appId: '', programLayout: 'cards', globalQuery: '', boardQuery: ''
+        doctorFilters: {}, statsFilters: {}, selected: new Set(), faqQuery: '', faqWork: '', docStatus: '', codeKind: 'technology', appId: '', programLayout: '', design: '1', globalQuery: '', boardQuery: ''
     };
     var V = window.RMSViews, e = V.esc, b = V.btn;
     function toast(message) {
@@ -60,7 +60,17 @@
     }
     function render(focus) {
         var p = route(), r = store.getSession().role;
-        document.body.classList.toggle('rms-home-design2', p[0] === 'home' && p[1] === '2');
+        document.querySelector('.rms-site-nav').hidden = r === 'visitor';
+        if (p[0] === 'home') {
+            var design = ['2', '3'].includes(p[1]) ? p[1] : '1';
+            if (ui.design !== design)
+                ui.programLayout = '';
+            ui.design = design;
+        }
+        ['1', '2', '3'].forEach(function (design) {
+            document.body.classList.toggle('rms-design' + design, ui.design === design);
+            document.body.classList.toggle('rms-home-design' + design, p[0] === 'home' && ui.design === design);
+        });
         try {
             var extensionHtml = extension.route ? extension.route(p) : null;
             root.innerHTML = extensionHtml != null ? extensionHtml : p[0] === 'doctors' ? views.doctors() : p[0] === 'doctor' ? views.doctorDetail(p[1]) : p[0] === 'matches' ? views.matches() : p[0] === 'stats' ? views.stats() : p[0] === 'documents' ? views.documents(p[1], p[2]) : p[0] === 'boards' ? views.boards(p[1], ui.boardQuery) : p[0] === 'search' ? views.search(ui.globalQuery) : p[0] === 'mydata' ? mydataPage(p[1]) : p[0] === 'faq' ? views.faq(false) : p[0] === 'questions' ? views.faq(true) : p[0] === 'manage' ? views.manage(p[1]) : views.home(p[1]);

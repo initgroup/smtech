@@ -34,9 +34,9 @@ test('entrypoint loads only local required assets and independent custom JavaScr
   assert(html.includes("connect-src 'self'"));assert(html.includes("form-action 'self'"));
 });
 
-test('handoff contains 19 unique screen fragments and matching generated source copies', () => {
+test('handoff contains 20 unique screen fragments and matching generated source copies', () => {
   const target=path.join(base,'handoff'),m=JSON.parse(fs.readFileSync(path.join(target,'manifest.json'),'utf8'));
-  assert.equal(m.screens.length,19);
+  assert.equal(m.screens.length,20);
   for(const file of m.files)assert.equal(hash(path.join(target,file.path)),file.sha256,file.path);
   for(const {screen} of m.screens){const html=fs.readFileSync(path.join(target,'fragments',screen+'.html'),'utf8');assert(html.includes('class="rms-enhance"'));const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(x=>x[1]);assert.equal(new Set(ids).size,ids.length,screen+' duplicate IDs');for(const match of html.matchAll(/<label[^>]+for="([^"]+)"/g))assert(ids.includes(match[1]),screen+' missing labelled input');}
   for(const name of JSON.parse(fs.readFileSync(path.join(web,'asset-manifest.json'),'utf8')).scripts)assert.equal(hash(path.join(target,name)),hash(path.join(web,name)));
@@ -46,4 +46,16 @@ test('all archived successful resources match the collection manifest', () => {
   const dir=path.join(base,'reference/public-site'),m=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8'));
   const rows=m.resources.filter(r=>r.status===200);assert.equal(rows.length,91);
   rows.forEach(r=>assert.equal(hash(path.join(dir,r.local_path)),r.sha256,r.local_path));
+});
+
+test('business entry selects one standalone CSS file and ships all three interchangeable choices',()=>{
+  const entry=fs.readFileSync(path.join(web,'application.html'),'utf8');
+  assert.equal((entry.match(/href="static\/css\/rms-selected-design\.css"/g)||[]).length,1);
+  assert.doesNotMatch(entry,/href="static\/css\/rms-home-design[123]\.css"/);
+  for(const design of [1,2,3]){
+    const css=fs.readFileSync(path.join(web,'static/css/themes/rms-design'+design+'.css'),'utf8').replace(/\/\*[\s\S]*?\*\//g,'');
+    assert.doesNotMatch(css,/\.rms-(?:home-)?design[123](?:[\s:.#>{])/);
+    assert.match(css,/rms-work-layout/);assert.match(css,/rms-dialoghead/);
+  }
+  assert.equal(hash(path.join(web,'static/css/rms-selected-design.css')),hash(path.join(web,'static/css/themes/rms-design1.css')));
 });

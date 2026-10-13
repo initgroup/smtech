@@ -1,2 +1,6 @@
-<!-- @template screens/home-main-blocks-2 | @owner publisher | @since RMS-PUB-20261008-01 | presenter: presenters/views.js#homeMainBlocks -->
-<div class="rms-gov-account-only">{{{homeLoginHtml}}}</div>
+<!-- @template screens/home-main-blocks-2 | @owner publisher | presenter: presenters/views.js#renderHome -->
+<div class="rms-dashboard-status" aria-label="업무 요약">
+  <dl><dt>접수 중 공고</dt><dd>{{programCount}}<small>건</small></dd></dl>
+  <dl><dt>공개 공지</dt><dd>{{noticeCount}}<small>건</small></dd></dl>
+  <dl><dt>{{applicationLabel}}</dt><dd class="{{accountClass}}">{{applicationCount}}<small>{{applicationUnit}}</small></dd></dl>
+</div>

@@ -433,3 +433,27 @@
   margin:7px 0;
 }
 
+
+/* Three concepts stay available while demo controls are collapsed. */
+.rms-site .rms-demo-toggle { padding-right: 610px; }
+.rms-site .rms-demo-designs { gap: 7px; }
+.rms-site .rms-demo-designs a { gap: 8px; padding: 4px 11px; min-height: 36px; }
+.rms-site .rms-demo-designs a span { font-size: 12px; font-weight: 400; }
+@media (max-width: 1100px) {
+  .rms-site .rms-demo-toggle { padding-right: 0; }
+  .rms-site .rms-demo-designs { position: static; display: flex; margin-top: 9px; }
+  .rms-site .rms-demo-designs a { flex: 1; justify-content: center; }
+}
+@media (max-width: 480px) {
+  .rms-site .rms-demo-designs a { flex-direction: column; gap: 1px; padding: 6px; }
+  .rms-site .rms-demo-designs a span { font-size: 10px; }
+}
+
+/* Three source ZIP buttons replace the original download control. */
+.rms-site .rms-demo-downloads { display:flex; align-items:center; gap:6px; }
+.rms-site .rms-demo-downloads a[data-source-design="2"] { background:#08766e; border-color:#08635d; }
+.rms-site .rms-demo-downloads a[data-source-design="3"] { background:#273956; border-color:#203047; }
+.rms-site .rms-demo-downloads a:hover { filter:brightness(.9); }
+@media(max-width:480px) {
+  .rms-site .rms-demo-downloads a.rms-source-download { font-size:11px; padding:7px 9px; }
+}

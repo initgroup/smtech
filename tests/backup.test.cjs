@@ -64,3 +64,18 @@ test('JSON roundtrip between independent PCs restores all records, history and v
   assert.equal(second.exportJson(),before);
   assert.equal(second.importJson(first.exportJson()),null,'Legacy raw JSON remains importable');
 });
+
+test('all three designs and home routes validate while invalid design metadata is rejected atomically',()=>{
+  const source=core.createStore(seed,storage()),target=core.createStore(seed,storage());
+  for(const [route,design] of [['home','1'],['home/2','2'],['home/3','3']]){
+    const presentation={...view,route,ui:{...view.ui,design,programLayout:'list'}};
+    const backup=source.exportBackup(presentation);assert.deepEqual(target.importJson(backup),presentation);
+    const before=target.exportJson();
+    for(const invalid of ['4',3,null,'javascript:alert(1)']){
+      const broken=JSON.parse(backup);broken.presentation.ui.design=invalid;
+      assert.throws(()=>target.importJson(JSON.stringify(broken)),/\uB514\uC790\uC778 \uC2DC\uC548/);assert.equal(target.exportJson(),before);
+    }
+    const legacy=JSON.parse(backup);delete legacy.presentation.ui.design;
+    assert.deepEqual(target.importJson(JSON.stringify(legacy)),{...presentation,ui:{...view.ui,programLayout:'list'}});
+  }
+});

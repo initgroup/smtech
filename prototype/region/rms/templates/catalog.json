@@ -2534,11 +2534,11 @@
     ],
     "slots": [
       {
-        "name": "globalSearchHtml",
+        "name": "headHtml",
         "mode": "html"
       },
       {
-        "name": "headHtml",
+        "name": "globalSearchHtml",
         "mode": "html"
       },
       {
@@ -2798,10 +2798,6 @@
       {
         "name": "programSectionHtml",
         "mode": "html"
-      },
-      {
-        "name": "homeLoginHtml",
-        "mode": "html"
       }
     ]
   },
@@ -2813,8 +2809,28 @@
     ],
     "slots": [
       {
-        "name": "homeLoginHtml",
-        "mode": "html"
+        "name": "programCount",
+        "mode": "text"
+      },
+      {
+        "name": "noticeCount",
+        "mode": "text"
+      },
+      {
+        "name": "applicationLabel",
+        "mode": "text"
+      },
+      {
+        "name": "accountClass",
+        "mode": "text"
+      },
+      {
+        "name": "applicationCount",
+        "mode": "text"
+      },
+      {
+        "name": "applicationUnit",
+        "mode": "text"
       }
     ]
   },
@@ -2826,7 +2842,7 @@
     ],
     "slots": [
       {
-        "name": "value",
+        "name": "homeLoginHtml",
         "mode": "html"
       },
       {
@@ -2834,7 +2850,11 @@
         "mode": "html"
       },
       {
-        "name": "homeLoginHtml",
+        "name": "statusHtml",
+        "mode": "html"
+      },
+      {
+        "name": "homeMainBlocksHtml",
         "mode": "html"
       }
     ]
@@ -2891,6 +2911,19 @@
     ]
   },
   {
+    "template": "screens/home-three",
+    "source": "templates/screens/home-three.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "homeHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
     "template": "screens/home-two",
     "source": "templates/screens/home-two.html",
     "presenters": [
@@ -2898,31 +2931,7 @@
     ],
     "slots": [
       {
-        "name": "globalSearchHtml",
-        "mode": "html"
-      },
-      {
-        "name": "headHtml",
-        "mode": "html"
-      },
-      {
-        "name": "homeMainBlocksHtml",
-        "mode": "html"
-      },
-      {
-        "name": "homeIconHtml",
-        "mode": "html"
-      },
-      {
-        "name": "homeIconHtml2",
-        "mode": "html"
-      },
-      {
-        "name": "homeIconHtml3",
-        "mode": "html"
-      },
-      {
-        "name": "homeIconHtml4",
+        "name": "homeHtml",
         "mode": "html"
       }
     ]
