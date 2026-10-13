@@ -3,6 +3,19 @@ window.RMSReleaseHistory = {
   "formatVersion": 1,
   "releases": [
     {
+      "version": "1.1.10",
+      "date": "2026-10-13",
+      "title": "추가 수정 배포 (1개 경로)",
+      "changes": [
+        "직전 버전 이후 변경 경로 1개. changedPaths와 SHA-256 목록을 비교하세요."
+      ],
+      "migration": "시연 화면의 다운로드 위치만 정리했습니다. 기존 소스 다운로드 영역에서 원하는 시안 ZIP을 선택합니다. 업무 소스 ZIP은 상단 시연·시안 선택 도구를 포함하지 않으며 기존 업무 소스 이식 방법을 유지합니다.",
+      "download": "downloads/releases/rms-developer-v1.1.10.zip",
+      "changedPaths": [
+        "README.md"
+      ]
+    },
+    {
       "version": "1.1.9",
       "date": "2026-10-13",
       "title": "기존 소스 다운로드 영역을 시안별 ZIP 버튼 3개로 교체",

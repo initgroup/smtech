@@ -46,3 +46,7 @@ ZIP 루트에 [먼저 읽는 이식 안내](docs/delivery/00_먼저읽기_개발
 ## 실행 및 Git 배포
 
 `start.ps1 -Check`로 환경을 점검하고 `start.ps1`로 화면을 빌드·실행합니다. `git-upload.ps1 -Check`는 읽기 전용 점검, `-PrepareOnly`는 Git을 변경하지 않는 배포본 생성입니다. 기본 실행은 전체 변경을 로컬 커밋하며 `-Push`를 지정해야 원격에 업로드합니다. 기존 remote 주소를 사용합니다. 공용 설정은 tools/project-config.json이며 자세한 명령과 영향 범위는 [Git 자동화 안내](docs/08-git-automation.md)를 확인하세요.
+
+
+# git 배포
+.\git-upload.ps1 -Push
