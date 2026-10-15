@@ -452,7 +452,7 @@
   border-bottom:0
 }
 
-.rms-enhance .rms-board-preview li>button {
+.rms-enhance .rms-board-preview li>:is(button,.rms-annotated-action) {
   display:flex;
   align-items:center;
   gap:14px;
@@ -475,7 +475,7 @@
   font-size:13px
 }
 
-.rms-enhance .rms-board-preview li>button:hover .rms-board-row-title {
+.rms-enhance .rms-board-preview li>:is(button,.rms-annotated-action):hover .rms-board-row-title {
   color:#0f67b5;
   text-decoration:underline;
   text-underline-offset:4px
@@ -654,7 +654,7 @@
 
 .rms-enhance .rms-board-search {
   display:flex;
-  align-items:center;
+  align-items:flex-end;
   gap:12px;
   background:#f4f7fa;
   border:1px solid #e1e7ef;
@@ -663,18 +663,41 @@
   margin-bottom:23px
 }
 
-.rms-enhance .rms-board-search>label {
-  font-weight:600;
-  white-space:nowrap
+/* Every field keeps its caption above its control, in all three designs. */
+.rms-enhance .rms-searchbar {
+  align-items:flex-end
 }
 
-.rms-enhance .rms-board-search>input {
-  flex:1
+.rms-enhance :is(.rms-board-search,.rms-searchbar)>.rms-field {
+  flex:0 1 180px;
+  min-width:0
 }
 
-.rms-enhance .rms-board-search>button {
+.rms-enhance :is(.rms-board-search,.rms-searchbar)>.rms-search-query {
+  flex:1 1 280px
+}
+
+.rms-enhance :is(.rms-board-search,.rms-searchbar)>.rms-field>label {
+  margin:0;
+  font-size:13px;
+  font-weight:500;
+  line-height:20px
+}
+
+.rms-enhance :is(.rms-board-search,.rms-searchbar)>.rms-field>:is(input,select) {
   flex:none;
-  min-width:75px
+  width:100%;
+  min-width:0;
+  height:40px;
+  box-sizing:border-box
+}
+
+.rms-enhance :is(.rms-board-search,.rms-searchbar)>.rms-btn {
+  flex:none;
+  min-width:75px;
+  height:40px;
+  min-height:40px;
+  box-sizing:border-box
 }
 
 .rms-enhance .rms-board-result-count {
@@ -960,7 +983,7 @@
     gap:6px
   }
 
-  .rms-enhance .rms-board-preview li>button {
+  .rms-enhance .rms-board-preview li>:is(button,.rms-annotated-action) {
     gap:10px
   }
 
@@ -1107,7 +1130,7 @@
     font-size:12px
   }
 
-  .rms-enhance .rms-board-preview li>button {
+  .rms-enhance .rms-board-preview li>:is(button,.rms-annotated-action) {
     padding:12px 0
   }
 
@@ -1134,17 +1157,16 @@
     flex-wrap:wrap
   }
 
-  .rms-enhance .rms-board-search>label {
-    width:100%;
-    font-size:13px
+  .rms-enhance :is(.rms-board-search,.rms-searchbar)>.rms-field {
+    flex:1 1 100%
   }
 
-  .rms-enhance .rms-board-search>input {
-    font-size:12px
+  .rms-enhance .rms-board-search>.rms-btn {
+    width:100%
   }
 
-  .rms-enhance .rms-board-search>button {
-    min-width:65px
+  .rms-enhance .rms-searchbar>.rms-btn {
+    flex:1 1 auto
   }
 
   .rms-enhance .rms-board-detail h3 {

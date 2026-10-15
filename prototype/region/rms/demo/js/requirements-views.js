@@ -7,11 +7,28 @@
         var parts = String(key || '').split('/'), r = requirements.find(function (item) { return item.id === parts[0]; });
         return parts.length === 2 && r ? r.menus.find(function (menu) { return menu.id === parts[1]; }) : null;
     }
+    function requirementDetails(r) {
+        return r.criteria.map(function (criterion) {
+            return T.render("screens/requirement-detail", {
+                id: criterion.id, status: criterion.status, statusLabel: criterion.statusLabel,
+                privacyClass: criterion.privacy ? 'rms-sfr-privacy' : '',
+                privacyHtml: criterion.privacy ? '<span class="rms-sfr-privacy-label">개인정보 보호</span>' : '',
+                text: criterion.text, evidence: criterion.evidence, remaining: criterion.remaining,
+                linksHtml: criterion.menus.map(function (menu) {
+                    return T.render("screens/requirement-detail-link", {route: menu.route, value: r.id + '/' + menu.id, criterion: criterion.id, label: menu.label});
+                }).join('')
+            });
+        }).join('');
+    }
     function requirementCoverage(r) {
         var labels = {
             design: '디자인 컨셉', screen: '화면 구성·사용 흐름', technology: '적용 기술·동작', data: '데이터 처리·저장 구조'
         };
         return T.render("screens/requirement-coverage", {
+            scope: root.RMSRequirementTrace.scope,
+            resourcesHtml: r.resources.length ? T.render("screens/requirement-resources", {itemsHtml: r.resources.map(function (resource) {
+                return T.render("screens/requirement-resource", {href: resource.href, label: resource.label, description: resource.description, downloadAttr: resource.download ? ' download' : ''});
+            }).join('')}) : '',
             itemsHtml: r.menus.map(function (menu) {
                 return T.render("screens/requirement-coverage-2", {
                     route: menu.route, value: r.id + '/' + menu.id, label: menu.label, content: menu.roles.length ? menu.roles.map(function (role) { return sfrRoleNames[role]; }).join(' / ') + ' · 권한이 없으면 로그인 팝업' : '공개 화면 · 로그인 없이 이동'
@@ -33,11 +50,7 @@
             return T.render("screens/requirements-table", {
                 btnHtml: btn('전체 펼침', 'requirements-expand', '', 'rms-btn-small'), btnHtml2: btn('전체 닫힘', 'requirements-collapse', '', 'rms-btn-small'), itemsHtml: requirements.map(function (r) {
                     return T.render("screens/requirements-table-2", {
-                        id: r.id, id2: r.id, id3: r.id, name: r.name, demo: r.demo, definition: r.definition, itemsHtml: r.details.map(function (detail) {
-                            return T.render("screens/requirements-table-3", {
-                                detail: detail
-                            });
-                        }).join(''), requirementCoverageHtml: requirementCoverage(r)
+                        id: r.id, id2: r.id, id3: r.id, name: r.name, demo: r.demo, definition: r.definition, itemsHtml: requirementDetails(r), requirementCoverageHtml: requirementCoverage(r)
                     });
                 }).join('')
             });
@@ -65,5 +78,5 @@
         }
         return { guide: guide, markup: function (ids) { activeSfr = requirements.filter(function (r) { return ids.includes(Number(r.id.slice(4))); }); return sfrMarkup(); } };
     }
-    root.RMSDemoViews = { create: create, requirementCoverage: requirementCoverage, sfrDestination: sfrDestination, sfrRoleNames: sfrRoleNames, requirement: function (id) { return requirements.find(function (r) { return r.id === id; }); } };
+    root.RMSDemoViews = { create: create, requirementDetails: requirementDetails, requirementCoverage: requirementCoverage, sfrDestination: sfrDestination, sfrRoleNames: sfrRoleNames, requirement: function (id) { return requirements.find(function (r) { return r.id === id; }); } };
 }(window));

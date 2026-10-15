@@ -11,10 +11,10 @@ python -m unittest discover -s tests -p "*_test.py"
 DOM 검사의 linkedom은 tmp/qa에만 설치하며 내부 ZIP에 포함하지 않습니다. 설치가 필요하면 다음 명령을 사용합니다.
 
 ~~~powershell
-npm.cmd install --prefix tmp/qa --cache tmp/npm-cache --no-package-lock --ignore-scripts --no-audit --no-fund linkedom@0.18.12
+npm.cmd install --prefix tmp/qa --cache tmp/npm-cache --no-package-lock --ignore-scripts --no-audit --no-fund linkedom@0.18.12 jsdom@26.1.0
 ~~~
 
-현재 Node 101개 + Python 20개 = 121개 검증을 통과했습니다. 업무 전용 application.html은 시연 JS 없이 서버 스냅샷으로 테스트하고, index.html은 demo/ 도구를 포함해 별도로 테스트합니다. linkedom의 window 전역은 테스트별로 격리하여 시연 플러그인이 업무 테스트에 남지 않게 합니다.
+현재 Node 130개 + Python 23개 = 153개 검증을 통과했습니다. 업무 전용 application.html은 시연 JS 없이 서버 스냅샷으로 테스트하고, index.html은 demo/ 도구를 포함해 별도로 테스트합니다. linkedom의 window 전역은 테스트별로 격리하여 시연 플러그인이 업무 테스트에 남지 않게 합니다.
 
 source_package_test.py는 실제 허용 목록과 ZIP 자산 연결을 확인하고, 임시 소스로 동일 버전 재현성·변경 시 버전 증가·시연만 변경된 배포·과거 ZIP 불변·시연 누출 거부를 검사합니다. 임시 Git index에서 staged 파일만 검증하고 미배포 변경을 거부합니다. 실제 프로젝트의 commit/push는 실행하지 않습니다.
 

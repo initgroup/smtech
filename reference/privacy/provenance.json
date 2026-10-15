@@ -1,0 +1,75 @@
+{
+  "verifiedOn": "2026-10-15",
+  "timezone": "Asia/Seoul",
+  "method": "Official publisher pages and original attachments; downloaded bytes unchanged. PDF signatures and page counts checked with pypdf 6.12.2.",
+  "latestScope": "Latest editions found at official publisher sites on the verification date; current laws override old guide citations.",
+  "sources": [
+    {
+      "file": "mois-web-quality-guide-20250630.pdf",
+      "title": "전자정부 웹사이트 품질관리 가이드 (2025-06-30)",
+      "publisher": "행정안전부",
+      "published": "2025-07-01",
+      "edition": "2025-06-30",
+      "pageCount": 161,
+      "sourcePage": "https://www.mois.go.kr/frt/bbs/type013/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000006&nttId=118639",
+      "downloadUrl": "https://www.mois.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_00136866qsMGij7&fileSn=0",
+      "bytes": 3169278,
+      "sha256": "ce50b7edeab84afa8b275d65e9f130c71e4f3a61f479eeeb4689e344f3ccb34b"
+    },
+    {
+      "file": "mois-website-build-guide-201705.pdf",
+      "title": "행정·공공기관 웹사이트 구축·운영 가이드 (2017년 개정)",
+      "publisher": "행정안전부 공식 게시처 / 발행 당시 행정자치부",
+      "published": "2017-05-19",
+      "edition": "2017",
+      "pageCount": 139,
+      "relevantPrintedPages": [
+        41,
+        66
+      ],
+      "sourcePage": "https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000015&nttId=58457",
+      "downloadUrl": "https://www.mois.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_00070241OoQdiJL&fileSn=0",
+      "bytes": 2823218,
+      "sha256": "739e750480c223a4742ea29c7cc98efed216d5c14b5fc10af59cc3c0629a6c22"
+    },
+    {
+      "file": "pipc-homepage-privacy-guide-202404.pdf",
+      "title": "홈페이지 개인정보 노출방지 안내서 (2024.04)",
+      "publisher": "개인정보보호위원회·한국인터넷진흥원",
+      "published": "2024-12-23",
+      "edition": "2024-04",
+      "pageCount": 163,
+      "relevantPrintedPages": [
+        13,
+        26,
+        158
+      ],
+      "sourcePage": "https://www.privacy.go.kr/front/bbs/bbsView.do?bbsNo=BBSMSTR_000000000049&bbscttNo=20775",
+      "corroboration": "https://www.kisa.kr/2060301/form?page=1&postSeq=58",
+      "downloadUrl": "https://www.privacy.go.kr/cmm/fms/FileDown.do?atchFileId=ATCH_000000000900434&fileSn=1",
+      "bytes": 18360124,
+      "sha256": "b93add2bd464f2a09e6e512db303399a7e655a449df78025ea64fcf17c663034"
+    }
+  ],
+  "currentRules": [
+    {
+      "title": "전자정부 웹사이트 품질관리 지침",
+      "notice": "행정안전부고시 제2025-46호",
+      "effective": "2025-06-25",
+      "url": "https://www.law.go.kr/admRulLsInfoP.do?admRulId=42433&efYd=0"
+    },
+    {
+      "title": "개인정보의 안전성 확보조치 기준",
+      "notice": "개인정보보호위원회고시 제2026-9호",
+      "effective": "2026-07-01",
+      "url": "https://law.go.kr/LSW/admRulLsInfoP.do?admRulSeq=2100000281400"
+    },
+    {
+      "title": "개인정보 보호법",
+      "notice": "법률 제21445호",
+      "effective": "2026-09-11",
+      "url": "https://www.law.go.kr/법령/개인정보보호법",
+      "corroboration": "https://www.law.go.kr/admRulStmdInfoP.do?admRulSeq=2100000265956"
+    }
+  ]
+}

@@ -32,6 +32,18 @@
     {
       "source": "tools/delivery",
       "target": "tools"
+    },
+    {
+      "source": "reference/privacy",
+      "target": "reference/privacy"
+    },
+    {
+      "source": "reference/vendor",
+      "target": "reference/vendor"
+    },
+    {
+      "source": "reference/environment",
+      "target": "reference/environment"
     }
   ],
   "files": [
@@ -42,6 +54,50 @@
     {
       "source": "prototype/region/rms/asset-manifest.json",
       "target": "web/asset-manifest.json"
+    },
+    {
+      "source": "docs/09-privacy-protection.md",
+      "target": "docs/09-privacy-protection.md"
+    },
+    {
+      "source": "docs/sfr-implementation.json",
+      "target": "docs/requirements-implementation.json"
+    },
+    {
+      "source": "reference/privacy/mois-web-quality-guide-20250630.pdf",
+      "target": "web/downloads/privacy/mois-web-quality-guide-20250630.pdf"
+    },
+    {
+      "source": "reference/privacy/mois-website-build-guide-201705.pdf",
+      "target": "web/downloads/privacy/mois-website-build-guide-201705.pdf"
+    },
+    {
+      "source": "reference/privacy/pipc-homepage-privacy-guide-202404.pdf",
+      "target": "web/downloads/privacy/pipc-homepage-privacy-guide-202404.pdf"
+    },
+    {
+      "source": "reference/privacy/provenance.json",
+      "target": "web/downloads/privacy/provenance.json"
+    },
+    {
+      "source": "reference/privacy/privacy-implementation.html",
+      "target": "web/downloads/privacy/privacy-implementation.html"
+    },
+    {
+      "source": "reference/privacy/privacy-report.css",
+      "target": "web/downloads/privacy/privacy-report.css"
+    },
+    {
+      "source": "reference/privacy/privacy-demo.js",
+      "target": "web/downloads/privacy/privacy-demo.js"
+    },
+    {
+      "source": "docs/10-qna-change-report.md",
+      "target": "docs/10-qna-change-report.md"
+    },
+    {
+      "source": "docs/11-qna-editor-security.md",
+      "target": "docs/11-qna-editor-security.md"
     }
   ],
   "watch": [
@@ -57,6 +113,12 @@
     "git-upload.ps1",
     ".gitattributes",
     "start.ps1",
-    ".gitignore"
+    ".gitignore",
+    "AGENTS.md",
+    "stop.ps1",
+    "restart.ps1",
+    "reference/privacy",
+    "reference/vendor",
+    "reference/environment"
   ]
 }

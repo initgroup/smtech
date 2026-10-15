@@ -49,8 +49,9 @@ app은 UI facade의 saveDoctor(input) 등을 호출합니다. HTTP adapter는 co
 | attachFile, requestSupplement, submitApplication | 파일 제출·보완·임시/최종 제출 |
 | saveCode, removeCode, mapWork | 분류 관리 |
 | updateQuestion, updateSettings, saveDocumentType | 노출·화면·연계 대상 관리 |
+| saveQuestion, removeQuestion, saveQuestionReply, removeQuestionReply, unlockQuestion | Q&A 글·댓글·답변 CRUD 및 비공개 작성자 확인. 상세 payload와 권한은 [Q&A 이식 안내](11-qna-editor-security.md) 참조 |
 
-기타 명령의 result는 null이어도 됩니다. 새 ID가 필요한 세 명령은 문자열 ID를 반환하세요. 서버 업무 오류는 request Promise를 reject하거나 decode에서 Error를 발생시킵니다. 정상 HTTP 200 안의 resultCode 실패도 내부 decode에서 오류로 변환해야 합니다.
+Q&A의 saveQuestion·saveQuestionReply·removeQuestionReply·unlockQuestion은 다음 상세화면에 필요한 글 ID를 반환해야 합니다. 다른 새 ID가 필요한 명령도 문자열 ID를 반환하세요. 기타 명령의 result는 null이어도 됩니다. 서버 업무 오류는 request Promise를 reject하거나 decode에서 Error를 발생시킵니다. 정상 HTTP 200 안의 resultCode 실패도 내부 decode에서 오류로 변환해야 합니다.
 
 공용 transport는 bootstrap을 GET, 나머지를 JSON POST로 보냅니다. attachFile은 {appId,id,file}을 FormData로 보내므로 내부 서버는 실제 multipart File을 받아야 합니다. 공고의 텍스트 시연 첨부와 운영 바이너리 공고 파일은 별도 기능입니다. 실제 공고 첨부 API·다운로드 정책은 내부 시스템의 모델에 맞게 확장합니다.
 

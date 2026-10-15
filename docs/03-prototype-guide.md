@@ -122,3 +122,7 @@
 ## 개발자 배포 분리
 
 시연 전용 진입점은 index.html, 도구·SFR·가상 자료는 demo/입니다. 내부 ZIP에는 application.html에서 생성한 web/index.html과 업무 자산만 포함됩니다. 시연 도구를 펼쳐 배포내역을 선택하면 버전별 변경 내용과 이식 안내를 이동 가능한 레이어에서 확인합니다. 자세한 기준은 docs/delivery/00_먼저읽기_개발자이식안내.md입니다.
+
+## 2026-10-15 Q&A·개인정보 보호 확장
+
+로그인 전후 Q&A와 전체 SFR 세부 추적 변경·검증 결과는 [변경 보고](10-qna-change-report.md), 공식 근거와 마스킹 예시는 [개인정보 보호 기술 설명](09-privacy-protection.md), 서버 payload와 라이브러리 이식은 [Q&A 이식 안내](11-qna-editor-security.md)를 참고합니다. 이전 시점의 검증 기록과 이번 결과를 구분합니다.

@@ -15,6 +15,187 @@ window.RMSRequirements = [
     ],
     "demo": "검색·상세·등록/수정 팝업, SMTECH 가상 사용자 초기값, 중복/등록기관 권한, 변경이력, 12개월 현행화 대상",
     "remaining": "SMTECH 사용자 조회, 실제 인적정보·기관권한·변경이력 테이블",
+    "criteria": [
+      {
+        "id": "SFR-01-01",
+        "status": "demo",
+        "evidence": "기본정보·학위·경력·자격·선정사유 입력·상세 조회",
+        "menus": [
+          {
+            "id": "doctor-register",
+            "label": "기술닥터 › 통합검색 › 기술닥터 등록",
+            "route": "doctors",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          },
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-form",
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 관리기관(TP)이 기술닥터의 기본정보, 소속기관, 학위정보, 취득기술정보, 주요 경력, 자격증 및 포상정보, 선정사유 등의 정보를 등록·조회·수정할 수 있는 기능을 구현하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-01-02",
+        "status": "partial",
+        "evidence": "소관 등록기관·관리자 수정 버튼 및 업무함수 권한검사",
+        "menus": [
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "서버 인증·기관 권한 재검증 필요",
+        "text": "◦ 기술닥터 등록기관의 관리권한을 보유한 담당자에 한하여 해당 기술닥터의 등록정보를 수정할 수 있도록 권한을 관리하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-01-03",
+        "status": "partial",
+        "evidence": "다른 지역 등록정보는 조회만 허용",
+        "menus": [
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "서버의 행 단위 열람·수정 권한 필요",
+        "text": "◦ 등록기관과 타지역 관리기관 간 조회·수정 권한 구분",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-01-04",
+        "status": "partial",
+        "evidence": "가상 SMTECH 사용자 선택 시 이름·기관 초기값 반영",
+        "menus": [
+          {
+            "id": "doctor-register",
+            "label": "기술닥터 › 통합검색 › 기술닥터 등록",
+            "route": "doctors",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "doctor-form"
+        ],
+        "privacy": false,
+        "remaining": "실제 SMTECH 회원 API 미연계",
+        "text": "◦ 기술닥터 등록 시 SMTECH에 등록된 사용자를 조회·선택할 수 있어야 하며, SMTECH에 등록된 사용자 기본정보를 연계하여 기술닥터 등록정보의 초기값으로 설정할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-01-05",
+        "status": "demo",
+        "evidence": "기술·상담·지원지역·선정사유 입력 및 검색 활용",
+        "menus": [
+          {
+            "id": "doctor-register",
+            "label": "기술닥터 › 통합검색 › 기술닥터 등록",
+            "route": "doctors",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          },
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-form",
+          "doctor-search"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터의 전문분야, 기술분야 및 지원가능 분야 등 기업과의 검색·매칭에 필요한 정보를 체계적으로 등록·관리할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-01-06",
+        "status": "demo",
+        "evidence": "사용자 ID 중복등록 차단 및 변경일시·변경자·필드별 이력",
+        "menus": [
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          },
+          {
+            "id": "doctor-register",
+            "label": "기술닥터 › 통합검색 › 기술닥터 등록",
+            "route": "doctors",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "doctor-history",
+          "doctor-form"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터 등록정보 변경 시 변경일시, 변경자, 변경내용 등의 변경이력을 관리·조회할 수 있어야 하며, 동일 기술닥터의 중복등록 방지",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-01-07",
+        "status": "demo",
+        "evidence": "최종 갱신일·현행화 대상 배지와 필터",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-search",
+          "doctor-results"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터별 최종 정보 갱신일자를 관리하고, 일정 기간 이상 등록정보가 갱신되지 않은 기술닥터를 식별하여 현행화 대상 정보를 조회·관리할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "전문가의 현재 상태를 빠르게 판단하도록 검색 목록에는 활동상태·최종 갱신일·현행화 대상 배지를 배치했습니다. 상세에서는 기본정보와 변경이력을 별도 패널로 나누어 현재 값과 수정 근거를 비교할 수 있습니다.",
       "screen": "관리기관·관리자에게 등록 버튼을 표시하고, 상세 수정 버튼은 소관 등록기관과 관리자에게 제공합니다. 등록 팝업에서 가상 SMTECH 사용자를 선택하면 소속기관을 채우며 학위·경력·취득기술·자격·선정사유·복수 전문분야를 입력합니다.",
@@ -64,6 +245,162 @@ window.RMSRequirements = [
     ],
     "demo": "관리자에서 산업·기술·상담·기관·지역·선정사유 분류 관리, parentId 계층, 복수 선택",
     "remaining": "표준코드 확정, 기존 자유입력 데이터 정제·이행",
+    "criteria": [
+      {
+        "id": "SFR-02-01",
+        "status": "partial",
+        "evidence": "산업·기술·상담·기관·지역·선정사유 분류",
+        "menus": [
+          {
+            "id": "codes",
+            "label": "설정 › 표준분류 › 기술·산업 등 분류",
+            "route": "manage",
+            "codeKind": "technology",
+            "roles": [
+              "admin"
+            ]
+          },
+          {
+            "id": "doctor-register",
+            "label": "기술닥터 › 통합검색 › 기술닥터 등록",
+            "route": "doctors",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "codes",
+          "doctor-form"
+        ],
+        "privacy": false,
+        "remaining": "지원지역 일부 지역명 문자열을 지역 ID로 통합 필요",
+        "text": "◦ 기술닥터 정보를 산업분야, 기술분야, 상담유형, 기관유형, 지원가능 지역, 기타 선정·활동 정보 등의 표준 분류체계에 따라 등록·관리할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-02-02",
+        "status": "demo",
+        "evidence": "parentId 계층·상위분류 선택·순환 참조 차단",
+        "menus": [
+          {
+            "id": "codes",
+            "label": "설정 › 표준분류 › 기술·산업 등 분류",
+            "route": "manage",
+            "codeKind": "technology",
+            "roles": [
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "codes"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 산업·기술정보 및 상담유형 등을 계층형 분류체계로 구성하여 기술닥터의 전문분야를 세분화하여 관리할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-02-03",
+        "status": "demo",
+        "evidence": "지원가능 지역 복수 등록과 지역 검색",
+        "menus": [
+          {
+            "id": "doctor-register",
+            "label": "기술닥터 › 통합검색 › 기술닥터 등록",
+            "route": "doctors",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          },
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-form",
+          "doctor-search"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터별 지원가능 지역을 등록하고 지역 단위로 검색할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-02-04",
+        "status": "partial",
+        "evidence": "상담유형·지원지역·선정사유 복수 선택, 취득기술 텍스트 입력",
+        "menus": [
+          {
+            "id": "doctor-register",
+            "label": "기술닥터 › 통합검색 › 기술닥터 등록",
+            "route": "doctors",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "doctor-form"
+        ],
+        "privacy": false,
+        "remaining": "취득기술 반복 항목 구조화 필요",
+        "text": "◦ 하나의 기술닥터가 복수의 상담유형, 취득기술정보 및 지원가능 지역, 선정사유를 등록할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-02-05",
+        "status": "demo",
+        "evidence": "관리자의 분류 추가·수정·삭제 및 참조 중 코드 삭제 제한",
+        "menus": [
+          {
+            "id": "codes",
+            "label": "설정 › 표준분류 › 기술·산업 등 분류",
+            "route": "manage",
+            "codeKind": "technology",
+            "roles": [
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "codes"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 분류체계의 추가·수정·삭제 등 관리자가 표준 분류체계를 관리할 수 있도록 구현하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-02-06",
+        "status": "demo",
+        "evidence": "공통 코드 ID를 검색·전문가·매칭 정보에 적용",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-search",
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터 검색 및 기업 매칭 시 해당 분류체계를 활용할 수 있도록 구현하여야 함",
+        "statusLabel": "시연 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "자유 입력으로 달라지기 쉬운 전문분류를 선택형 UI로 통일했습니다. 분류 관리에서는 상위 항목을 들여쓰기로 구별하고 사용·노출 상태를 함께 보여 관리자가 코드의 구조와 제공 상태를 한 화면에서 판단하게 했습니다.",
       "screen": "산업·기술·상담·기관·지역·선정사유 분류를 관리 화면에서 추가·수정합니다. 기술닥터 등록에는 복수 체크박스, 검색에는 같은 코드의 선택 목록, 상세에는 코드명 표시를 적용했습니다.",
@@ -124,6 +461,219 @@ window.RMSRequirements = [
     ],
     "demo": "전국 검색, 등록지역/지원가능 지역 구분, 타지역 전문가 매칭 요청과 실적",
     "remaining": "지역 간 관리권한·요청전달·승인 규칙",
+    "criteria": [
+      {
+        "id": "SFR-03-01",
+        "status": "partial",
+        "evidence": "전국 지역의 가상 기술닥터 목록 통합검색",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-search"
+        ],
+        "privacy": false,
+        "remaining": "기관별 원장·실제 데이터 연계 미구현",
+        "text": "◦ 지역별 기술닥터 정보를 연계하여 초광역권 단위로 통합 검색할 수 있는 기능을 구현하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-03-02",
+        "status": "demo",
+        "evidence": "등록지역에 제한 없이 타지역 전문가 검색",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-search"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기업이 소재한 지역뿐만 아니라 타지역의 기술닥터도 검색하고 활용할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-03-03",
+        "status": "demo",
+        "evidence": "지원가능 지역·활동상태 목록·상세 표시",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          },
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-results",
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 타지역 기술닥터 활용시 해당 전문가의 지원가능 여부 및 지원가능 지역을 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-03-04",
+        "status": "demo",
+        "evidence": "소속기관·기관유형·취득기술·지원지역 조회",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          },
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-results",
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 검색 결과에서 기술닥터의 소속기관, 기관유형, 취득기술정보, 지원가능 지역 등 주요 정보를 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-03-05",
+        "status": "partial",
+        "evidence": "기업·기관 역할에서 기술애로 매칭 요청 등록",
+        "menus": [
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          },
+          {
+            "id": "matches",
+            "label": "기술닥터 › 매칭·지원 관리",
+            "route": "matches",
+            "roles": [
+              "company",
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "doctor-profile",
+          "matches"
+        ],
+        "privacy": false,
+        "remaining": "기관 간 요청 전달·수락·취소 및 운영 API 필요",
+        "text": "◦ 기업 또는 관리기관이 타지역 기술닥터에 대한 매칭 또는 활용 요청을 등록·관리 할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-03-06",
+        "status": "demo",
+        "evidence": "지원지역·활동상태 확인 및 요청 시 지원범위 검증",
+        "menus": [
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 지역 간 기술닥터 활용이 가능하도록 지역 제한 여부 및 지원 가능 범위 등의 정보를 제공할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-03-07",
+        "status": "demo",
+        "evidence": "복합검색·상세정보·매칭 요청 연결",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          },
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-search",
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 초광역권 통합검색을 통해 기업의 기술애로에 적합한 타지역 기술닥터를 활용할 수 있도록 지원하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-03-08",
+        "status": "partial",
+        "evidence": "매칭 접수·지원진행·완료 및 기업지원 결과 등록",
+        "menus": [
+          {
+            "id": "matches",
+            "label": "기술닥터 › 매칭·지원 관리",
+            "route": "matches",
+            "roles": [
+              "company",
+              "tp",
+              "admin"
+            ]
+          },
+          {
+            "id": "match-review",
+            "label": "기술닥터 › 매칭·지원 관리 › 지원실적 처리",
+            "route": "matches",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "matches"
+        ],
+        "privacy": false,
+        "remaining": "기관 단위 공식 실적 승인·집계 정책 필요",
+        "text": "◦ 타지역 기술닥터 활용에 따른 매칭·지원실적을 기술닥터 및 관리기관 단위로 관리 할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "등록지역과 실제 지원가능 지역을 분리해 보여 지역 밖의 전문가도 찾을 수 있도록 구성했습니다. 상세의 매칭 요청 버튼에서 지원 관리로 이어지는 흐름과 지역 내·지역 간 매칭 배지로 초광역 협업 여부를 구별합니다.",
       "screen": "전국 전문가를 검색하고 지원가능 지역·활동상태를 확인한 뒤 기술애로를 입력해 요청합니다. 매칭 목록에서는 요청접수 → 지원진행 → 지원완료로 처리하고 완료 시 기업지원 결과를 입력합니다.",
@@ -183,6 +733,130 @@ window.RMSRequirements = [
     ],
     "demo": "이름·기관·취득기술, 산업·기술·기관유형·지역·연도 복합 검색, 정렬, 2~3명 비교",
     "remaining": "대량 검색·페이징·접근 가능한 필드 결정",
+    "criteria": [
+      {
+        "id": "SFR-04-01",
+        "status": "demo",
+        "evidence": "기관유형·지원지역·기관명 검색어·선정연도 필터",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-search"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터의 기관유형, 지원가능 지역, 소속기관명, 선정연도 등의 조건을 활용하여 검색할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-04-02",
+        "status": "demo",
+        "evidence": "산업·기술·기관·지역·활동상태 복합검색",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-search"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 복수의 검색조건을 조합하여 기업의 기술수요에 적합한 기술닥터를 검색할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-04-03",
+        "status": "partial",
+        "evidence": "갱신일·이름·기관 정렬과 기술·지역 필터",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-search"
+        ],
+        "privacy": false,
+        "remaining": "모든 요청 조건별 정렬 및 서버 정렬 API 확인 필요",
+        "text": "◦ 검색결과를 기관유형, 취득기술정보, 지역 등 조건에 따라 정렬 및 필터링할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-04-04",
+        "status": "demo",
+        "evidence": "이름·기관·전문기술·지역·활동·갱신일 결과표",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-results"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 검색결과에서 기술닥터의 이름, 소속기관, 기관유형, 취득기술정보, 지원가능 지역 등 주요 정보를 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-04-05",
+        "status": "demo",
+        "evidence": "학위·경력·자격·취득기술·지원범위 상세",
+        "menus": [
+          {
+            "id": "doctor-detail",
+            "label": "기술닥터 › 상세정보·변경이력",
+            "route": "doctors",
+            "record": "doctor",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-profile"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터 상세정보 조회 시 기업의 기술애로 해결에 필요한 전문정보를 제공할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-04-06",
+        "status": "demo",
+        "evidence": "최대 3명 선택 후 2~3명 속성 비교",
+        "menus": [
+          {
+            "id": "doctors",
+            "label": "기술닥터 › 통합검색·비교",
+            "route": "doctors",
+            "roles": []
+          }
+        ],
+        "features": [
+          "doctor-results"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 검색조건 및 검색결과를 활용하여 적합한 기술닥터를 비교·선택할 수 있도록 구현하여야 함",
+        "statusLabel": "시연 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "상단 필터 → 결과 목록 → 선택 비교 순서로 탐색 영역을 정리했습니다. 요약 지표와 갱신 배지를 먼저 보여 후보를 좁히고, 비교 표는 속성을 행으로 정렬하여 전문가별 차이를 나란히 읽도록 했습니다.",
       "screen": "이름·소속기관·취득기술 검색어와 산업·기술·기관유형·지원지역·선정연도 조건을 함께 적용합니다. 활동 가능·현행화 대상 필터와 정렬을 제공하며 최대 3명 선택, 2~3명 비교, 상세 진입을 연결했습니다.",
@@ -224,6 +898,170 @@ window.RMSRequirements = [
     ],
     "demo": "등록·활동 전문가, 매칭·지원완료·중복제거 기업 수, 지역/산업/기술/기간, CSV",
     "remaining": "공식 집계 정의, 이력 시점 통계, 대량 엑셀 출력",
+    "criteria": [
+      {
+        "id": "SFR-05-01",
+        "status": "demo",
+        "evidence": "지역별 등록·활동 전문가 표·막대 표시",
+        "menus": [
+          {
+            "id": "stats",
+            "label": "기술닥터 › 통계·성과",
+            "route": "stats",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "statistics"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 지역별 기술닥터 등록 및 활동 현황을 조회할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-05-02",
+        "status": "demo",
+        "evidence": "산업·기술 필터별 현재 전문가 집계",
+        "menus": [
+          {
+            "id": "stats",
+            "label": "기술닥터 › 통계·성과",
+            "route": "stats",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "statistics"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 산업분야 및 기술분야별 기술닥터 현황을 조회할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-05-03",
+        "status": "demo",
+        "evidence": "매칭 요청·지원완료 건수 집계",
+        "menus": [
+          {
+            "id": "stats",
+            "label": "기술닥터 › 통계·성과",
+            "route": "stats",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "statistics"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터와 기업 간 매칭 건수 및 매칭 실적을 조회할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-05-04",
+        "status": "demo",
+        "evidence": "지원완료 건수와 중복 기업 ID 제거 지원기업 수",
+        "menus": [
+          {
+            "id": "stats",
+            "label": "기술닥터 › 통계·성과",
+            "route": "stats",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "statistics"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기술닥터를 활용한 기업지원 건수 및 지원실적을 조회할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-05-05",
+        "status": "partial",
+        "evidence": "지역·산업·기술·매칭 요청일 기간별 집계",
+        "menus": [
+          {
+            "id": "stats",
+            "label": "기술닥터 › 통계·성과",
+            "route": "stats",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "statistics"
+        ],
+        "privacy": false,
+        "remaining": "과거 시점의 소속·활동 상태 복원 통계 미구현",
+        "text": "◦ 지역별·기술별·기간별 등 다양한 조건으로 통계자료를 조회할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-05-06",
+        "status": "partial",
+        "evidence": "관리기관·관리자 역할의 통계 화면",
+        "menus": [
+          {
+            "id": "stats",
+            "label": "기술닥터 › 통계·성과",
+            "route": "stats",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "statistics"
+        ],
+        "privacy": false,
+        "remaining": "서버 권한·대량 집계·공식 지표 검증 필요",
+        "text": "◦ 통계 및 성과정보를 관리자 및 사업관리자가 업무에 활용할 수 있도록 화면 조회 및 통계자료 제공 기능을 구현하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-05-07",
+        "status": "demo",
+        "evidence": "조회조건을 반영한 CSV 다운로드",
+        "menus": [
+          {
+            "id": "stats",
+            "label": "기술닥터 › 통계·성과",
+            "route": "stats",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "statistics"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 조회된 통계자료는 엑셀 등 활용 가능한 형태로 내려받을 수 있어야함",
+        "statusLabel": "시연 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "등록 전문가·매칭·지원완료·지원기업 수를 상단 지표로 구분했습니다. 지역별 막대 표시와 상세 수치 표를 함께 배치해 규모 비교와 정확한 숫자 확인을 동시에 할 수 있도록 했습니다.",
       "screen": "관리기관·관리자가 지역·산업·기술·매칭 요청기간을 조합해 통계를 조회합니다. 지원완료 건수와 중복을 제거한 기업 수를 별도로 표시하고 지역별 집계 표를 CSV로 내려받습니다.",
@@ -266,6 +1104,69 @@ window.RMSRequirements = [
     ],
     "demo": "메인 로그인 패널/역할 선택 팝업, 로그인 전후 메뉴",
     "remaining": "SMTECH 인증·휴대폰 OTP·세션·로그아웃",
+    "criteria": [
+      {
+        "id": "SFR-06-01",
+        "status": "demo",
+        "evidence": "메인 독립 로그인 패널·상단 계정 메뉴",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-login"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 메인화면에서 로그인 기능을 쉽게 인지하고 접근할 수 있도록 로그인 영역을 배치하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-06-02",
+        "status": "partial",
+        "evidence": "로그인 선택 시 역할 선택 팝업 시연",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-login"
+        ],
+        "privacy": false,
+        "remaining": "실제 SMTECH 로그인·OTP·세션 발급 미연계",
+        "text": "◦ 메인화면에서 로그인 선택 시 로그인 화면 또는 팝업 방식으로 로그인할 수 있도록 구현하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-06-03",
+        "status": "partial",
+        "evidence": "시연 역할별 로그인·회원정보·로그아웃·나의 업무 분기",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-login"
+        ],
+        "privacy": false,
+        "remaining": "실제 계정 복구·회원정보·인증 세션 연계 필요",
+        "text": "◦ 로그인 상태에 따라 로그인, 로그아웃, 회원정보 등 사용자별 메뉴를 구분하여 제공하여야 함",
+        "statusLabel": "부분 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "메인에서 로그인 위치를 쉽게 찾도록 공고·검색 콘텐츠 옆에 독립 로그인 패널을 배치했습니다. 상단 계정 메뉴와 같은 청색 버튼 체계를 사용하고, 모바일에서는 로그인 패널을 업무 콘텐츠 앞에 배치합니다.",
       "screen": "로그인 전에는 로그인·아이디/비밀번호 찾기를 표시하고 로그인 후에는 사용자명·회원정보·로그아웃 및 나의 업무 진입을 제공합니다. 로그인 선택 시 역할 선택 팝업을 열며 SFR 메뉴에서 권한이 부족한 경우에도 필요한 역할을 안내합니다.",
@@ -297,9 +1198,112 @@ window.RMSRequirements = [
     ],
     "demo": "메인 주요 질문 펼침, 제목·답변·키워드, 부분/관련 글자 검색, 더보기",
     "remaining": "기존 FAQ 데이터, 검색 품질·관련도 기준",
+    "criteria": [
+      {
+        "id": "SFR-07-01",
+        "status": "demo",
+        "evidence": "메인 FAQ 게시판 미리보기와 제목 목록",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "faq",
+            "label": "소통관리 › 자주하는 질문",
+            "route": "faq",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-faq",
+          "faq"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 사용자가 자주 묻는 질문을 쉽게 확인할 수 있도록 메인화면에 FAQ 영역을 구성하고 주요 FAQ를 제공하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-07-02",
+        "status": "demo",
+        "evidence": "메인 FAQ 제목 선택 시 게시물 상세팝업에서 답변 확인",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "faq",
+            "label": "소통관리 › 자주하는 질문",
+            "route": "faq",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-faq",
+          "faq"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 메인화면의 FAQ 영역에서 질문을 선택하면 해당 질문의 답변내용을 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-07-03",
+        "status": "demo",
+        "evidence": "메인 FAQ 더보기에서 전체 공개 FAQ 게시판 이동",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "faq",
+            "label": "소통관리 › 자주하는 질문",
+            "route": "faq",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-faq"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ FAQ 영역의 [더보기] 기능을 통해 전체 FAQ 목록 화면으로 이동할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-07-04",
+        "status": "partial",
+        "evidence": "FAQ 화면 제목·답변·키워드 검색과 관련 글자 대체 후보",
+        "menus": [
+          {
+            "id": "faq",
+            "label": "소통관리 › 자주하는 질문",
+            "route": "faq",
+            "roles": []
+          }
+        ],
+        "features": [
+          "faq"
+        ],
+        "privacy": false,
+        "remaining": "메인 통합검색 유사도 추천·질문내용 별도 필드 미구현",
+        "text": "◦ 제목, 질문내용, 답변내용 및 등록된 키워드를 대상으로 검색하고 검색어가 일부 포함된 관련 FAQ를 우선 제공하고, 검색어와 일치하는 FAQ가 없는 경우 검색어와 유사하거나 관련된 FAQ를 제공할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
-      "design": "메인에 질문형 제목과 검색창을 배치해 사용자가 메뉴명을 몰라도 질문으로 시작할 수 있게 했습니다. 주요 질문은 제목 목록에서 답변을 펼치는 아코디언으로 구성해 페이지 이동 없이 내용을 확인합니다.",
-      "screen": "메인 검색과 FAQ 더보기를 전체 FAQ 화면에 연결하고 업무유형·검색어를 유지합니다. 제목·답변·키워드를 검색하며 직접 일치 결과가 없으면 관련 글자·키워드 기반 제안임을 안내합니다.",
+      "design": "메인 FAQ 게시판 미리보기에서 제목을 선택해 상세로 이동합니다. 별도 FAQ 화면은 검색·아코디언 답변을 제공하며 메인과의 차이를 세부항목에 기록했습니다.",
+      "screen": "메인 FAQ 더보기는 전체 공개 FAQ 게시판으로 이동합니다. 소통관리 FAQ는 업무유형·제목·답변·키워드를 검색하고 관련 글자 기반 대체 후보를 표시합니다.",
       "technology": "details/summary의 기본 펼침 동작과 키보드 조작을 사용합니다. JavaScript 문자열 비교로 일치 항목을 찾고 관련 문자를 비교해 대체 후보를 정렬합니다. 생성형 AI·외부 검색 엔진을 호출하는 기능은 아닙니다.",
       "data": "faqs의 title·answer·keywords·work·published를 사용하고 업무분류의 사용·노출 설정도 함께 검사합니다. 검색어·업무유형은 시연 내보내기의 화면 메타정보로 복원하며 FAQ 데이터는 전체 백업에 포함합니다."
     },
@@ -336,8 +1340,158 @@ window.RMSRequirements = [
     ],
     "demo": "유형+검색어, 분류 사용/노출 설정, 기존 유형 일괄 매핑",
     "remaining": "기존 소통 분류 코드·데이터 매핑 검증",
+    "criteria": [
+      {
+        "id": "SFR-08-01",
+        "status": "demo",
+        "evidence": "FAQ·질문의 work 코드와 업무유형 필터",
+        "menus": [
+          {
+            "id": "faq",
+            "label": "소통관리 › 자주하는 질문",
+            "route": "faq",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "faq",
+          "qna-list"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ FAQ 및 질문·답변 정보를 로그인, 사업신청, 사업관리 등 업무 유형별로 분류하여 관리할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-08-02",
+        "status": "partial",
+        "evidence": "FAQ·소통하기에서 업무유형 선택 조회",
+        "menus": [
+          {
+            "id": "faq",
+            "label": "소통관리 › 자주하는 질문",
+            "route": "faq",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "faq",
+          "qna-list"
+        ],
+        "privacy": false,
+        "remaining": "메인 업무유형 선택 칩 현재 미제공",
+        "text": "◦ 메인화면에서 업무 유형을 선택하여 해당 업무와 관련된 질문 및 답변을 조회할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-08-03",
+        "status": "demo",
+        "evidence": "업무유형과 검색어 조합 검색",
+        "menus": [
+          {
+            "id": "faq",
+            "label": "소통관리 › 자주하는 질문",
+            "route": "faq",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "faq",
+          "qna-list"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 업무 유형과 검색어를 조합하여 원하는 정보를 검색할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-08-04",
+        "status": "partial",
+        "evidence": "메인 주요 FAQ·최근 Q&A 공개 목록",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-faq",
+          "home-qna"
+        ],
+        "privacy": false,
+        "remaining": "메인 업무유형별 주요 질문 구분 후속 구현",
+        "text": "◦ 업무 유형별 주요 질문 및 자주 이용되는 정보를 메인화면에서 확인할 수 있도록 구현하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-08-05",
+        "status": "demo",
+        "evidence": "관리자의 업무분류 추가·수정·사용·노출 설정",
+        "menus": [
+          {
+            "id": "work-codes",
+            "label": "설정 › 표준분류 › 업무유형",
+            "route": "manage",
+            "codeKind": "work",
+            "roles": [
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "codes"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 소통하기 분류체계를 기반으로 업무유형을 구성하되, 관리자가 분류체계의 추가·변경·사용여부·노출여부를 관리할 수 있도록 구현하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-08-06",
+        "status": "partial",
+        "evidence": "기존 업무분류를 FAQ·질문에 일괄 매핑",
+        "menus": [
+          {
+            "id": "home-settings",
+            "label": "설정 › 메인·소통 설정",
+            "route": "manage/home",
+            "roles": [
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "work-map"
+        ],
+        "privacy": false,
+        "remaining": "운영 데이터 이행·누락 검증·롤백 미구현",
+        "text": "◦ 기존 질문·답변 데이터에 검색기능에서 활용할 수 있도록 기존 데이터와의 매핑 또는 전환 방안을 마련하여야 함",
+        "statusLabel": "부분 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
-      "design": "메인 업무유형 칩과 FAQ·소통하기의 선택 목록을 같은 분류명으로 통일했습니다. 관리자 설정에서는 사용 여부와 사용자에게 보일 노출 여부를 구분해 기존 분류를 즉시 삭제하지 않고 관리하도록 했습니다.",
+      "design": "FAQ·소통하기의 업무유형 선택 목록은 공통 코드로 관리합니다. 메인은 공개 FAQ·Q&A 미리보기를 제공하며 업무유형 칩은 미제공 범위로 구분했습니다.",
       "screen": "업무유형과 검색어를 결합해 FAQ·공개 질문을 조회합니다. 표준분류의 업무유형 탭에서 항목을 관리하고 메인·소통 설정에서는 기존 유형을 다른 유형으로 일괄 매핑한 결과를 확인합니다.",
       "technology": "공통 codes/options 렌더링과 work ID 필터를 사용해 화면마다 서로 다른 분류 목록이 생기지 않게 했습니다. 동일 유형끼리의 무의미한 매핑과 잘못된 분류 참조를 차단하고 데이터 검증 후 저장합니다.",
       "data": "classifications의 work 코드와 faqs·questions의 work 필드를 연결합니다. 매핑 시 두 목록의 기존 참조를 함께 변경하며 비활성·비노출 업무유형의 항목은 공개 화면 후보에서 제외합니다."
@@ -399,15 +1553,249 @@ window.RMSRequirements = [
     ],
     "demo": "공개·메인노출허용·활성 업무유형 조건, 제목/날짜/상태, 상세 모달",
     "remaining": "개인정보 제거·게시물 승인·서버측 공개 검사",
+    "criteria": [
+      {
+        "id": "SFR-09-01",
+        "status": "demo",
+        "evidence": "메인 Q&A 공개 목록 최근 등록 질문",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-qna",
+          "qna-list",
+          "qna-recent"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 메인화면에 최근 등록된 질문을 조회할 수 있는 영역을 구성하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-09-02",
+        "status": "demo",
+        "evidence": "메인 Q&A 최근 답변완료 탭에서 답변 시각 기준 최신순 확인(기존 자료는 등록일 대체)",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-qna",
+          "qna-list",
+          "qna-recent"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 최근 답변이 완료된 질문 및 답변 게시물을 메인화면에 제공하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-09-03",
+        "status": "demo",
+        "evidence": "질문 제목·등록일·답변상태 표시",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-qna",
+          "qna-list"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 질문 제목, 등록일, 답변상태 등 주요 정보를 메인화면에서 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-09-04",
+        "status": "demo",
+        "evidence": "제목 선택으로 질문 상세·답변·댓글 확인",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-qna",
+          "qna-detail"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 질문 또는 답변 선택 시 해당 상세 화면으로 이동할 수 있도록 구현하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-09-05",
+        "status": "partial",
+        "evidence": "공개·메인노출·업무유형 검사; 개인정보 탐지 글의 메인 노출 차단과 제목·본문·댓글 마스킹",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-qna",
+          "qna-list",
+          "qna-detail",
+          "privacy-protection"
+        ],
+        "privacy": true,
+        "remaining": "규칙 탐지의 누락 가능성: 운영 서버 필터·공개 DTO·게시 승인·첨부 검사 강제 필요",
+        "text": "◦ 메인화면에는 공개가 가능한 질문·답변만 노출하여야 하며 비공개 게시물 및 개인정보가 포함된 정보는 노출하지 않아야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-09-06",
+        "status": "demo",
+        "evidence": "관리자의 공개 게시물별 메인 노출 변경",
+        "menus": [
+          {
+            "id": "home-settings",
+            "label": "설정 › 메인·소통 설정",
+            "route": "manage/home",
+            "roles": [
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "qna-moderation"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 관리자가 게시물의 메인화면 노출 여부를 지정할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-09-07",
+        "status": "partial",
+        "evidence": "메인 공개 항목에서 작성자·기업 필드 제외 및 개인정보 문자열 마스킹",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          },
+          {
+            "id": "questions",
+            "label": "소통관리 › 소통하기 · 공개 질문과 답변",
+            "route": "questions",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-qna",
+          "qna-list",
+          "privacy-protection"
+        ],
+        "privacy": true,
+        "remaining": "문맥상 개인 식별·기업 담당자·결합정보 검수 필요; 브라우저만으로 접근통제 보장 불가",
+        "text": "◦ 메인화면에 노출되는 정보에는 작성자 및 기업의 개인정보가 표시되지 않도록 하여야 함",
+        "statusLabel": "부분 구현"
+      }
+    ],
+    "resources": [
+      {
+        "label": "행정안전부 전자정부 웹사이트 품질관리 가이드 (2025.06) · PDF",
+        "href": "downloads/privacy/mois-web-quality-guide-20250630.pdf",
+        "download": true,
+        "description": "웹 품질·호환성·접근성 근거. 개인정보 탐지 패턴을 정하는 문서가 아닙니다."
+      },
+      {
+        "label": "개인정보위·KISA 홈페이지 개인정보 노출방지 안내서 (2024.04) · PDF",
+        "href": "downloads/privacy/pipc-homepage-privacy-guide-202404.pdf",
+        "download": true,
+        "description": "게시판 개인정보 노출 예방·점검·조치. 공식 게시 2024-12-23; 최신 검색 확인 2026-10-15."
+      },
+      {
+        "label": "행정안전부 행정·공공기관 웹사이트 구축·운영 가이드 (2017.05) · PDF",
+        "href": "downloads/privacy/mois-website-build-guide-201705.pdf",
+        "download": true,
+        "description": "웹사이트 구축·운영 참고 문서. 2025 품질관리 지침과 함께 구분하여 적용."
+      },
+      {
+        "label": "개인정보 보호 구현 예시·오픈소스·운영 적용 설명",
+        "href": "downloads/privacy/privacy-implementation.html",
+        "description": "기준·마스킹 예시·라이브러리 버전·라이선스·서버 적용 한계·소스 위치."
+      },
+      {
+        "label": "JavaScript 원문 · 개인정보 탐지·마스킹 privacy.js",
+        "href": "static/js/rms-enhance/common/privacy.js",
+        "download": true,
+        "description": "프로젝트 자체 규칙 구현이며 정부 인증 라이브러리가 아닙니다."
+      },
+      {
+        "label": "JavaScript 원문 · HTML 보안 처리 board-security.js",
+        "href": "static/js/rms-enhance/common/board-security.js",
+        "download": true,
+        "description": "DOMPurify 출력 정제. 개인정보 탐지와 XSS 차단은 별도 수행."
+      },
+      {
+        "label": "마스킹 밑줄·클릭형 기술 설명 레이어 · JavaScript",
+        "href": "static/js/rms-enhance/ui/privacy-display.js",
+        "download": true,
+        "description": "마스킹 값만 밑줄로 표시하고 클릭할 때 기술·소스·근거를 레이어로 보여줍니다. 미리보기의 배치를 유지합니다."
+      }
+    ],
     "implementation": {
-      "design": "메인 하단에 최근 질문과 답변을 표로 배치하고 업무유형·제목·등록일·답변상태만 먼저 보여 정보를 빠르게 훑게 했습니다. 제목을 누르면 답변 팝업이 열려 메인 화면의 탐색 맥락을 유지합니다.",
-      "screen": "메인에는 노출 허용된 공개 질문 일부를 표시하고 더보기로 공개 질문 전체 목록에 이동합니다. 관리자 설정에서 글별 메인 노출을 변경하며 비공개 글의 노출 선택은 막습니다.",
-      "technology": "공개 여부·메인 노출 여부·활성 업무유형을 함께 평가합니다. 상세를 열 때도 공개 목록에서 다시 대상을 찾고 제목·답변은 HTML 이스케이프하여 저장된 문자열을 실행하지 않고 텍스트로 표시합니다.",
-      "data": "questions에 public·mainVisible·work·status·date를 저장합니다. 메인 노출을 해제해도 공개 글 전체 목록에서는 조회되며, 비공개 글은 목록·상세 대상에서 제외됩니다. 원본 운영 게시판이나 승인 DB는 연결하지 않았습니다."
+      "design": "메인 Q&A 최근 질문·답변완료 게시물을 상세로 연결합니다. 개인정보 보호 항목 SFR-09-05·07과 실제 검사·마스킹 영역은 보라색 배경과 개인정보 보호 문구로 특별 강조합니다.",
+      "screen": "로그인 전·후 글 작성·수정·삭제 및 댓글·답변 흐름에 무료 웹에디터를 적용합니다. 공개 목록·상세에 마스킹된 콘텐츠를 표시하고 관리자만 공식 답변·메인 노출을 관리합니다. 비회원 수정·삭제는 작성 비밀번호로 확인합니다.",
+      "technology": "privacy.js의 NFKC 정규화·우회문자 정리·규칙 마스킹과 board-security.js의 DOMPurify HTML 정제를 분리합니다. 웹표준 지침은 개인정보 판별 정규식을 정하지 않으므로 행안부 웹 품질 가이드와 개인정보위·KISA 노출방지 안내서를 각각 근거로 제시합니다.",
+      "data": "제목·내용·답변·댓글을 마스킹하고 개인정보 탐지 게시물은 메인에서 제외합니다. 공개 출력 필드와 공개·메인노출·업무유형·답변상태를 검사하며 작성자·기업 개인정보를 메인에 표시하지 않습니다. 브라우저 시연 저장은 운영 비공개 원장 저장소가 아닙니다."
     },
     "followup": [
-      "공개 답변의 개인정보 제거·게시 승인·첨부 열람 규칙을 적용하고 서버 목록·상세 API에서 공개권한을 검증해야 합니다. 브라우저에 가상 전체 JSON을 내려주는 현재 구조는 운영 비공개 데이터에 사용할 수 없습니다.",
-      "DB 설계 제안: 게시물 공개상태·승인이력·메인 노출 순서와 공개일을 관리하고 목록 조회 인덱스를 구성합니다. 게시판 등록·답변 편집·승인 워크플로 및 서버 페이징은 미구현입니다."
+      "운영 서버에서 같은 개인정보 정규화·마스킹과 HTML 정제를 재실행하고 공개 DTO·객체별 권한·게시 승인·첨부/이미지 검사·감사·보유기간 정책을 강제해야 합니다. 규칙 탐지는 문맥·이미지·모든 우회를 판별하지 못하므로 수동 검수가 필요합니다.",
+      "DB·서버 후속: 실인증·비회원 비밀번호 서버 해싱·실패 횟수 제한·CSRF 방어·동시수정·개인정보 원문 비전달·접근기록·파기를 구현해야 합니다. 현재 정적 프로토타입만으로 공공기관 운영 적합성·법 준수를 보증하지 않습니다."
     ],
     "menus": [
       {
@@ -444,9 +1832,94 @@ window.RMSRequirements = [
     ],
     "demo": "공고·FAQ·질문 위치/노출 관리, 키보드 조작·라벨·상태 텍스트",
     "remaining": "이용통계 분석, 공식 접근성·호환성 점검",
+    "criteria": [
+      {
+        "id": "SFR-10-01",
+        "status": "partial",
+        "evidence": "3개 메인 시안 공고·로그인·주요 메뉴·게시판 배치",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-layout"
+        ],
+        "privacy": false,
+        "remaining": "실제 이용빈도·업무 중요도 분석 미연계",
+        "text": "◦ 사용자의 이용 빈도 및 업무 중요도 등을 분석하여 주요 기능 및 정보를 메인화면에 우선 배치할 수 있도록 개선하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-10-02",
+        "status": "demo",
+        "evidence": "로그인·신청현황·기술닥터·FAQ 바로가기",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-layout"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 로그인, 사업신청, 사업관리, FAQ 등 주요 업무 기능에 대한 접근성을 높일 수 있도록 화면 UI를 개선하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-10-03",
+        "status": "partial",
+        "evidence": "반응형 배치·label·포커스·건너뛰기·상태 텍스트",
+        "menus": [
+          {
+            "id": "home",
+            "label": "공고 › 메인 로그인·공고·주요 질문",
+            "route": "home",
+            "roles": []
+          }
+        ],
+        "features": [
+          "home-layout"
+        ],
+        "privacy": false,
+        "remaining": "실제 보조기기·브라우저 검증과 접근성 인증 필요",
+        "text": "◦ 주요 정보 및 기능을 직관적으로 인지할 수 있도록 메뉴 및 콘텐츠 영역을 재구성하여 웹접근성 개선하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-10-04",
+        "status": "partial",
+        "evidence": "공고 노출 및 공고·게시판 순서 변경",
+        "menus": [
+          {
+            "id": "home-settings",
+            "label": "설정 › 메인·소통 설정",
+            "route": "manage/home",
+            "roles": [
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "home-settings"
+        ],
+        "privacy": false,
+        "remaining": "메뉴 이용통계·문의유형 분석·CMS 승인 연계 미구현",
+        "text": "◦ 기존 시스템 메뉴별 이용현황, 사용자 문의유형, 업무 중요도 등을 분석하여 메인화면의 콘텐츠 배치 및 노출 정보를 지속적으로 변경·관리할 수 있도록 구성하여야 함",
+        "statusLabel": "부분 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "공고·FAQ·최근 질문을 카드와 패널로 구분하고 로그인·바로가기를 보조 영역으로 배치했습니다. 기존 RMS 청색 계열과 원본 스타일을 유지하면서 개선 CSS의 적용 범위를 제한했습니다. 임시 시연 도구는 맨 위 보라색 영역으로 분리했습니다.",
-      "screen": "관리자가 공고·FAQ·질문의 순서와 노출 여부를 바꾸면 메인에 즉시 반영됩니다. 공고에는 접수기간·마감일시, 상세에는 구조화된 지원내용·담당자·첨부를 표시하며 상세 팝업 이동과 내부 스크롤을 제공합니다.",
+      "screen": "관리자의 공고 노출 및 공고·공개 게시판 순서 변경을 3개 메인 시안에 반영합니다. 공고 상세에는 지원내용·담당자·첨부·마감일시와 내부 스크롤을 제공합니다.",
       "technology": "CSS Grid/Flex·미디어쿼리·minmax로 영역을 재배치하고 좁은 화면에서는 버튼을 줄바꿈합니다. 넓은 표는 자체 가로 스크롤을 사용하며 label·focus-visible·상태 텍스트·본문 건너뛰기를 적용합니다. SFR 비교 레이어는 Pointer Events로 이동·크기 조절합니다.",
       "data": "settings.homeOrder·homeVisible과 공고 programs의 구조화된 상세항목을 브라우저에 저장합니다. 공고 텍스트 첨부는 JSON에 내용까지 포함하고 기존 형식의 누락 필드를 보완합니다. 실서비스 CMS나 공고 DB를 변경한 것은 아닙니다."
     },
@@ -484,6 +1957,140 @@ window.RMSRequirements = [
     ],
     "demo": "4종 실제 수신 XML 선택·동의·일괄/개별 확인·리포트·파일 대체",
     "remaining": "기관 연계, 동의 법정 문구·목적·보유기간, 암호화",
+    "criteria": [
+      {
+        "id": "SFR-11-01",
+        "status": "partial",
+        "evidence": "첨부 XML 수신 샘플을 9종 증빙으로 매핑 조회",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "제공기관 API·인증·암호화 통신 미연계",
+        "text": "◦ 사업 신청 시 필요한 증빙서류 중 공공마이데이터로 제공 가능한 정보를 관계기관과 연계하여 조회할 수 있는 기능을 구현하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-11-02",
+        "status": "partial",
+        "evidence": "정보제공 동의 후 조회 및 수신묶음 변경 시 재동의",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "consent"
+        ],
+        "privacy": false,
+        "remaining": "동의 목적·항목·보유기간·철회 서버 검증 필요",
+        "text": "◦ 기업의 정보 제공 동의 후 공공마이데이터를 조회할 수 있도록 동의 절차를 구현하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-11-03",
+        "status": "demo",
+        "evidence": "값이 수신된 증빙은 파일 없이 조회완료·제출조건 충족",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 공공마이데이터를 통해 확인 가능한 서류는 별도의 파일 제출 없이 해당 정보를 활용할 수 있도록 구현하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-11-04",
+        "status": "partial",
+        "evidence": "동일 신청서의 조회 증빙을 제출 단계 재사용",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "company-submit",
+            "label": "사업신청·관리 › 04 제출 및 보완 · 기업 제출",
+            "route": "documents",
+            "step": "4",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "다른 사업 간 재사용·유효기간 관리 미구현",
+        "text": "◦ 공공마이데이터 연계를 통해 제출서류의 중복 제출을 최소화할 수 있도록 구현하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-11-05",
+        "status": "demo",
+        "evidence": "미수신·공란·비제공 서류 파일 보완 제출",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 공공마이데이터 조회가 불가능하거나 서비스에서 제공되지 않는 경우 기존 방식의 증빙서류 파일 제출이 가능하여야 함",
+        "statusLabel": "시연 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "접수서류 목록 바로 위에 정보제공 동의를 배치해 조회의 목적과 선택 조건을 먼저 확인하도록 했습니다. 동의가 없는 경우에도 파일 제출 경로를 보여 선택 가능한 제출 방식을 분명하게 했습니다.",
       "screen": "지원기업은 수신 묶음을 선택해 동의한 후 개별 또는 필수서류 일괄확인을 진행합니다. 상세에서 문서 리포트와 주소 비교를 열며, 기관은 수신값을 확인하고 보완을 요청합니다.",
@@ -552,6 +2159,384 @@ window.RMSRequirements = [
     ],
     "demo": "기존9종 XML 매핑, 전체25종 수신문서 리포트, 공란·미수신 구분",
     "remaining": "실제 제공항목·기관 규격·만료/유효기간",
+    "criteria": [
+      {
+        "id": "SFR-12-01",
+        "status": "partial",
+        "evidence": "9종 서류 목록·XML 수신코드 매핑",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "실제 공공마이데이터 API 미연계",
+        "text": "◦ 다음 증빙서류에 대한 공공마이데이터 연계 및 조회 기능을 구현하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-02",
+        "status": "partial",
+        "evidence": "사업자등록증명 XML 필드·리포트",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "실제 기관 조회 미연계",
+        "text": "· 사업자등록증명서",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-03",
+        "status": "partial",
+        "evidence": "폐업사실증명 XML 필드·리포트",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "실제 기관 조회 미연계",
+        "text": "· 폐업사실증명서",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-04",
+        "status": "partial",
+        "evidence": "휴업사실증명 XML 필드·리포트",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "실제 기관 조회 미연계",
+        "text": "· 휴업사실증명서",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-05",
+        "status": "partial",
+        "evidence": "표준재무제표 수신내용·공란 상태",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "기업 샘플 공란을 성공 값으로 생성하지 않음; 실제 기관 조회 미연계",
+        "text": "· 표준재무제표증명서",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-06",
+        "status": "partial",
+        "evidence": "국세 납세증명 XML 필드·리포트",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "실제 기관 조회 미연계",
+        "text": "· 국세 납세증명서",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-07",
+        "status": "partial",
+        "evidence": "지방세 납세증명 XML 필드·리포트",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "실제 기관 조회 미연계",
+        "text": "· 지방세 납세증명서",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-08",
+        "status": "pending",
+        "evidence": "대상 목록에는 있으나 XML에 부가세 증명이 없어 미수신·파일보완 안내",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "유효한 제공기관 응답·조회 API 구현 필요",
+        "text": "· 부가가치세 과세표준증명",
+        "statusLabel": "후속 구현"
+      },
+      {
+        "id": "SFR-12-09",
+        "status": "partial",
+        "evidence": "중소기업확인서 XML 필드·리포트",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "실제 기관 조회 미연계",
+        "text": "· 중소기업확인서",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-10",
+        "status": "partial",
+        "evidence": "4대 사회보험료 완납 수신내용·공란 상태",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "개인 샘플 공란 표시; 실제 기관 조회 미연계",
+        "text": "· 4대 사회보험료 완납 증명서",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-12-11",
+        "status": "demo",
+        "evidence": "사업별 requiredDocs 필수서류·일괄조회",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 사업별 신청요건에 따라 필요한 증빙서류를 구분하여 조회할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-12-12",
+        "status": "demo",
+        "evidence": "수신 필드·출처·조회일시·처리이력",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 조회된 공공마이데이터의 정보 및 조회일시 등을 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-12-13",
+        "status": "partial",
+        "evidence": "관리자의 대상 서류 추가·수정·연계사용 설정",
+        "menus": [
+          {
+            "id": "document-settings",
+            "label": "설정 › 연계서류 설정",
+            "route": "manage/documents",
+            "roles": [
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "document-settings"
+        ],
+        "privacy": false,
+        "remaining": "제공기관 API 버전·변경계약 관리 미구현",
+        "text": "◦ 공공마이데이터 제공기관의 서비스 제공 범위 및 연계방식 변경 등에 따라 대상 서류를 추가·변경할 수 있도록 구현하여야 함",
+        "statusLabel": "부분 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "9종 증빙을 같은 표 구조로 정리하고 서류명·제공기관·필수여부·상태·조회일시·처리를 열로 분리했습니다. 색상 배지와 상태명을 함께 표시해 성공·미제출·실패를 색상만으로 판단하지 않게 했습니다.",
       "screen": "기존9종 접수서류 표와 전체 수신 리포트를 함께 제공합니다. 개인·기업 및 신청·우대 묶음을 바꾸어 비교하고 문서별 필드를 검색하거나 UTF-8 원문을 내려받습니다.",
@@ -611,6 +2596,161 @@ window.RMSRequirements = [
     ],
     "demo": "XML 사업자등록 상호·대표자·주소·사업자번호 명시적 반영, 주소 비교",
     "remaining": "전체 신청필드 매핑, 동일 정보의 사업 간 재사용 범위·재동의",
+    "criteria": [
+      {
+        "id": "SFR-13-01",
+        "status": "demo",
+        "evidence": "입력·수신주소 불일치 표시 후 반영·유지 선택",
+        "menus": [
+          {
+            "id": "company-info",
+            "label": "사업신청·관리 › 02 신청기업 정보",
+            "route": "documents",
+            "step": "2",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "company-info",
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 공공마이데이터 조회 정보와 입력 정보가 다른 경우 자동으로 변경하지 않고 불일치 항목을 식별하여 사용자에게 안내하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-13-02",
+        "status": "demo",
+        "evidence": "직접 입력·수신 데이터·파일 제출 경로 구분",
+        "menus": [
+          {
+            "id": "company-info",
+            "label": "사업신청·관리 › 02 신청기업 정보",
+            "route": "documents",
+            "step": "2",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "company-info",
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기업이 직접 입력하거나 파일로 첨부하여야 하는 정보와 공공마이데이터를 통해 자동 확인되는 정보를 구분하여 제공하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-13-03",
+        "status": "partial",
+        "evidence": "주소 불일치 및 사업자등록증명 상호·대표자·주소 반영",
+        "menus": [
+          {
+            "id": "company-info",
+            "label": "사업신청·관리 › 02 신청기업 정보",
+            "route": "documents",
+            "step": "2",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "company-info",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "전체 신청필드 불일치 매핑 검증 필요",
+        "text": "◦ 공공마이데이터 조회 결과와 신청서 입력정보 간 불일치 여부를 확인할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-13-04",
+        "status": "pending",
+        "evidence": "신청서 단위 수신정보 보관; 다사업 증빙 공유 미구현",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "다사업 재사용 동의·유효기간·증빙 참조·충돌 처리 필요",
+        "text": "◦ 동일한 증빙정보를 여러 사업에 반복 제출하는 경우 공공마이데이터를 활용하여 중복 제출을 최소화할 수 있어야 함",
+        "statusLabel": "후속 구현"
+      },
+      {
+        "id": "SFR-13-05",
+        "status": "partial",
+        "evidence": "조회·반영 전 기업 소유권·동의·제출잠금 확인",
+        "menus": [
+          {
+            "id": "company-info",
+            "label": "사업신청·관리 › 02 신청기업 정보",
+            "route": "documents",
+            "step": "2",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "company-info",
+          "consent"
+        ],
+        "privacy": false,
+        "remaining": "서버 동의 증거·조회권한 검증 필요",
+        "text": "◦ 공공마이데이터 조회 및 정보 활용에 대한 기업의 동의 여부를 확인할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "신청기업 정보 입력과 증빙 확인을 별도 단계로 나누고 주소 불일치 시 두 값을 비교하는 팝업을 제공합니다. 자동 덮어쓰기 대신 조회값 반영·기존값 유지 버튼으로 사용자의 선택을 명시하게 했습니다.",
       "screen": "02·03 단계에서 동의 후 XML 신청정보 반영을 선택하면 사업자등록증명의 상호·대표자·주소·사업자번호를 반영합니다. 주소만 다른 경우 두 값을 비교해 수신값 반영 또는 기존값 유지를 선택합니다.",
@@ -662,6 +2802,181 @@ window.RMSRequirements = [
     ],
     "demo": "4단계 신청 흐름과 수신근거·제출·기관 보완 연계",
     "remaining": "서버 검색·필터·권한·대량 목록, 보완 알림",
+    "criteria": [
+      {
+        "id": "SFR-14-01",
+        "status": "demo",
+        "evidence": "기업별 사업 신청서 선택·증빙 조회·제출현황",
+        "menus": [
+          {
+            "id": "business-choice",
+            "label": "사업신청·관리 › 01 사업 선택",
+            "route": "documents",
+            "step": "1",
+            "roles": [
+              "company",
+              "tp",
+              "admin"
+            ]
+          },
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents",
+          "business-choice"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기업이 신청한 사업별 증빙서류의 제출 및 조회현황을 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-14-02",
+        "status": "demo",
+        "evidence": "서류별 상태 배지·파일·조회일시 표시",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기업 화면에서 증빙서류별 제출상태를 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-14-03",
+        "status": "partial",
+        "evidence": "기관 역할의 소관 기업·사업 신청서 필터",
+        "menus": [
+          {
+            "id": "manager-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기관 검토",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "서버 기관·기업 행 권한 검증 필요",
+        "text": "◦ 사업관리기관은 신청기업별·사업별 증빙서류 제출현황을 조회할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-14-04",
+        "status": "demo",
+        "evidence": "미제출·조회완료·조회실패·보완필요·제출완료 구분",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "manager-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기관 검토",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 증빙서류별로 제출완료, 미제출, 조회완료, 조회실패, 보완필요 등의 상태를 구분하여 제공하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-14-05",
+        "status": "demo",
+        "evidence": "기관의 서류별 보완요청 및 기업 수정잠금 해제",
+        "menus": [
+          {
+            "id": "manager-review",
+            "label": "사업신청·관리 › 04 제출 및 보완 · 기관 보완요청",
+            "route": "documents",
+            "step": "4",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 사업관리기관이 미제출 및 보완이 필요한 증빙서류를 확인하고 기업에 보완을 요청할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-14-06",
+        "status": "demo",
+        "evidence": "신청기업·사업·서류상태 필터와 목록",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "manager-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기관 검토",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 기업별·사업별·서류별 제출현황을 검색 및 조회할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "사업 선택 → 신청기업 정보 → 접수서류 확인 → 제출 및 보완의 4단계로 진행 위치를 고정했습니다. 기업·사업 선택과 신청서 상태를 위에 두고 서류상태 필터로 확인해야 할 항목을 좁히도록 구성했습니다.",
       "screen": "4단계 신청 흐름에서 XML 수신 묶음과 서류 확인 상태를 연결했습니다. 기업은 수신 필드·미수신·공란·주소 불일치를 확인한 뒤 증빙파일을 보완하며 기관은 같은 수신 근거로 검토합니다.",
@@ -744,6 +3059,172 @@ window.RMSRequirements = [
     ],
     "demo": "실제 XML 공란·미수신·주소 불일치, 동일파일 재확인·보완·이력",
     "remaining": "오류코드·재시도·멱등성·기관 로그·장애 대응",
+    "criteria": [
+      {
+        "id": "SFR-15-01",
+        "status": "demo",
+        "evidence": "XML 미수신·공란·주소 불일치 실패·보완필요 표시",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 공공마이데이터 조회 실패, 기업정보 불일치, 정보 미제공 등의 발생 상황을 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-15-02",
+        "status": "demo",
+        "evidence": "서류 상세 실패사유·보완 안내·파일제출",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 조회 실패 시 기업이 실패사유 및 조치방법을 확인할 수 있도록 안내하여야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-15-03",
+        "status": "partial",
+        "evidence": "같은 XML 재검사; 공란을 성공으로 바꾸지 않음",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "실제 기관 재요청·재시도 정책 미구현",
+        "text": "◦ 공공마이데이터 조회에 실패한 경우 재조회할 수 있는 기능을 제공하여야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-15-04",
+        "status": "demo",
+        "evidence": "관리기관의 기업별 증빙 보완요청",
+        "menus": [
+          {
+            "id": "manager-review",
+            "label": "사업신청·관리 › 04 제출 및 보완 · 기관 보완요청",
+            "route": "documents",
+            "step": "4",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 사업관리기관은 기업별 증빙서류의 보완 필요 여부를 확인하고 보완을 요청할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      },
+      {
+        "id": "SFR-15-05",
+        "status": "partial",
+        "evidence": "동의·조회·반영·제출·보완·재확인 시각·근거 JSON 기록",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "manager-review",
+            "label": "사업신청·관리 › 04 제출 및 보완 · 기관 보완요청",
+            "route": "documents",
+            "step": "4",
+            "roles": [
+              "tp",
+              "admin"
+            ]
+          }
+        ],
+        "features": [
+          "documents"
+        ],
+        "privacy": false,
+        "remaining": "서버 감사로그·무결성·보유기간 보호 필요",
+        "text": "◦ 공공마이데이터 조회, 제출, 보완 및 재조회 등에 대한 처리이력을 관리할 수 있어야 함",
+        "statusLabel": "부분 구현"
+      },
+      {
+        "id": "SFR-15-06",
+        "status": "demo",
+        "evidence": "조회일시·수신출처·시간순 처리이력",
+        "menus": [
+          {
+            "id": "company-docs",
+            "label": "사업신청·관리 › 03 접수서류 확인 · 기업 조회·첨부",
+            "route": "documents",
+            "step": "3",
+            "roles": [
+              "company"
+            ]
+          },
+          {
+            "id": "receipt-report",
+            "label": "사업신청·관리 › 4종 XML 수신 리포트",
+            "route": "mydata",
+            "roles": []
+          }
+        ],
+        "features": [
+          "documents",
+          "receipt"
+        ],
+        "privacy": false,
+        "remaining": "운영에서는 인증·서버 저장·권한 및 실제 데이터 검증이 필요합니다.",
+        "text": "◦ 조회된 정보의 조회일시 등 관련 이력을 확인할 수 있어야 함",
+        "statusLabel": "시연 구현"
+      }
+    ],
+    "resources": [],
     "implementation": {
       "design": "오류 상태만 표시하는 대신 상세에 실패·보완 사유와 다음 행동을 함께 배치했습니다. 재조회·파일 제출·보완요청 버튼과 시간순 처리이력을 같은 팝업에 두어 복구 방법과 처리 근거를 확인하도록 했습니다.",
       "screen": "첨부에 없는 부가세 증명, 공란인 기업 재무제표·개인4대보험, 입력주소와 수신주소 불일치를 실제 파일 내용에 따라 표시합니다. 재조회는 동일 파일을 재확인하므로 공란·미수신을 자동 성공으로 바꾸지 않습니다.",
@@ -802,3 +3283,184 @@ window.RMSRequirements = [
     ]
   }
 ];
+window.RMSRequirementTrace = {
+  "scope": "관리번호는 원문 세부행 순서대로 부여합니다. 시연 구현은 가상 데이터의 브라우저 동작을 뜻하며 운영 인증·API·DB 구축 완료를 뜻하지 않습니다. 부분 구현·후속 구현은 남은 범위를 함께 기록합니다.",
+  "statuses": {
+    "demo": "시연 구현",
+    "partial": "부분 구현",
+    "pending": "후속 구현"
+  },
+  "features": {
+    "doctor-form": {
+      "label": "기술닥터 등록·수정",
+      "selector": "#rms-doctor-form"
+    },
+    "doctor-search": {
+      "label": "전문가 검색·현행화 필터",
+      "selector": "#rms-doctor-search"
+    },
+    "doctor-results": {
+      "label": "전문가 결과·선택 비교",
+      "selector": "[data-action=\"compare\"]",
+      "closest": ".rms-panel"
+    },
+    "doctor-profile": {
+      "label": "전문가 기본정보·지원범위",
+      "selector": ".rms-profile",
+      "closest": ".rms-panel",
+      "routes": [
+        "doctor"
+      ]
+    },
+    "doctor-history": {
+      "label": "전문가 변경이력",
+      "selector": "h2",
+      "closest": ".rms-panel",
+      "routes": [
+        "doctor"
+      ],
+      "text": "등록정보 변경이력"
+    },
+    "codes": {
+      "label": "표준분류 관리",
+      "selector": "[data-action=\"code-edit\"]",
+      "closest": ".rms-panel",
+      "routes": [
+        "manage"
+      ]
+    },
+    "matches": {
+      "label": "매칭 요청·지원실적",
+      "selector": "h2",
+      "closest": ".rms-panel",
+      "routes": [
+        "matches"
+      ],
+      "text": "매칭 요청 및 지원실적"
+    },
+    "statistics": {
+      "label": "통계 조회·성과·CSV",
+      "selector": "#rms-stats-search"
+    },
+    "home-login": {
+      "label": "로그인·계정 메뉴",
+      "selector": ".rms-public-login"
+    },
+    "home-faq": {
+      "label": "메인 FAQ",
+      "selector": "a[href=\"#boards/faq\"]",
+      "closest": ".rms-board-panel",
+      "routes": [
+        "home"
+      ]
+    },
+    "faq": {
+      "label": "FAQ 업무유형·검색·답변",
+      "selector": "#rms-faq-search",
+      "routes": [
+        "faq"
+      ]
+    },
+    "qna-list": {
+      "label": "Q&A 목록·업무유형·검색",
+      "selector": "[data-requirement-key=\"qna-list\"], #rms-faq-search",
+      "routes": [
+        "questions",
+        "boards/qna"
+      ]
+    },
+    "home-qna": {
+      "label": "메인 최근 질문·답변",
+      "selector": "a[href=\"#boards/qna\"]",
+      "closest": ".rms-board-panel",
+      "routes": [
+        "home"
+      ]
+    },
+    "qna-detail": {
+      "label": "Q&A 상세·답변·댓글",
+      "selector": "[data-requirement-key=\"qna-detail\"][data-board-type=\"qna\"]"
+    },
+    "privacy-protection": {
+      "label": "개인정보 검사·마스킹",
+      "selector": "[data-requirement-key=\"privacy-protection\"], [data-requirement-key=\"qna-editor\"]"
+    },
+    "qna-moderation": {
+      "label": "게시물 메인 노출·검수",
+      "selector": "[data-question-visible]",
+      "closest": ".rms-panel",
+      "routes": [
+        "manage/home"
+      ]
+    },
+    "work-map": {
+      "label": "기존 업무분류 매핑",
+      "selector": "#rms-work-map"
+    },
+    "home-layout": {
+      "label": "메인 정보 배치·바로가기",
+      "selector": ".rms-home-refresh",
+      "routes": [
+        "home"
+      ]
+    },
+    "home-settings": {
+      "label": "메인 콘텐츠 배치",
+      "selector": "[data-action=\"home-up\"]",
+      "closest": ".rms-panel",
+      "routes": [
+        "manage/home"
+      ]
+    },
+    "documents": {
+      "label": "증빙서류 조회·제출·보완",
+      "selector": "#rms-application-filter, .rms-statusrow, [data-action=\"doc-detail\"]",
+      "routes": [
+        "documents"
+      ]
+    },
+    "consent": {
+      "label": "정보제공 동의",
+      "selector": "#rms-consent",
+      "closest": ".rms-panel",
+      "routes": [
+        "documents"
+      ]
+    },
+    "receipt": {
+      "label": "XML 수신 리포트·근거",
+      "selector": "#rms-receipt-page, #rms-receipt-report, .rms-receipt-panel",
+      "routes": [
+        "documents",
+        "mydata"
+      ]
+    },
+    "company-info": {
+      "label": "기업 입력정보·수신값 반영",
+      "selector": "#rms-company-form"
+    },
+    "document-settings": {
+      "label": "연계 대상 증빙 설정",
+      "selector": "[data-action=\"doc-type-edit\"]",
+      "closest": ".rms-panel",
+      "routes": [
+        "manage/documents"
+      ]
+    },
+    "qna-recent": {
+      "label": "최근 질문·답변완료 전환",
+      "selector": "[data-requirement-key=\"qna-recent\"]",
+      "routes": [
+        "home"
+      ]
+    },
+    "business-choice": {
+      "label": "사업신청·관리 › 01 사업 선택",
+      "selector": ".rms-announcements",
+      "closest": ".rms-panel",
+      "routes": [
+        "documents"
+      ]
+    }
+  }
+};

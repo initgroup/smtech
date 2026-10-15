@@ -399,8 +399,8 @@ body.rms-site.rms-site .rms-enhance .rms-board-panelhead h2::before { content: '
 body.rms-site.rms-site .rms-enhance .rms-board-panelhead>a { color: #596b81; font-size: 10px; gap: 3px; }
 body.rms-site.rms-site .rms-enhance .rms-board-panelhead>a svg { width: 13px; height: 13px; }
 body.rms-site.rms-site .rms-enhance .rms-board-preview li { border-bottom-color: #e5e9ef; }
-body.rms-site.rms-site .rms-enhance .rms-board-preview li>button { padding: 8px 0; gap: 8px; }
-body.rms-site.rms-site .rms-enhance .rms-board-preview li>button::before { content: ''; width: 4px; height: 4px; background: #b6c0cd; flex: none; }
+body.rms-site.rms-site .rms-enhance .rms-board-preview li>:is(button,.rms-annotated-action) { padding: 8px 0; gap: 8px; }
+body.rms-site.rms-site .rms-enhance .rms-board-preview li>:is(button,.rms-annotated-action)::before { content: ''; width: 4px; height: 4px; background: #b6c0cd; flex: none; }
 body.rms-site.rms-site .rms-enhance .rms-board-row-title { font-size: 11px; }
 body.rms-site.rms-site .rms-enhance .rms-board-row-meta { gap: 5px; }
 body.rms-site.rms-site .rms-enhance .rms-board-row-meta time { min-width: 57px; font-size: 10px; color: #7d8897; }

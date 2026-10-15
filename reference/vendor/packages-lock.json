@@ -1,0 +1,61 @@
+{
+  "verifiedDate": "2026-10-15",
+  "packages": [
+    {
+      "name": "quill",
+      "version": "2.0.3",
+      "license": "BSD-3-Clause",
+      "source": "https://github.com/slab/quill/tree/v2.0.3",
+      "archive": "https://registry.npmjs.org/quill/-/quill-2.0.3.tgz"
+    },
+    {
+      "name": "dompurify",
+      "version": "3.4.16",
+      "license": "Apache-2.0 OR MPL-2.0",
+      "source": "https://github.com/cure53/DOMPurify/tree/3.4.16",
+      "archive": "https://registry.npmjs.org/dompurify/-/dompurify-3.4.16.tgz"
+    }
+  ],
+  "files": [
+    {
+      "path": "prototype/region/rms/static/vendor/dompurify-3.4.16/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "path": "prototype/region/rms/static/vendor/dompurify-3.4.16/purify.min.js",
+      "sha256": "2c90a9b46d6463f26038a29b686e82bc91de01fdac9d5229e7cfe3b360134ea2",
+      "bytes": 28885
+    },
+    {
+      "path": "prototype/region/rms/static/vendor/quill-2.0.3/LICENSE",
+      "sha256": "395c12b616d6f58238b4be39284d4d9221b58dd6e1f1e34d9ab537e34abbb022",
+      "bytes": 1561
+    },
+    {
+      "path": "prototype/region/rms/static/vendor/quill-2.0.3/quill.js",
+      "sha256": "f6157c72ac9b3f51cdead426335688a027b12405d9d6a4daadd38a676b2d7ff2",
+      "bytes": 209274
+    },
+    {
+      "path": "prototype/region/rms/static/vendor/quill-2.0.3/quill.js.LICENSE.txt",
+      "sha256": "7b1938804d68d96764233d0a148a7501f39e547e6ae2dead4b16836e9b8d123c",
+      "bytes": 159
+    },
+    {
+      "path": "prototype/region/rms/static/vendor/quill-2.0.3/quill.snow.css",
+      "sha256": "1c7948cd13aa92fac6390319bc1e5e461823da171519d3a768db56164f871636",
+      "bytes": 24606
+    },
+    {
+      "path": "reference/vendor/dompurify-3.4.16.tgz",
+      "sha256": "d288ced25e6bda3e5fc76d1fc9bca899260cf886e005e84f232e686ada57f1b4",
+      "bytes": 331885
+    },
+    {
+      "path": "reference/vendor/quill-2.0.3.tgz",
+      "sha256": "3a8a6cb4383b65e93552ea3da79a796eb0be5d2ca08390f1add0208fb23e6f42",
+      "bytes": 748714
+    }
+  ]
+}

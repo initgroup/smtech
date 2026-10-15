@@ -40,7 +40,7 @@
             }); }).join('')
         }) : empty('검색된 질문이 없습니다. 다른 검색어나 업무유형을 선택해 주세요.'); }
         function questionTable(list) { return table('소통하기 공개 질문', ['업무유형', '질문 제목', '등록일', '답변상태'], list.map(function (q) { return T.render("screens/question-table", {
-            nameHtml: name(q.work), id: q.id, title: q.title, date: q.date, badgeHtml: badge(q.status)
+            nameHtml: name(q.work), id: q.id, title: root.RMSBoardSecurity.mask(q.title), date: q.date, badgeHtml: badge(q.status)
         }); }), true); }
         function globalSearch(query) {
             return T.render("screens/global-search", {
@@ -98,10 +98,11 @@
                     if (type === 'qna') {
                         var mainIds = store.visibleQuestions().map(function (q) { return q.id; });
                         items = items.filter(function (q) { return mainIds.includes(q.id); });
+                        if (ui.homeQnaView === 'answered') items = items.filter(function (q) { return q.status === '답변완료'; }).sort(function (a,b) { return (b.answeredAt || b.date).localeCompare(a.answeredAt || a.date); }).map(function (q) { return Object.assign({},q,{date:(q.answeredAt || q.date).slice(0,10)}); });
                     }
                     items = items.slice(0, 5);
                     return T.render("screens/home-boards-2", {
-                        itemValue: root.RMSBoards.labels[type], type: type, itemValue2: root.RMSBoards.labels[type], homeIconHtml: homeIcon('arrow'), boardRowsHtml: boardRows(type, items)
+                        filterHtml: type === 'qna' ? T.render('screens/qna-home-filter',{recentPressed:String(ui.homeQnaView !== 'answered'),answeredPressed:String(ui.homeQnaView === 'answered')}) : '', itemValue: root.RMSBoards.labels[type], type: type, itemValue2: root.RMSBoards.labels[type], homeIconHtml: homeIcon('arrow'), boardRowsHtml: boardRows(type, items)
                     });
                 }).join('')
             });
@@ -116,9 +117,9 @@
         }
         function boards(type, query) {
             type = root.RMSBoards.types.includes(type) ? type : 'notice';
-            var label = root.RMSBoards.labels[type], q = String(query || '').trim(), all = root.RMSBoards.list(type, store), items = all.filter(function (row) { return !q || [row.title, row.body, row.answer, row.category].join(' ').toLowerCase().includes(q.toLowerCase()); });
+            var label = root.RMSBoards.labels[type], q = String(query || '').trim(), all = root.RMSBoards.list(type, store, true), items = all.filter(function (row) { return (type !== 'qna' || !ui.boardWork || row.work === ui.boardWork) && (!q || [row.title, row.body, row.answer, row.category].join(' ').toLowerCase().includes(q.toLowerCase())); });
             return T.render("screens/boards", {
-                headHtml: head(label, '고객지원 › ' + label, '로그인 없이 공개된 게시물과 안내자료를 확인할 수 있습니다.'), itemsHtml: root.RMSBoards.types.map(function (t) { return T.render("screens/boards-2", {
+                boardWorkHtml:type === 'qna' ? select('업무유형','work',options('work'),ui.boardWork) : '', qnaActionsHtml: type === 'qna' ? T.render('screens/qna-list-actions',{writeHtml:btn('비공개 글 찾기','qna-unlock')+btn('글쓰기','qna-write','','rms-btn-primary'),privacyHtml:''}) : '', headHtml: head(label, '고객지원 › ' + label, '로그인 없이 공개된 게시물과 안내자료를 확인할 수 있습니다.'), itemsHtml: root.RMSBoards.types.map(function (t) { return T.render("screens/boards-2", {
                     t: t, value: (t === type ? ' aria-current="page"' : ''), itemValue: root.RMSBoards.labels[t]
                 }); }).join(''), type: type, label: label, q: q, length: items.length, value: (q ? ' · 검색어 “' + esc(q) + '”' : ''), tableHtml: table(label + ' 목록', type === 'qna' ? ['번호', '업무유형', '제목', '답변상태', '등록일'] : ['번호', '분류', '제목', '등록일'], items.map(function (row, i) { return T.render("screens/boards-3", {
                     value: (items.length - i), category: row.category, value2: type + '/' + row.id, title: row.title, value3: (type === 'qna' ? T.render("screens/boards-4", {
@@ -132,7 +133,19 @@
             if (!row)
                 return empty('공개된 게시물을 찾을 수 없습니다.');
             return T.render("screens/board-detail", {
-                itemValue: root.RMSBoards.labels[type], category: row.category, title: row.title, date: row.date, value: (row.status ? badge(row.status) : ''), body: row.body, value2: (type === 'qna' ? T.render("screens/board-detail-2", {
+                privacyHtml: '',
+                bodyHtml: type === 'qna' ? root.RMSBoardSecurity.prepare(row).bodyHtml : esc(row.body),
+                manageHtml: type === 'qna' && (row.canManage || row.ownerKind === 'guest') ? btn('글수정','qna-edit',id) + btn('글삭제','qna-delete',id,'rms-btn-danger') : '',
+                repliesHtml: type === 'qna' ? T.render('screens/qna-replies', {
+                    count: (row.replies || []).length,
+                    itemsHtml: (row.replies || []).map(function (reply) { return T.render('screens/qna-reply',{
+                        className: reply.official ? 'is-official' : '', kindLabel: reply.kind === 'answer' ? (reply.official ? '담당자 답변' : '일반 답변') : '댓글',
+                        authorLabel:reply.authorLabel,date:reply.date,bodyHtml:root.RMSBoardSecurity.prepare(reply).bodyHtml,
+                        actionsHtml: reply.canManage || reply.ownerKind === 'guest' ? btn('수정','qna-reply-edit',id+'/'+reply.id,'rms-btn-small')+btn('삭제','qna-reply-delete',id+'/'+reply.id,'rms-btn-small') : ''
+                    }); }).join(''),
+                    commentHtml:btn('댓글 등록','qna-comment',id),answerHtml:btn('답변 등록','qna-answer',id,'rms-btn-primary')
+                }) : '',
+                itemValue: root.RMSBoards.labels[type], category: row.category, visibility: type === 'qna' ? (row.public ? '공개' : '비공개 · 작성자 확인됨') + ' · 글 번호 ' + row.id : '', title: row.title, date: row.date, value: (row.status ? badge(row.status) : ''), body: row.body, value2: (type === 'qna' ? T.render("screens/board-detail-2", {
                     value: row.answer || '담당자가 문의 내용을 확인하고 있습니다. 답변이 등록되면 이 화면에서 확인할 수 있습니다.'
                 }) : ''), value3: (row.attachment ? T.render("screens/board-detail-3", {
                     homeIconHtml: homeIcon('document'), url: row.attachment.url, name: row.attachment.name, name2: row.attachment.name
@@ -391,6 +404,7 @@
             });
         }
         function faq(questionsOnly) {
+            if (questionsOnly) return boards('qna',ui.faqQuery);
             var result = store.searchFaqs(ui.faqQuery, ui.faqWork);
             return T.render("screens/faq", {
                 headHtml: head(questionsOnly ? '소통하기' : '자주하는 질문', '소통관리 › ' + (questionsOnly ? '소통하기' : 'FAQ'), '업무유형과 궁금한 내용을 함께 검색하세요.'), tabsHtml: tabs(questionsOnly ? 'questions' : 'faq', 'support'), selectHtml: select('업무유형', 'work', options('work'), ui.faqWork), faqQuery: ui.faqQuery, btnHtml: btn('초기화', 'faq-reset'), value: (questionsOnly ? questionTable(store.publicQuestions().filter(function (q) { return (!ui.faqWork || q.work === ui.faqWork) && (!ui.faqQuery || [q.title, q.answer].join(' ').includes(ui.faqQuery)); })) : T.render("screens/faq-2", {
@@ -409,7 +423,7 @@
                             value: (s.settings.homeVisible.announcements ? ' checked' : '')
                         }) : T.render("screens/manage-4", {})), btnHtml: btn('위로', 'home-up', k, 'rms-btn-small')
                     }); }).join(''), selectHtml: select('기존 분류', 'from', codes('work', true), s.classifications.find(function (c) { return c.kind === 'work'; }).id), selectHtml2: select('변경 분류', 'to', codes('work', true), 'W03'), tableHtml: table('게시물 노출 설정', ['제목', '공개여부', '메인 노출'], s.questions.map(function (q) { return T.render("screens/manage-5", {
-                        title: q.title, badgeHtml: badge(q.public ? '공개' : '비공개'), id: q.id, value: (q.mainVisible ? ' checked' : ''), value2: (!q.public ? ' disabled' : '')
+                        title: root.RMSBoardSecurity.mask(q.title), badgeHtml: badge(q.public ? '공개' : '비공개'), id: q.id, value: (q.mainVisible ? ' checked' : ''), value2: (!q.public || q.privacyDetected ? ' disabled' : ''), privacyLabel:q.privacyDetected ? '개인정보 검출 · 메인 노출 제한' : ''
                     }); }), true)
                 });
             else if (sub === 'documents')

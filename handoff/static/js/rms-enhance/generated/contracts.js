@@ -78,5 +78,25 @@ window.RMSCommands = {
   ],
   "saveDocumentType": [
     "input"
+  ],
+  "saveQuestion": [
+    "input"
+  ],
+  "removeQuestion": [
+    "id",
+    "password"
+  ],
+  "saveQuestionReply": [
+    "questionId",
+    "input"
+  ],
+  "removeQuestionReply": [
+    "questionId",
+    "replyId",
+    "password"
+  ],
+  "unlockQuestion": [
+    "id",
+    "password"
   ]
 };

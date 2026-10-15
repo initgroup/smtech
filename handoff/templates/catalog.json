@@ -806,31 +806,143 @@
     ]
   },
   {
-    "template": "dialogs/question",
-    "source": "templates/dialogs/question.html",
+    "template": "dialogs/qna-credential",
+    "source": "templates/dialogs/qna-credential.html",
     "presenters": [
       "static/js/rms-enhance/app.js"
     ],
     "slots": [
       {
+        "name": "autocomplete",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/qna-delete",
+    "source": "templates/dialogs/qna-delete.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "questionId",
+        "mode": "text"
+      },
+      {
+        "name": "replyId",
+        "mode": "text"
+      },
+      {
+        "name": "message",
+        "mode": "text"
+      },
+      {
+        "name": "credentialHtml",
+        "mode": "html"
+      },
+      {
+        "name": "cancelHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/qna-form",
+    "source": "templates/dialogs/qna-form.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "privacyHtml",
+        "mode": "html"
+      },
+      {
         "name": "title",
         "mode": "text"
       },
       {
-        "name": "badgeHtml",
+        "name": "workHtml",
         "mode": "html"
       },
       {
-        "name": "labelHtml",
+        "name": "publicChecked",
+        "mode": "html"
+      },
+      {
+        "name": "credentialHtml",
+        "mode": "html"
+      },
+      {
+        "name": "cancelHtml",
+        "mode": "html"
+      },
+      {
+        "name": "previewHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/qna-reply-form",
+    "source": "templates/dialogs/qna-reply-form.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "id",
         "mode": "text"
       },
       {
-        "name": "date",
+        "name": "questionId",
         "mode": "text"
       },
       {
-        "name": "value",
-        "mode": "text"
+        "name": "privacyHtml",
+        "mode": "html"
+      },
+      {
+        "name": "commentSelected",
+        "mode": "html"
+      },
+      {
+        "name": "answerSelected",
+        "mode": "html"
+      },
+      {
+        "name": "credentialHtml",
+        "mode": "html"
+      },
+      {
+        "name": "cancelHtml",
+        "mode": "html"
+      },
+      {
+        "name": "previewHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "dialogs/qna-unlock",
+    "source": "templates/dialogs/qna-unlock.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": [
+      {
+        "name": "cancelHtml",
+        "mode": "html"
       }
     ]
   },
@@ -1356,6 +1468,10 @@
     ],
     "slots": [
       {
+        "name": "type",
+        "mode": "text"
+      },
+      {
         "name": "itemValue",
         "mode": "text"
       },
@@ -1368,6 +1484,10 @@
         "mode": "text"
       },
       {
+        "name": "visibility",
+        "mode": "text"
+      },
+      {
         "name": "date",
         "mode": "text"
       },
@@ -1376,8 +1496,12 @@
         "mode": "html"
       },
       {
-        "name": "body",
-        "mode": "text"
+        "name": "privacyHtml",
+        "mode": "html"
+      },
+      {
+        "name": "bodyHtml",
+        "mode": "html"
       },
       {
         "name": "value2",
@@ -1388,8 +1512,16 @@
         "mode": "html"
       },
       {
+        "name": "repliesHtml",
+        "mode": "html"
+      },
+      {
         "name": "type",
         "mode": "text"
+      },
+      {
+        "name": "manageHtml",
+        "mode": "html"
       },
       {
         "name": "btnHtml",
@@ -1502,6 +1634,18 @@
       },
       {
         "name": "type",
+        "mode": "text"
+      },
+      {
+        "name": "qnaActionsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "type",
+        "mode": "html"
+      },
+      {
+        "name": "boardWorkHtml",
         "mode": "html"
       },
       {
@@ -2584,6 +2728,10 @@
         "mode": "html"
       },
       {
+        "name": "filterHtml",
+        "mode": "html"
+      },
+      {
         "name": "boardRowsHtml",
         "mode": "html"
       }
@@ -3048,6 +3196,10 @@
         "mode": "text"
       },
       {
+        "name": "privacyLabel",
+        "mode": "text"
+      },
+      {
         "name": "badgeHtml",
         "mode": "html"
       },
@@ -3415,6 +3567,106 @@
       },
       {
         "name": "btnHtml2",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/qna-home-filter",
+    "source": "templates/screens/qna-home-filter.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "recentPressed",
+        "mode": "text"
+      },
+      {
+        "name": "answeredPressed",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/qna-list-actions",
+    "source": "templates/screens/qna-list-actions.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "writeHtml",
+        "mode": "html"
+      },
+      {
+        "name": "privacyHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/qna-privacy",
+    "source": "templates/screens/qna-privacy.html",
+    "presenters": [
+      "static/js/rms-enhance/app.js"
+    ],
+    "slots": []
+  },
+  {
+    "template": "screens/qna-replies",
+    "source": "templates/screens/qna-replies.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "count",
+        "mode": "text"
+      },
+      {
+        "name": "itemsHtml",
+        "mode": "html"
+      },
+      {
+        "name": "commentHtml",
+        "mode": "html"
+      },
+      {
+        "name": "answerHtml",
+        "mode": "html"
+      }
+    ]
+  },
+  {
+    "template": "screens/qna-reply",
+    "source": "templates/screens/qna-reply.html",
+    "presenters": [
+      "static/js/rms-enhance/presenters/views.js"
+    ],
+    "slots": [
+      {
+        "name": "className",
+        "mode": "text"
+      },
+      {
+        "name": "kindLabel",
+        "mode": "text"
+      },
+      {
+        "name": "authorLabel",
+        "mode": "text"
+      },
+      {
+        "name": "date",
+        "mode": "text"
+      },
+      {
+        "name": "bodyHtml",
+        "mode": "html"
+      },
+      {
+        "name": "actionsHtml",
         "mode": "html"
       }
     ]
@@ -3952,6 +4204,55 @@
       },
       {
         "name": "name",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "shared/privacy-tooltip",
+    "source": "templates/shared/privacy-tooltip.html",
+    "presenters": [
+      "static/js/rms-enhance/ui/privacy-display.js"
+    ],
+    "slots": [
+      {
+        "name": "heading",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "description",
+        "mode": "text"
+      },
+      {
+        "name": "example",
+        "mode": "text"
+      },
+      {
+        "name": "technology",
+        "mode": "text"
+      },
+      {
+        "name": "source",
+        "mode": "text"
+      },
+      {
+        "name": "source",
+        "mode": "text"
+      },
+      {
+        "name": "reference",
+        "mode": "text"
+      },
+      {
+        "name": "referenceText",
+        "mode": "text"
+      },
+      {
+        "name": "basis",
         "mode": "text"
       }
     ]

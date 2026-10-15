@@ -1,0 +1,12 @@
+<!-- @template dialogs/qna-form | @owner publisher -->
+<form id="rms-qna-form" class="rms-qna-form" data-id="{{id}}" data-requirement-key="qna-editor">
+  {{{privacyHtml}}}
+  <label>글 제목 <input name="title" maxlength="300" required value="{{title}}" autocomplete="off"></label>
+  {{{workHtml}}}
+  <div><p><strong>글 내용</strong> · 무료 웹에디터 Quill</p><div data-board-editor></div><textarea name="body" maxlength="10000" required aria-label="게시글 내용 일반텍스트"></textarea></div>
+  <label class="rms-qna-inline"><input type="checkbox" name="public"{{{publicChecked}}}> 공개 게시물</label>
+  {{{credentialHtml}}}
+  <p>비공개 글은 작성자 확인 후 조회합니다. 비회원은 글 번호와 비밀번호를 보관하세요. 메인화면 노출은 관리자가 별도로 지정합니다.</p>
+  <section class="rms-privacy-highlight" data-board-preview hidden aria-live="polite"></section>
+  <div class="rms-actions">{{{cancelHtml}}}{{{previewHtml}}}<button class="rms-btn rms-btn-primary" type="submit">검사 후 저장</button></div>
+</form>

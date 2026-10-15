@@ -98,11 +98,7 @@
                 sfrLayer.querySelector('#rms-sfr-layer-title').textContent = r.id + ' · ' + r.name;
                 var body = sfrLayer.querySelector('.rms-sfr-layerbody');
                 body.innerHTML = T.render("dialogs/open-sfr-layer-2", {
-                    definition: r.definition, itemsHtml: r.details.map(function (x) {
-                        return T.render("dialogs/open-sfr-layer-3", {
-                            x: x
-                        });
-                    }).join(''), requirementCoverageHtml: V.requirementCoverage(r)
+                    definition: r.definition, itemsHtml: V.requirementDetails(r), requirementCoverageHtml: V.requirementCoverage(r)
                 });
                 body.scrollTop = 0;
                 var bounds = sfrLayerBounds();

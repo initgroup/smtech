@@ -29,7 +29,7 @@ test('entrypoint loads only local required assets and independent custom JavaScr
   for(const m of html.matchAll(/(?:src|href)="([^"]+)"/g)) {const value=m[1];if(value.startsWith('#'))continue;assert(!/^(?:https?:)?\/\//.test(value));assert(fs.existsSync(path.join(web,value)),value);}
   const scripts=[...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map(x=>x[1]);
   assert.deepEqual(scripts,JSON.parse(fs.readFileSync(path.join(web,'demo/asset-manifest.json'),'utf8')).scripts);
-  scripts.forEach(s=>{assert(s.startsWith('static/js/rms-enhance/')||s.startsWith('demo/'));new vm.Script(fs.readFileSync(path.join(web,s),'utf8'));});
+  scripts.forEach(s=>{assert(s.startsWith('static/js/rms-enhance/')||s.startsWith('static/vendor/')||s.startsWith('demo/'));new vm.Script(fs.readFileSync(path.join(web,s),'utf8'));});
   assert(!/\son(?:click|change|submit)\s*=/.test(html));
   assert(html.includes("connect-src 'self'"));assert(html.includes("form-action 'self'"));
 });

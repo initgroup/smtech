@@ -46,6 +46,28 @@ class AutomationTest(unittest.TestCase):
         put(self.base,'public/site/static/new-feature.js','window.nextFeature=true;\n');self.okay(self.ps('git-upload.ps1','-Push'))
         latest=json.loads((self.base/'releases/history.json').read_text(encoding='utf-8'))['releases'][0];self.assertEqual(latest['version'],'1.1.1')
         branch=self.git('symbolic-ref','--short','HEAD').decode().strip();remote_head=subprocess.check_output(['git','--git-dir',str(remote),'rev-parse',branch]);self.assertEqual(remote_head,self.git('rev-parse','HEAD'))
+    def test_push_stages_deleted_generated_templates_with_changed_and_new_files(self):
+        stale='handoff/templates/dialogs/question.html'
+        renamed='public/site/static/old-screen.js'
+        put(self.base,stale,'<article>retired generated template</article>\n')
+        put(self.base,renamed,'window.oldScreen=true;\n')
+        self.git('add',stale,renamed);self.git('commit','-qm','fixture retired templates')
+        (self.base/stale).unlink();(self.base/renamed).unlink()
+        put(self.base,'public/site/static/new-screen.js','window.newScreen=true;\n')
+        put(self.base,'public/site/static/app.js','window.business=2;\n')
+        remote=self.base/'tmp/remote.git';remote.parent.mkdir()
+        subprocess.check_call(['git','init','--bare','-q',str(remote)])
+        self.git('remote','add','origin',str(remote))
+        self.okay(self.ps('git-upload.ps1','-Push'))
+        tracked=self.git('ls-files','-z').split(b'\0')
+        self.assertNotIn(stale.encode(),tracked);self.assertNotIn(renamed.encode(),tracked)
+        self.assertIn(b'public/site/static/new-screen.js',tracked)
+        self.assertEqual(self.git('show','HEAD:public/site/static/app.js'),b'window.business=2;\n')
+        self.assertFalse((self.base/stale).exists());self.assertTrue((self.base/'local/private.txt').exists())
+        self.assertEqual(self.git('status','--porcelain'),b'')
+        branch=self.git('symbolic-ref','--short','HEAD').decode().strip()
+        remote_head=subprocess.check_output(['git','--git-dir',str(remote),'rev-parse',branch])
+        self.assertEqual(remote_head,self.git('rev-parse','HEAD'))
     def test_missing_version_sidecar_blocks_staged_verification(self):
         self.okay(self.ps('git-upload.ps1'))
         self.git('rm','--cached','public/site/downloads/releases/rms-developer-v1.1.0.zip.sha256')

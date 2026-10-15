@@ -3,12 +3,12 @@
  * Real backend writes belong in integration-owned adapter, never in this file. */
 (function (root, factory) {
     'use strict';
-    var api = factory(typeof module === 'object' && module.exports ? require('../../static/js/rms-enhance/data/selectors.js') : root.RMSQueries);
+    var api = factory(typeof module === 'object' && module.exports ? require('../../static/js/rms-enhance/data/selectors.js') : root.RMSQueries, typeof module === 'object' && module.exports ? require('../../static/js/rms-enhance/common/board-security.js') : root.RMSBoardSecurity, typeof module === 'object' && module.exports ? require('../generated/privacy-scenarios.js') : root.RMSPrivacyScenarios);
     if (typeof module === 'object' && module.exports)
         module.exports = api;
     else
         root.RMSCore = api;
-}(typeof window !== 'undefined' ? window : this, function (queries) {
+}(typeof window !== 'undefined' ? window : this, function (queries, boardSecurity, privacyScenarios) {
     'use strict';
     var KEY = 'smtech.rms.prototype.v1', LEGACY_KEY = 'rms.prototype.v1';
     var clone = function (x) { return JSON.parse(JSON.stringify(x)); };
@@ -109,6 +109,43 @@
             assert(Number.isSafeInteger(a.size) && a.size === utf8Size(a.content), '공고 첨부파일 크기 오류');
         });
     }
+    function protectQuestion(q) {
+        var safe = boardSecurity.prepare(Object.assign({},q,{body:q.body || q.content || q.title}));
+        q.title = safe.title;
+        q.body = safe.body;
+        q.bodyHtml = safe.bodyHtml;
+        var answer = boardSecurity.prepare({body:q.answer});
+        q.answer = answer.body;
+        q.privacyDetected = !!q.privacyDetected || safe.privacyDetected || answer.privacyDetected;
+        delete q.content;
+        q.replies = (q.replies || []).map(function (reply) {
+            var content = boardSecurity.prepare(reply);
+            if (content.privacyDetected) { q.privacyDetected = true; q.mainVisible = false; }
+            return Object.assign({}, reply, {body:content.body,bodyHtml:content.bodyHtml});
+        });
+        if (q.privacyDetected) q.mainVisible = false;
+        return q;
+    }
+    function upgradePrivacyExamples(data) {
+        if (!privacyScenarios || data.settings.privacyExamplesVersion >= privacyScenarios.version) return;
+        privacyScenarios.items.forEach(function (example) {
+            var current=data.questions.find(function(q){return q.id===example.id;});
+            if (!current) {
+                // Existing legacy IDs may have been deliberately deleted. Add only newly introduced IDs.
+                if (!privacyScenarios.legacy.some(function(q){return q.id===example.id;})) data.questions.push(clone(example));
+                return;
+            }
+            if (current.ownerKind || current.updatedAt || (current.replies || []).length) return;
+            var untouched=privacyScenarios.legacy.some(function(old){
+                var body=old.body || old.title;
+                return current.id===old.id && current.title===old.title && (current.body || current.title)===body &&
+                    (!current.bodyHtml || current.bodyHtml===boardSecurity.prepare({body:body}).bodyHtml) &&
+                    current.answer===old.answer && current.date===old.date && current.public===old.public && current.mainVisible===old.mainVisible;
+            });
+            if (untouched) Object.assign(current,clone(example));
+        });
+        data.settings.privacyExamplesVersion=privacyScenarios.version;
+    }
     function validate(data) {
         safeTree(data, 0);
         assert(data && data.schemaVersion === 1, '지원하지 않는 JSON 형식입니다. schemaVersion 1 파일을 선택하세요.');
@@ -124,6 +161,7 @@
                 }
             });
         });
+        if (data.settings) upgradePrivacyExamples(data);
         // Upgrade only absent notice fields; imported collections remain authoritative.
         data.programs = data.programs.map(normalizeProgram);
         var codeIds = new Set(data.classifications.map(function (c) { return c.id; }));
@@ -199,6 +237,12 @@
             assert(data.classifications.some(function (c) { return c.id === f.work && c.kind === 'work'; }) && typeof f.published === 'boolean', 'FAQ 분류 오류');
         });
         data.questions.forEach(function (q) {
+            assert(Array.isArray(q.replies || []) && (q.replies || []).length <= 500, '댓글·답변 형식 오류');
+            (q.replies || []).forEach(function (reply) {
+                clean(reply.id,80); clean(reply.body,10000);
+                assert(['comment','answer'].includes(reply.kind), '댓글·답변 종류 오류');
+            });
+            protectQuestion(q);
             clean(q.title, 300);
             assert(typeof q.answer === 'string' && typeof q.public === 'boolean' && typeof q.mainVisible === 'boolean' && codeIds.has(q.work), '소통 게시물 오류');
             assert(['답변대기', '답변완료'].indexOf(q.status) >= 0 && !isNaN(Date.parse(q.date)), '게시물 상태 오류');
@@ -331,6 +375,58 @@
             state = next;
             return result;
         }
+        function qnaIdentity() {
+            return session.role === 'visitor' ? '' : session.role + ':' + (session.role === 'company' ? session.companyId : session.region);
+        }
+        function cryptoApi() {
+            var api = typeof window !== 'undefined' ? window.crypto : require('node:crypto').webcrypto;
+            assert(api && api.subtle && api.getRandomValues, '비회원 인증은 HTTPS 또는 localhost의 보안 환경에서 이용하세요.');
+            return api;
+        }
+        function hex(bytes) { return Array.from(new Uint8Array(bytes)).map(function (n) { return n.toString(16).padStart(2,'0'); }).join(''); }
+        async function passwordProof(password, salt) {
+            assert(typeof password === 'string' && password.length >= 10 && password.length <= 128, '비회원 비밀번호는 10~128자로 입력하세요.');
+            var api = cryptoApi(), bytes = Uint8Array.from(salt.match(/../g), function (c) { return parseInt(c,16); });
+            var key = await api.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+            return hex(await api.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:bytes,iterations:600000},key,256));
+        }
+        async function ownership(password) {
+            if (session.role !== 'visitor') return {ownerKind:'member',ownerKey:qnaIdentity()};
+            var salt = hex(cryptoApi().getRandomValues(new Uint8Array(16)));
+            return {ownerKind:'guest',guestSalt:salt,guestHash:await passwordProof(password,salt)};
+        }
+        var failedGuestAttempts = new Map();
+        async function authorizePost(row,password) {
+            assert(row,'게시물을 찾을 수 없습니다.');
+            if (session.role === 'admin' || row.ownerKind === 'member' && row.ownerKey === qnaIdentity()) return;
+            assert(row.ownerKind === 'guest' && row.guestSalt && row.guestHash, '작성자 또는 관리자만 수정·삭제할 수 있습니다.');
+            var attempts = failedGuestAttempts.get(row.id) || {count:0,until:0};
+            assert(Date.now() >= attempts.until, '비밀번호 확인 시도가 많습니다. 잠시 후 다시 시도하세요.');
+            var expected = await passwordProof(password,row.guestSalt), difference = 0;
+            for (var i=0;i<expected.length;i++) difference |= expected.charCodeAt(i) ^ row.guestHash.charCodeAt(i);
+            if (difference || expected.length !== row.guestHash.length) {
+                attempts.count++;
+                if (attempts.count >= 5) attempts.until = Date.now() + 60000;
+                failedGuestAttempts.set(row.id,attempts);
+                throw new Error('작성자 비밀번호가 일치하지 않습니다.');
+            }
+            failedGuestAttempts.delete(row.id);
+        }
+        function question(s,id) {
+            var q = s.questions.find(function (row) { return row.id === id; });
+            assert(q,'게시물을 찾을 수 없습니다.');
+            return q;
+        }
+        function qnaContent(input) {
+            var safe = boardSecurity.prepare(input);
+            clean(safe.body,10000);
+            return safe;
+        }
+        function qnaStatus(q) {
+            var answers = q.replies.filter(function (r) { return r.kind === 'answer'; });
+            q.status = q.answer || answers.length ? '답변완료' : '답변대기';
+            q.answeredAt = answers.map(function (r) { return r.updatedAt || r.date; }).sort().pop() || (q.answer ? q.date : '');
+        }
         function signed() { assert(session.role !== 'visitor', '사용자 역할에서 지원기업 또는 관리기관으로 전환해 주세요.'); }
         function manager() { assert(['tp', 'admin'].indexOf(session.role) >= 0, '관리기관 또는 관리자만 처리할 수 있습니다.'); }
         function admin() { assert(session.role === 'admin', '시스템 관리자만 설정할 수 있습니다.'); }
@@ -428,6 +524,7 @@
             setRole: function (role) {
                 assert(roles.indexOf(role) >= 0, '역할 오류');
                 session.role = role;
+                session.qnaUnlocked = [];
             },
             saveProgram: function (input) { return update('사업공고 정보 저장', function (s) {
                 admin();
@@ -693,11 +790,65 @@
                 }
                 a.submission = draft ? '임시저장' : '제출완료';
             }); },
+            saveQuestion: async function (input) {
+                input = input || {};
+                var old = input.id ? question(state,input.id) : null;
+                if (old) await authorizePost(old,input.password);
+                var owner = old ? {} : await ownership(input.password), safe = qnaContent(input);
+                clean(safe.title,300);
+                return update(old ? 'Q&A 글 수정' : 'Q&A 글 등록', function (s) {
+                    assert(s.classifications.some(function (c) { return c.id === input.work && c.kind === 'work' && c.active && c.visible; }), '업무유형을 선택하세요.');
+                    var q = old ? question(s,input.id) : Object.assign({id:'Q'+cryptoApi().randomUUID(),date:now().slice(0,10),answer:'',status:'답변대기',replies:[],mainVisible:false},owner);
+                    Object.assign(q,{title:safe.title,body:safe.body,bodyHtml:safe.bodyHtml,work:input.work,public:input.public !== false,privacyDetected:safe.privacyDetected || input.privacyDetected === true || q.privacyDetected === true,updatedAt:now()});
+                    if (!q.public || q.privacyDetected) q.mainVisible = false;
+                    if (!old) s.questions.unshift(q);
+                    if (!q.public) session.qnaUnlocked = Array.from(new Set((session.qnaUnlocked || []).concat(q.id)));
+                    return q.id;
+                });
+            },
+            unlockQuestion: async function (id,password) {
+                var q = question(state,id);
+                await authorizePost(q,password);
+                session.qnaUnlocked = Array.from(new Set((session.qnaUnlocked || []).concat(id)));
+                return id;
+            },
+            removeQuestion: async function (id,password) {
+                await authorizePost(question(state,id),password);
+                return update('Q&A 글 삭제',function (s) { s.questions = s.questions.filter(function (q) { return q.id !== id; }); });
+            },
+            saveQuestionReply: async function (questionId,input) {
+                var q = question(state,questionId);
+                assert(q.public || session.role === 'admin' || q.ownerKey === qnaIdentity() || (session.qnaUnlocked || []).includes(q.id), '작성자 확인된 게시물에만 댓글·답변을 등록할 수 있습니다.');
+                input = input || {};
+                var old = input.id ? (q.replies || []).find(function (r) { return r.id === input.id; }) : null;
+                if (input.id) await authorizePost(old,input.password);
+                var owner = old ? {} : await ownership(input.password), safe = qnaContent(input);
+                assert(['comment','answer'].includes(input.kind),'댓글·답변 종류를 선택하세요.');
+                return update('Q&A 댓글·답변 저장',function (s) {
+                    var target = question(s,questionId), reply = old ? target.replies.find(function (r) { return r.id === input.id; }) : Object.assign({id:'R'+cryptoApi().randomUUID(),date:now().slice(0,10)},owner);
+                    Object.assign(reply,{kind:input.kind,body:safe.body,bodyHtml:safe.bodyHtml,updatedAt:now()});
+                    if (!old) { reply.official = ['tp','admin'].includes(session.role) && input.kind === 'answer'; target.replies.push(reply); }
+                    if (safe.privacyDetected || input.privacyDetected === true) { target.privacyDetected = true; target.mainVisible = false; }
+                    qnaStatus(target);
+                    return questionId;
+                });
+            },
+            removeQuestionReply: async function (questionId,replyId,password) {
+                var q = question(state,questionId), reply = (q.replies || []).find(function (r) { return r.id === replyId; });
+                await authorizePost(reply,password);
+                return update('Q&A 댓글·답변 삭제',function (s) {
+                    var target = question(s,questionId);
+                    target.replies = target.replies.filter(function (r) { return r.id !== replyId; });
+                    qnaStatus(target);
+                    return questionId;
+                });
+            },
             updateQuestion: function (id, mainVisible) { return update('소통 메인노출 변경', function (s) {
                 admin();
                 var q = s.questions.find(function (x) { return x.id === id; });
                 assert(q, '게시물이 없습니다.');
                 assert(!mainVisible || q.public, '비공개 게시물은 메인에 노출할 수 없습니다.');
+                assert(!mainVisible || !q.privacyDetected, '개인정보가 검출된 게시물은 메인에 노출할 수 없습니다.');
                 q.mainVisible = !!mainVisible;
             }); },
             updateSettings: function (settings) { return update('메인화면 배치 설정', function (s) {
@@ -739,6 +890,7 @@
                     storage.setItem(KEY, JSON.stringify(seed));
                 state = clone(seed);
                 session.role = 'visitor';
+                session.qnaUnlocked = [];
             }
         }, queries.create(function () { return {
             state: state, session: session

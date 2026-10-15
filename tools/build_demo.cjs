@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path');const web=require('./project.cjs').web;
 const assets=JSON.parse(fs.readFileSync(path.join(web,'asset-manifest.json'),'utf8'));
 const scripts=assets.scripts.filter(s=>s!=='integration/config.js'&&!s.endsWith('/app.js'));
-scripts.splice(1,0,'demo/generated/templates.js');scripts.push('demo/generated/requirements.js','demo/generated/releases.js','demo/js/demo-store.js','demo/js/receipt-samples.js','demo/js/adapter.js','demo/js/requirements-views.js','demo/js/sfr-layer.js','demo/js/tools.js',assets.scripts.at(-1));
+scripts.splice(1,0,'demo/generated/templates.js');scripts.push('demo/generated/requirements.js','demo/generated/releases.js','demo/generated/privacy-scenarios.js','demo/js/demo-store.js','demo/js/receipt-samples.js','demo/js/adapter.js','demo/js/requirements-views.js','demo/js/sfr-layer.js','demo/js/tools.js',assets.scripts.at(-1));
 const designStyles=[1,2,3].map(n=>'static/css/rms-home-design'+n+'.css');
 const styles=assets.styles.filter(s=>s!=='static/css/rms-selected-design.css').concat(designStyles,['demo/css/tools.css','demo/css/sfr.css']);
 let html=fs.readFileSync(path.join(web,'application.html'),'utf8').replace(/  <script[^]*?<\/head>/,scripts.map(s=>'  <script src="'+s+'" defer></script>').join('\n')+'\n</head>');

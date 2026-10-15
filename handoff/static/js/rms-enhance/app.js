@@ -6,7 +6,7 @@
     var T = window.RMSTemplates, extension = {};
     var root = document.getElementById('rms-enhance-app'), host = document.getElementById('rms-dialog-host'), store, views, modalReturnFocus, toastTimer;
     var ui = {
-        doctorFilters: {}, statsFilters: {}, selected: new Set(), faqQuery: '', faqWork: '', docStatus: '', codeKind: 'technology', appId: '', programLayout: '', design: '1', globalQuery: '', boardQuery: ''
+        doctorFilters: {}, statsFilters: {}, selected: new Set(), faqQuery: '', faqWork: '', docStatus: '', codeKind: 'technology', appId: '', programLayout: '', design: '1', globalQuery: '', boardQuery: '', boardWork: '', homeQnaView: 'recent'
     };
     var V = window.RMSViews, e = V.esc, b = V.btn;
     function toast(message) {
@@ -27,6 +27,7 @@
             toast(error.message || String(error));
     }
     function closeModal() {
+        window.RMSPrivacyDisplay?.close(false);
         var d = host.querySelector('dialog');
         if (d) {
             window.RMSLayers.dispose(d);
@@ -49,6 +50,7 @@
         d.showModal();
         if (options && options.draggable)
             window.RMSLayers.movable(d);
+        window.RMSPrivacyDisplay?.enhance(d);
     }
     function route() { return (location.hash.slice(1) || 'home').split('/'); }
     function go(path) {
@@ -59,6 +61,7 @@
             location.hash = path;
     }
     function render(focus) {
+        window.RMSPrivacyDisplay?.close(false);
         var p = route(), r = store.getSession().role;
         document.querySelector('.rms-site-nav').hidden = r === 'visitor';
         if (p[0] === 'home') {
@@ -96,6 +99,7 @@
                 root.querySelector('h1')?.focus({
                     preventScroll: true
                 });
+            window.RMSPrivacyDisplay?.enhance(root);
             if (extension.onRender)
                 extension.onRender(p);
         }
@@ -273,6 +277,42 @@
             program: true, draggable: true
         });
     }
+    function qnaCredential(row) {
+        var guest = row ? row.ownerKind === 'guest' && store.getSession().role !== 'admin' : store.getSession().role === 'visitor';
+        return guest ? T.render('dialogs/qna-credential',{autocomplete:row ? 'current-password' : 'new-password'}) : '';
+    }
+    function qnaForm(id) {
+        var q = id ? window.RMSBoards.get('qna',id,store) : {id:'',title:'',body:'',work:''};
+        if (!q) throw new Error('공개된 게시물을 찾을 수 없습니다.');
+        modal(id ? 'Q&A 글수정' : 'Q&A 글쓰기',T.render('dialogs/qna-form',{
+            id:q.id,title:q.title,publicChecked:q.public === false ? '' : ' checked',workHtml:V.select('업무유형 *','work',views.codes('work'),q.work),
+            credentialHtml:qnaCredential(id ? q : null),privacyHtml:T.render('screens/qna-privacy',{}),
+            cancelHtml:b('취소','close'),previewHtml:b('개인정보 검사·미리보기','qna-preview')
+        }),{program:true});
+        window.RMSBoardEditor.mount(host.querySelector('#rms-qna-form'),q);
+    }
+    function qnaReplyForm(value,kind) {
+        var ids = value.split('/'), q = window.RMSBoards.get('qna',ids[0],store);
+        if (!q) throw new Error('공개된 게시물을 찾을 수 없습니다.');
+        var reply = ids[1] ? (q.replies || []).find(function (r) { return r.id === ids[1]; }) : {id:'',body:'',kind:kind || 'comment'};
+        if (!reply) throw new Error('댓글·답변을 찾을 수 없습니다.');
+        modal(reply.id ? '댓글·답변 수정' : reply.kind === 'answer' ? '답변 등록' : '댓글 등록',T.render('dialogs/qna-reply-form',{
+            id:reply.id,questionId:q.id,commentSelected:reply.kind === 'comment' ? ' selected' : '',answerSelected:reply.kind === 'answer' ? ' selected' : '',
+            credentialHtml:qnaCredential(reply.id ? reply : null),privacyHtml:T.render('screens/qna-privacy',{}),
+            cancelHtml:b('취소','close'),previewHtml:b('개인정보 검사·미리보기','qna-preview')
+        }),{program:true});
+        window.RMSBoardEditor.mount(host.querySelector('#rms-qna-reply-form'),reply);
+    }
+    function qnaDelete(value,isReply) {
+        var ids = value.split('/'), q = window.RMSBoards.get('qna',ids[0],store);
+        if (!q) throw new Error('공개된 게시물을 찾을 수 없습니다.');
+        var row = isReply ? (q.replies || []).find(function (r) { return r.id === ids[1]; }) : q;
+        if (!row) throw new Error('삭제할 항목을 찾을 수 없습니다.');
+        modal(isReply ? '댓글·답변 삭제' : 'Q&A 글삭제',T.render('dialogs/qna-delete',{
+            id:q.id,questionId:q.id,replyId:isReply ? row.id : '',message:isReply ? '이 댓글·답변을 삭제합니다.' : '이 글과 연결된 댓글·답변을 삭제합니다.',
+            credentialHtml:qnaCredential(row),cancelHtml:b('취소','close')
+        }));
+    }
     function docDetail(id) {
         var s = store.getState(), a = store.getApplications().find(function (x) { return x.id === ui.appId; }), d = a.docs.find(function (x) { return x.specId === id; }), spec = s.documentTypes.find(function (x) { return x.id === id; }), company = store.getSession().role === 'company', locked = a.submission === '제출완료';
         var mismatch = id === 'F01' && d.issue === 'mismatch';
@@ -325,6 +365,16 @@
             render();
         },
         'board-detail': boardDetail,
+        'qna-write':function () { qnaForm(''); },
+        'qna-home-filter':function (id) { ui.homeQnaView = id === 'answered' ? 'answered' : 'recent'; render(); },
+        'qna-unlock':function () { modal('비공개 글 작성자 확인',T.render('dialogs/qna-unlock',{cancelHtml:b('취소','close')})); },
+        'qna-edit':qnaForm,
+        'qna-delete':function (id) { qnaDelete(id,false); },
+        'qna-comment':function (id) { qnaReplyForm(id,'comment'); },
+        'qna-answer':function (id) { qnaReplyForm(id,'answer'); },
+        'qna-reply-edit':function (id) { qnaReplyForm(id); },
+        'qna-reply-delete':function (id) { qnaDelete(id,true); },
+        'qna-preview':function () { window.RMSBoardEditor.preview(host.querySelector('.rms-qna-form')); },
         'receipt-report': receiptReport,
         'receipt-apply': function (id) { commit(function () { return store.applyReceiptInfo(id); }, 'XML 수신값을 신청정보에 반영했습니다.', false, function (result) { go('documents/' + id + '/2'); }); },
         'home-programs': function () {
@@ -385,14 +435,7 @@
                 go('documents/' + appId + '/2');
             });
         },
-        question: function (id) {
-            var q = store.publicQuestions().find(function (x) { return x.id === id; });
-            if (!q)
-                throw new Error('공개된 게시물이 아닙니다.');
-            modal('소통하기 · 질문과 답변', T.render("dialogs/question", {
-                title: q.title, badgeHtml: V.badge(q.status), labelHtml: store.label(q.work), date: q.date, value: q.answer || '아직 등록된 답변이 없습니다.'
-            }));
-        },
+        question: function (id) { boardDetail('qna/' + id); },
         'doctor-reset': function () {
             ui.doctorFilters = {};
             render();
@@ -533,7 +576,24 @@
         event.preventDefault();
         var f = data(form), id = form.dataset.id;
         try {
-            if (form.id === 'rms-doctor-search') {
+            if (form.id === 'rms-qna-unlock-form') {
+                commit(function () { return store.unlockQuestion(f.questionId,f.password || ''); },'작성자를 확인했습니다.',false,function (savedId) { boardDetail('qna/'+savedId); });
+            }
+            else if (form.id === 'rms-qna-form' || form.id === 'rms-qna-reply-form') {
+                var safe = window.RMSBoardEditor.preview(form);
+                if (!safe.body || safe.body.length > 10000) throw new Error('글 내용은 1~10,000자로 입력하세요.');
+                var input = Object.assign({},safe,{id:id,password:f.password || '',work:f.work,kind:f.kind,public:!!f.public});
+                var replying = form.id === 'rms-qna-reply-form', questionId = form.dataset.questionId;
+                commit(function () { return replying ? store.saveQuestionReply(questionId,input) : store.saveQuestion(input); },
+                    safe.privacyDetected ? '개인정보 의심 패턴을 마스킹하여 저장했습니다.' : '개인정보 검사 후 저장했습니다.',false,
+                    function (savedId) { boardDetail('qna/' + savedId); });
+            }
+            else if (form.id === 'rms-qna-delete-form') {
+                var replyId = form.dataset.replyId;
+                commit(function () { return replyId ? store.removeQuestionReply(id,replyId,f.password || '') : store.removeQuestion(id,f.password || ''); },
+                    '삭제했습니다.',false,function () { if (replyId) boardDetail('qna/'+id); else go('boards/qna'); });
+            }
+            else if (form.id === 'rms-doctor-search') {
                 ui.doctorFilters = Object.assign({}, f, {
                     available: !!f.available, stale: !!f.stale
                 });
@@ -546,6 +606,7 @@
             }
             else if (form.id === 'rms-board-search') {
                 ui.boardQuery = (f.q || '').trim().slice(0, 500);
+                ui.boardWork = f.work || '';
                 go('boards/' + form.dataset.board);
             }
             else if (form.id === 'rms-faq-search') {

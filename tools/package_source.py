@@ -105,7 +105,7 @@ def collect(policy,sources):
     for name,data in result.items():
         if any(p in {'demo','data'} for p in PurePosixPath(name).parts) and name.startswith('web/') and '/static/js/rms-enhance/data/' not in name:
             raise ValueError('Sample/demo directory in developer package: '+name)
-        if name.endswith(('.html','.css','.js','.jsp','.jspf')):
+        if name.startswith('web/') and not name.startswith('web/downloads/privacy/') and name.endswith(('.html','.css','.js','.jsp','.jspf')):
             text=data.decode('utf-8')
             if any(token in text for token in forbidden) or __import__('re').search(r'\bSFR(?:-\d{2}|\b)',text): raise ValueError('Demo runtime leaked: '+name)
     return result

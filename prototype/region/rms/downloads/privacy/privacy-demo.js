@@ -1,0 +1,2 @@
+'use strict';
+document.getElementById("privacy-run").addEventListener("click",function(){var out=document.getElementById("privacy-result");try{var result=RMSPrivacy.inspect(document.getElementById("privacy-input").value);out.textContent="탐지 "+result.count+"건\n"+result.text;}catch(error){out.textContent="검사할 수 없습니다. 입력 길이와 모듈 로딩을 확인해 주세요.";}});

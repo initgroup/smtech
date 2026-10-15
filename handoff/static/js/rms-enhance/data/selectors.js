@@ -2,12 +2,12 @@
  * Pure UI queries on a server-authorized snapshot. No storage, writes, DOM or fetch.
  * These filters support display only; authorization and eligibility remain server responsibilities. */
 (function (root, factory) {
-    var api = factory();
+    var api = factory(typeof module === 'object' && module.exports ? require('../common/board-security.js') : root.RMSBoardSecurity);
     if (typeof module === 'object' && module.exports)
         module.exports = api;
     else
         root.RMSQueries = api;
-}(typeof window !== 'undefined' ? window : this, function () {
+}(typeof window !== 'undefined' ? window : this, function (boardSecurity) {
     'use strict';
     var clone = function (value) { return JSON.parse(JSON.stringify(value)); };
     function assert(ok, message) { if (!ok)
@@ -56,6 +56,13 @@
                 return a.name.localeCompare(b.name, 'ko');
             });
         }
+        function publicQuestion(row) {
+            var identity = session.role === 'visitor' ? '' : session.role + ':' + (session.role === 'company' ? session.companyId : session.region);
+            var q = clone(row);
+            q.canManage = row.canManage === true || session.role === 'admin' || q.ownerKind === 'member' && q.ownerKey === identity;
+            q.replies = (q.replies || []).map(function (r) { r.canManage = r.canManage === true || session.role === 'admin' || r.ownerKind === 'member' && r.ownerKey === identity; return r; });
+            return boardSecurity.publicQuestion(q);
+        }
         var queries = {
             getState: function () { return clone(state); },
             getSession: function () { return clone(session); },
@@ -64,8 +71,16 @@
                 assert(p, '사업공고를 찾을 수 없습니다.');
                 return programStatus(p, state.demoDate);
             },
-            visibleQuestions: function () { return state.questions.filter(function (q) { return q.public && q.mainVisible && state.classifications.some(function (c) { return c.id === q.work && c.kind === 'work' && c.active && c.visible; }); }).sort(function (a, b) { return b.date.localeCompare(a.date); }); },
-            publicQuestions: function () { return state.questions.filter(function (q) { return q.public && state.classifications.some(function (c) { return c.id === q.work && c.kind === 'work' && c.active && c.visible; }); }).sort(function (a, b) { return b.date.localeCompare(a.date); }); },
+            visibleQuestions: function () { return state.questions.filter(function (q) { return q.public && q.mainVisible && !q.privacyDetected && state.classifications.some(function (c) { return c.id === q.work && c.kind === 'work' && c.active && c.visible; }); }).sort(function (a, b) { return b.date.localeCompare(a.date); }).map(publicQuestion).filter(function (q) { return !q.privacyDetected; }); },
+            publicQuestions: function () { return state.questions.filter(function (q) { return q.public && state.classifications.some(function (c) { return c.id === q.work && c.kind === 'work' && c.active && c.visible; }); }).sort(function (a, b) { return b.date.localeCompare(a.date); }).map(publicQuestion); },
+            accessibleQuestions: function () {
+                var identity = session.role === 'visitor' ? '' : session.role + ':' + (session.role === 'company' ? session.companyId : session.region);
+                return state.questions.filter(function (q) {
+                    return (q.public && state.classifications.some(function (c) { return c.id === q.work && c.kind === 'work' && c.active && c.visible; })) ||
+                        q.canView === true || q.canManage === true || session.role === 'admin' ||
+                        q.ownerKind === 'member' && q.ownerKey === identity || (session.qnaUnlocked || []).includes(q.id);
+                }).sort(function (a,b) { return b.date.localeCompare(a.date); }).map(publicQuestion);
+            },
             searchFaqs: function (query, work) {
                 var q = (query || '').trim().toLowerCase();
                 var allowed = state.classifications.filter(function (c) { return c.kind === 'work' && c.active && c.visible; }).map(function (c) { return c.id; });

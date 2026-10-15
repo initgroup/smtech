@@ -11,7 +11,7 @@ const core = require(path.join(web, 'demo/js/demo-store.js'));
 const seed = JSON.parse(fs.readFileSync(path.join(web, 'demo/data/seed.json'), 'utf8'));
 const sandbox = { window: {} };
 const assets=JSON.parse(fs.readFileSync(path.join(web,'asset-manifest.json'),'utf8'));
-for (const name of assets.scripts.filter(file=>!file.endsWith('/app.js')&&file!=='integration/config.js')) vm.runInNewContext(fs.readFileSync(path.join(web,name),'utf8'),sandbox);
+for (const name of assets.scripts.filter(file=>!file.startsWith('static/vendor/')&&!file.endsWith('/app.js')&&file!=='integration/config.js')) vm.runInNewContext(fs.readFileSync(path.join(web,name),'utf8'),sandbox);
 vm.runInNewContext(fs.readFileSync(path.join(web,'demo/js/receipt-samples.js'),'utf8'),sandbox);
 sandbox.window.RMSMydata.setBundles(sandbox.window.RMSMydata.manifest.map(meta=>sandbox.window.RMSMydata.parseXml(fs.readFileSync(path.join(web,meta.xmlPath),'utf8'),meta)));
 const store = core.createStore(seed, null);
@@ -51,6 +51,10 @@ for(const directory of ['templates','contracts']){
 fs.copyFileSync(path.join(web,'asset-manifest.json'),path.join(target,'asset-manifest.json'));
 
 fs.cpSync(path.join(web,'downloads','boards'),path.join(target,'downloads','boards'),{recursive:true});
+// Preserve bundled vendor license notices and official downloadable documents in the mirror.
+for (const directory of ['static/vendor','downloads/privacy']) {
+  if (fs.existsSync(path.join(web,directory))) fs.cpSync(path.join(web,directory),path.join(target,directory),{recursive:true});
+}
 const crypto = require('crypto');
 const files = [];
 function scan(dir) {for (const ent of fs.readdirSync(dir, {withFileTypes:true})) {const p=path.join(dir,ent.name);if(ent.isDirectory())scan(p);else if(ent.name!=='manifest.json')files.push({path:path.relative(target,p).replace(/\\/g,'/'),bytes:fs.statSync(p).size,sha256:crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex')});}}

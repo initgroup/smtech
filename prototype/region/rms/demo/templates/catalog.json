@@ -153,9 +153,7 @@
   {
     "template": "dialogs/open-sfr-layer-3",
     "source": "demo/templates/dialogs/open-sfr-layer-3.html",
-    "presenters": [
-      "demo/js/sfr-layer.js"
-    ],
+    "presenters": [],
     "slots": [
       {
         "name": "x",
@@ -330,6 +328,14 @@
         "mode": "text"
       },
       {
+        "name": "scope",
+        "mode": "text"
+      },
+      {
+        "name": "resourcesHtml",
+        "mode": "html"
+      },
+      {
         "name": "itemsHtml2",
         "mode": "html"
       },
@@ -391,6 +397,114 @@
       {
         "name": "item",
         "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirement-detail",
+    "source": "demo/templates/screens/requirement-detail.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "privacyClass",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "id",
+        "mode": "text"
+      },
+      {
+        "name": "status",
+        "mode": "text"
+      },
+      {
+        "name": "statusLabel",
+        "mode": "text"
+      },
+      {
+        "name": "privacyHtml",
+        "mode": "html"
+      },
+      {
+        "name": "text",
+        "mode": "text"
+      },
+      {
+        "name": "evidence",
+        "mode": "text"
+      },
+      {
+        "name": "linksHtml",
+        "mode": "html"
+      },
+      {
+        "name": "remaining",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirement-detail-link",
+    "source": "demo/templates/screens/requirement-detail-link.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "route",
+        "mode": "text"
+      },
+      {
+        "name": "value",
+        "mode": "text"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirement-resource",
+    "source": "demo/templates/screens/requirement-resource.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "href",
+        "mode": "text"
+      },
+      {
+        "name": "downloadAttr",
+        "mode": "html"
+      },
+      {
+        "name": "label",
+        "mode": "text"
+      },
+      {
+        "name": "description",
+        "mode": "text"
+      }
+    ]
+  },
+  {
+    "template": "screens/requirement-resources",
+    "source": "demo/templates/screens/requirement-resources.html",
+    "presenters": [
+      "demo/js/requirements-views.js"
+    ],
+    "slots": [
+      {
+        "name": "itemsHtml",
+        "mode": "html"
       }
     ]
   },
@@ -459,9 +573,7 @@
   {
     "template": "screens/requirements-table-3",
     "source": "demo/templates/screens/requirements-table-3.html",
-    "presenters": [
-      "demo/js/requirements-views.js"
-    ],
+    "presenters": [],
     "slots": [
       {
         "name": "detail",

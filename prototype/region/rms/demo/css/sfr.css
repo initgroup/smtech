@@ -520,3 +520,31 @@
   height: var(--rms-layer-height, 620px);
 }
 
+
+/* Item-level trace: original text is retained, progress and evidence are separate. */
+.rms-enhance .rms-sfr-details .rms-sfr-criterion {margin:0 0 14px;padding:13px;border:1px solid #cbdbe7;border-radius:7px;background:#f8fbfe;line-height:1.7;list-style:none;}
+.rms-enhance .rms-sfr-criterion-head {display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:8px;}
+.rms-enhance .rms-sfr-criterion-head>strong {font-size:13px;color:#16517c;}
+.rms-enhance .rms-sfr-status {display:inline-block;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:700;line-height:1.8;}
+.rms-enhance .rms-sfr-status-demo {background:#e1f2ec;color:#145a43;border:1px solid #a9d7c7;}
+.rms-enhance .rms-sfr-status-partial {background:#fff2d5;color:#735000;border:1px solid #e0c778;}
+.rms-enhance .rms-sfr-status-pending {background:#f4e8e8;color:#823838;border:1px solid #d7aaaa;}
+.rms-enhance .rms-sfr-criterion p {margin:7px 0;}
+.rms-enhance .rms-sfr-evidence {font-size:12px;color:#31536e;}
+.rms-enhance .rms-sfr-detail-links {display:flex;flex-wrap:wrap;gap:5px 11px;font-size:11px;}
+.rms-enhance .rms-sfr-detail-links a {color:#005b97;text-decoration:underline;text-underline-offset:3px;}
+.rms-enhance .rms-sfr-detail-remaining {font-size:11px;color:#795315;}
+.rms-enhance .rms-sfr-trace-note {padding:9px 11px;background:#fff7e3;border:1px solid #e9d49c;font-size:12px;color:#6e511b;}
+.rms-enhance .rms-sfr-details .rms-sfr-privacy {background:#f3eaff;border:2px solid #8553b2;box-shadow:inset 4px 0 #8553b2;}
+.rms-enhance .rms-sfr-privacy-label {font-size:11px;font-weight:800;color:#5b247f;background:#e9d6fa;border:1px solid #b688d8;border-radius:4px;padding:1px 7px;}
+.rms-enhance .rms-sfr-privacy-resources {background:#f4eaff;border:2px solid #8553b2;border-radius:8px;padding:15px;margin:18px 0;color:#44285e;}
+.rms-enhance .rms-sfr-privacy-resources h3 {color:#592e7b;}
+.rms-enhance .rms-sfr-privacy-resources ul {padding-left:18px;}
+.rms-enhance .rms-sfr-privacy-resources li {list-style:disc;margin:12px 0;}
+.rms-enhance .rms-sfr-privacy-resources a {color:#532078;font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+.rms-enhance .rms-sfr-privacy-resources li p {font-size:12px;margin:4px 0;}
+.rms-enhance .rms-requirement-content .rms-sfr-details {padding-left:0;}
+.rms-enhance .rms-sfr-layer-grid {padding:0;gap:24px;}
+.rms-enhance .rms-sfr-criterion-focused {outline:3px solid #bd7c12;outline-offset:3px;}
+@media(max-width:850px){.rms-enhance .rms-sfr-layer-grid {grid-template-columns:minmax(0,1fr);}}
+

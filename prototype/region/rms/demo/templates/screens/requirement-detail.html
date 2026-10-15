@@ -1,0 +1,8 @@
+<!-- @template screens/requirement-detail | @owner publisher | presenter: demo/js/requirements-views.js#requirementDetails -->
+<li class="rms-sfr-criterion {{privacyClass}}" data-criterion-id="{{id}}">
+  <div class="rms-sfr-criterion-head"><strong>{{id}}</strong><span class="rms-sfr-status rms-sfr-status-{{status}}">{{statusLabel}}</span>{{{privacyHtml}}}</div>
+  <p class="rms-sfr-original-text">{{text}}</p>
+  <p class="rms-sfr-evidence"><b>적용 위치·동작</b> {{evidence}}</p>
+  <div class="rms-sfr-detail-links">{{{linksHtml}}}</div>
+  <p class="rms-sfr-detail-remaining"><b>남은 범위</b> {{remaining}}</p>
+</li>

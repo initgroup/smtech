@@ -46,10 +46,12 @@ try {
 
     # Honor every current ignore rule, including files tracked before the rule existed.
     Invoke-ProjectCommand -Executable $python -Arguments @($guard, '--prune-index') -Failure 'Cannot remove ignored files from index'
-    # Attribute changes do not invalidate Git's cached stat information for existing files.
-    # Reapply current clean/text rules before collecting new files; -text -eol assets retain their exact bytes.
-    Invoke-Git -GitArgs @('add', '--renormalize', '--', '.')
+    # Stage deletions first: --renormalize reads tracked paths and fails if a deleted
+    # generated template is still in the index. Also collect changed/new files here.
     Invoke-Git -GitArgs @('add', '--all', '--', '.')
+    # Attribute changes do not invalidate Git's cached stat information for existing files.
+    # Reapply current clean/text rules to the remaining paths; -text -eol assets retain exact bytes.
+    Invoke-Git -GitArgs @('add', '--renormalize', '--', '.')
     # Read staged bytes without rebuilding the ZIP or modifying staged contents.
     Invoke-ProjectCommand -Executable $python -Arguments @($packager, '--verify-index') -Failure 'Staged release verification failed; commit stopped'
     & git diff --cached --quiet

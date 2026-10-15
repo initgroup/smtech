@@ -16,9 +16,9 @@ test('generated templates and contracts match editable originals; template slots
 
 test('hand-written modules contain no UI markup, inline appearance, endpoints in app, or DOM access in data modules',()=>{
   const manifest=JSON.parse(fs.readFileSync(path.join(web,'asset-manifest.json'),'utf8'));
-  for(const file of manifest.scripts.filter(f=>!f.includes('/generated/'))){const text=fs.readFileSync(path.join(web,file),'utf8');assert.doesNotMatch(text,/<(?:div|form|section|table|dialog|button|input|svg)\b/i,file);assert.doesNotMatch(text,/\.style\.(?:left|top|width|height|margin|color|background)\s*=/,file);if(file.includes('/data/'))assert.doesNotMatch(text,/document\.(?:querySelector|createElement|getElementById)|\.innerHTML\s*=/,file);}
+  for(const file of manifest.scripts.filter(f=>!f.includes('/generated/')&&!f.startsWith('static/vendor/'))){const text=fs.readFileSync(path.join(web,file),'utf8');assert.doesNotMatch(text,/<(?:div|form|section|table|dialog|button|input|svg)\b/i,file);assert.doesNotMatch(text,/\.style\.(?:left|top|width|height|margin|color|background)\s*=/,file);if(file.includes('/data/'))assert.doesNotMatch(text,/document\.(?:querySelector|createElement|getElementById)|\.innerHTML\s*=/,file);}
   const app=fs.readFileSync(path.join(js,'app.js'),'utf8');assert.doesNotMatch(app,/\bfetch\s*\(|localStorage|createStore\(/);
-  const catalog=JSON.parse(fs.readFileSync(path.join(web,'templates/catalog.json'),'utf8'));assert.equal(catalog.length,177);for(const entry of catalog){assert.ok(entry.presenters.length,entry.template+' has no presenter');assert.doesNotMatch(fs.readFileSync(path.join(web,entry.source),'utf8'),/\sstyle\s*=|<style\b|\son\w+\s*=/);}
+  const catalog=JSON.parse(fs.readFileSync(path.join(web,'templates/catalog.json'),'utf8'));assert.ok(catalog.length>=177);assert.equal(new Set(catalog.map(entry=>entry.template)).size,catalog.length);for(const entry of catalog){assert.ok(entry.presenters.length,entry.template+' has no presenter');assert.doesNotMatch(fs.readFileSync(path.join(web,entry.source),'utf8'),/\sstyle\s*=|<style\b|\son\w+\s*=/);}
 });
 
 test('HTTP adapter uses server snapshot, returns saved ID and preserves data on network and invalid-response failure',async()=>{

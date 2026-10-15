@@ -1,0 +1,9 @@
+<!-- @template shared/privacy-tooltip | @owner publisher -->
+<section id="rms-privacy-tooltip" class="rms-privacy-tooltip" role="dialog" aria-modal="false" aria-labelledby="rms-privacy-tooltip-title" tabindex="-1">
+  <header><strong id="rms-privacy-tooltip-title">{{heading}}</strong><button type="button" data-privacy-dismiss aria-label="기술 설명 닫기">×</button></header>
+  <p class="rms-privacy-current">{{value}}</p>
+  <p>{{description}}</p>
+  <p class="rms-privacy-example">{{example}}</p>
+  <dl><dt>적용 기술</dt><dd>{{technology}}</dd><dt>JavaScript 소스</dt><dd><a href="{{source}}" download>{{source}}</a></dd><dt>문서 근거</dt><dd><a href="{{reference}}" target="_blank" rel="noopener">{{referenceText}}</a><br>{{basis}}</dd></dl>
+  <footer><a href="downloads/privacy/privacy-implementation.html" target="_blank" rel="noopener">구현·공식 근거 자세히 보기</a></footer>
+</section>

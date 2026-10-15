@@ -61,17 +61,20 @@ async function browser(options={}) {
     set hash(value){const next=value && !value.startsWith('#')?'#'+value:value;if(next!==hash){hash=next;window.dispatchEvent(new window.Event('hashchange'));}}
   };
   window.localStorage=storage;
+  window.location=location;
+  window.crypto=require("node:crypto").webcrypto;
   window.innerWidth=options.width||1280;window.innerHeight=options.height||800;
   window.showSaveFilePicker=options.picker;
   const sandbox={
-    window,document,location,FormData:BrowserFormData,Blob,URL:{createObjectURL(blob){downloads.push(blob);return 'blob:qa-download';},revokeObjectURL(){}},
+    window,document,location,FormData:BrowserFormData,Blob,TextEncoder,TextDecoder,URL:{createObjectURL(blob){downloads.push(blob);return 'blob:qa-download';},revokeObjectURL(){}},
     console:{log(){},warn(){},error(...args){errors.push(args.join(' '));}},
     fetch:async url=>{if(url==='demo/data/boards.json')return {ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(base,'demo/data/boards.json'),'utf8'))};if(url==='demo/data/seed.json')return {ok:true,json:async()=>JSON.parse(JSON.stringify(seed))};assert.match(String(url),/^demo\/data\/mydata\/[a-z-]+\.xml$/,'QA must read only local XML assets');return {ok:true,text:async()=>fs.readFileSync(path.join(base,String(url)),'utf8')};},
     setTimeout:(fn,ms)=>{const timer=setTimeout(fn,ms);timer.unref();return timer;},clearTimeout,
     requestAnimationFrame:fn=>fn(0)
   };
   vm.createContext(sandbox);
-  entryScripts.forEach(script=>{if(script.name==='app.js'&&options.integrationFactory)window.RMSIntegration=options.integrationFactory(window);vm.runInContext(script.text,sandbox,{filename:script.name});});
+  // Editor vendors require a full browser. DOM tests exercise the safe text fallback.
+  entryScripts.filter(script=>!['quill.js','purify.min.js'].includes(script.name)).forEach(script=>{if(script.name==='app.js'&&options.integrationFactory)window.RMSIntegration=options.integrationFactory(window);vm.runInContext(script.text,sandbox,{filename:script.name});});
   await new Promise(resolve=>setImmediate(resolve));
   function one(selector){const el=document.querySelector(selector);assert.ok(el,'Missing DOM element: '+selector);return el;}
   function dispatch(el,type){return el.dispatchEvent(new window.Event(type,{bubbles:true,cancelable:true}));}
@@ -90,7 +93,7 @@ async function browser(options={}) {
   function set(selector,value){one(selector).value=value;}
   function route(value){location.hash=value;}
   function state(){return values.has('smtech.rms.prototype.v1')?JSON.parse(values.get('smtech.rms.prototype.v1')):JSON.parse(JSON.stringify(seed));}
-  function healthy(){assert.equal(one('#rms-enhance-app').getAttribute('aria-busy'),'false');assert.doesNotMatch(one('#rms-enhance-app').textContent,/화면을 표시하지 못했습니다|가상 초기자료를 읽을 수 없습니다/,one('#rms-toast').textContent);assert.deepEqual(errors,[]);}
+  function healthy(){assert.equal(one('#rms-enhance-app').getAttribute('aria-busy'),'false');assert.doesNotMatch(one('#rms-enhance-app').textContent,/화면을 표시하지 못했습니다|가상 초기자료를 읽을 수 없습니다/,one('#rms-toast').textContent);assert.deepEqual(errors,[]);if(!location.hash.startsWith('#guide'))assert.doesNotMatch(one('#rms-enhance-app').textContent,/SFR-\d{2}|기능 관리번호/);assert.doesNotMatch(one('#rms-dialog-host').textContent,/SFR-\d{2}|기능 관리번호/);assert.equal(document.querySelector('#rms-enhance-app .rms-feature-trace,#rms-dialog-host .rms-feature-trace,[data-requirement-ids]'),null);}
   healthy();
   return {window,document,one,click,change,submit,set,route,currentRoute:()=>location.hash,state,healthy,downloads,values,role:value=>change('#rms-role',value),text:()=>one('#rms-enhance-app').textContent};
 }
@@ -153,7 +156,7 @@ test('blocked save picker offers explicit fallback without silently downloading'
 
 test('all pages and application steps render for every demo role with working global controls',async()=>{
   const b=await browser();
-  const pages=['home','doctors','doctor/D001','matches','stats','documents','documents/A001/1','documents/A001/2','documents/A001/3','documents/A001/4','faq','questions','manage','manage/home','manage/documents','guide'];
+  const pages=['home','home/2','home/3','boards/notice','boards/qna','boards/faq','boards/resources','search','mydata','doctors','doctor/D001','matches','stats','documents','documents/A001/1','documents/A001/2','documents/A001/3','documents/A001/4','faq','questions','manage','manage/home','manage/documents','guide'];
   for(const role of ['visitor','company','tp','admin']){
     b.role(role);
     for(const page of pages){
@@ -719,7 +722,7 @@ test('administrator code form persists changes and main visibility affects only 
   b.route('manage/home');const q=seed.questions.find(q=>q.public&&q.mainVisible);
   b.change('[data-question-visible="'+q.id+'"]',false);
   b.route('home');assert.equal(b.document.querySelector('[data-action="board-detail"][data-id="qna/'+q.id+'"]'),null);
-  b.route('questions');b.click('[data-action="question"][data-id="'+q.id+'"]');
+  b.route('questions');b.click('[data-action="board-detail"][data-id="qna/'+q.id+'"]');
   assert.match(b.one('dialog').textContent,new RegExp(q.title.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
   b.healthy();
 });
@@ -893,7 +896,7 @@ test('backups from a subpage retain the selected theme and doctor search and com
     assert.equal(second.currentRoute(),'#doctors');assert.ok(second.document.body.classList.contains('rms-design'+design));
     assert.equal(second.document.body.classList.contains('rms-home-design'+design),false);
     assert.equal(second.one('#rms-q').value,seed.doctors[0].name);assert.ok(second.one('[data-compare="'+seed.doctors[0].id+'"]').checked);
-    assert.equal(second.one('#rms-role').value,'company');assert.deepEqual(second.state(),first.state());second.healthy();
+    assert.equal(second.one('#rms-role').value,'company');assert.deepEqual(second.state(),JSON.parse(backup).data);second.healthy();
   }
 });
 
@@ -959,4 +962,99 @@ test('three ZIP buttons replace the original download control and keep their res
     }
     b.healthy();
   }
+});
+
+test('all three designs expose guest Q&A editing and privacy preview; member CRUD uses masked content',async()=>{
+  const b=await browser();
+  for(const design of ['home','home/2','home/3']){
+    b.route('#'+design);b.route('#boards/qna');
+    b.click('[data-action="qna-write"]');
+    assert(b.one('#rms-qna-form input[name=password]'));
+    b.set('#rms-qna-form input[name=title]','연락 qa@example.test');
+    b.set('#rms-qna-form textarea[name=body]','전화 010-1234-5678');
+    b.click('[data-action="qna-preview"]');
+    const preview=b.one('[data-board-preview]').textContent;
+    assert.match(preview,/개인정보/);assert.doesNotMatch(preview,/qa@example\.test|010-1234-5678/);
+    close(b);b.healthy();
+  }
+  b.role('company');b.route('#boards/qna');b.click('[data-action="qna-write"]');
+  b.set('#rms-qna-form input[name=title]','검증용 문의 qa@example.test');
+  b.set('#rms-qna-form textarea[name=body]','신청 방법과 전화 010-1234-5678');
+  const work=b.state().classifications.find(c=>c.kind==='work'&&c.active&&c.visible).id;
+  b.set('#rms-qna-form [name=work]',work);b.submit('#rms-qna-form');
+  await new Promise(resolve=>setImmediate(resolve));
+  const q=b.state().questions.find(q=>q.title.startsWith('검증용 문의'));
+  assert(q,b.one('#rms-toast').textContent);assert.doesNotMatch(JSON.stringify(q),/qa@example\.test|010-1234-5678/);
+  assert(b.document.querySelector('[data-action="qna-edit"]'));
+  b.click('[data-action="qna-comment"]');b.set('#rms-qna-reply-form textarea[name=body]','댓글의 이메일 reply@example.test');b.submit('#rms-qna-reply-form');
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(b.state().questions.find(row=>row.id===q.id).replies.length,1);
+  assert.doesNotMatch(b.one('dialog').textContent,/reply@example\.test/);
+  b.click('[data-action="qna-edit"]');b.set('#rms-qna-form input[name=title]','검증용 수정 완료');b.submit('#rms-qna-form');
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(b.state().questions.find(row=>row.id===q.id).title,'검증용 수정 완료');
+  b.click('[data-action="qna-delete"]');b.submit('#rms-qna-delete-form');
+  await new Promise(resolve=>setImmediate(resolve));
+  assert(!b.state().questions.some(row=>row.id===q.id));b.healthy();
+});
+
+test('three previews keep their layout and show masked values as independent clickable technology tooltips',async()=>{
+  const b=await browser();
+  for(const route of ['home','home/2','home/3']){
+    b.route(route);
+    assert.equal(b.document.querySelectorAll('.rms-feature-trace').length,0);
+    assert.equal(b.document.querySelectorAll('#rms-enhance-app .rms-privacy-highlight').length,0);
+    const name=b.one('.rms-board-preview .rms-masked-value[data-privacy-type=name]');
+    assert.equal(name.textContent,'김○○');
+    assert.equal(name.closest('button[data-action]'),null,'annotation must not nest inside the original action');
+    b.click(name);
+    assert(b.one('#rms-privacy-tooltip').textContent.includes('RMSPrivacy 1.2.0'));
+    assert.doesNotMatch(b.one('#rms-privacy-tooltip').textContent,/SFR-\d{2}|기능 관리번호/);
+    assert.equal(b.document.querySelectorAll('dialog').length,0,'masked value click must not open post detail');
+    b.click('[data-privacy-dismiss]');
+    assert.equal(b.document.querySelector('#rms-privacy-tooltip'),null);
+    b.click('.rms-annotated-action [data-annotation-action]');
+    const dialog=b.one('dialog');
+    assert.equal(dialog.querySelector('.rms-privacy-highlight'),null);
+    assert.equal(dialog.querySelector('.rms-feature-trace'),null);
+    const phone=b.one('dialog .rms-masked-value[data-privacy-type=phone]');
+    assert.equal(phone.textContent,'010-****-****');
+    b.click(phone);
+    assert.equal(b.one('#rms-privacy-tooltip').closest('dialog'),dialog,'help stays above the existing modal');
+    assert(b.one('#rms-privacy-tooltip a[download]').getAttribute('href').endsWith('/privacy.js'));
+    const key=new b.window.Event('keydown',{bubbles:true,cancelable:true});Object.defineProperty(key,'key',{value:'Escape'});b.one('#rms-privacy-tooltip').dispatchEvent(key);
+    assert.equal(b.document.querySelector('#rms-privacy-tooltip'),null);assert(b.document.querySelector('dialog'));
+    assert.doesNotMatch(dialog.innerHTML,/010-1234-5678|김예시|qa@example\.test/,'original PII must not be hidden in the preview DOM');
+    b.window.RMSPrivacyDisplay.enhance(dialog);
+    assert.equal(dialog.querySelectorAll('.rms-masked-value .rms-masked-value').length,0);
+    close(b);b.healthy();
+  }
+});
+
+
+test('all document-based privacy examples open a type-specific PDF-linked help layer in each design',async()=>{
+  const b=await browser();
+  const cases=JSON.parse(fs.readFileSync(path.join(__dirname,'../reference/privacy/examples/board-scenarios.json'),'utf8')).cases;
+  const found=new Set();
+  for(const design of ['home','home/2','home/3']){
+    b.route(design);b.route('questions');
+    for(const item of cases){
+      b.click('[data-action="board-detail"][data-id="qna/'+item.post.id+'"]');
+      const dialog=b.one('dialog');
+      const markers=[...dialog.querySelectorAll('.rms-masked-value')];
+      assert.ok(markers.length,item.post.id);
+      for(const marker of markers){
+        const type=marker.dataset.privacyType;found.add(type);assert.notEqual(type,'protected',item.post.id+' generic help');
+        b.click(marker);
+        const layer=b.one('#rms-privacy-tooltip');
+        assert.match(layer.textContent,/문서 근거/);assert.match(layer.textContent,/책자 p\./);
+        const pdf=layer.querySelector('a[href*="pipc-homepage-privacy-guide-202404.pdf#page="]');assert.ok(pdf,type);
+        assert.doesNotMatch(layer.textContent,/SFR-\d{2}|기능 관리번호/);
+        assert.ok(layer.textContent.includes(marker.textContent));b.click('[data-privacy-dismiss]');
+      }
+      assert.equal(dialog.querySelectorAll('.rms-masked-value .rms-masked-value').length,0);
+      close(b);b.healthy();
+    }
+  }
+  assert.ok(found.size>=20,'every specific category needs working inline help');
 });
