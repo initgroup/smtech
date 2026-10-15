@@ -1,1 +1,40 @@
-body{margin:0;background:#f4f6fa;color:#17253c;font:16px/1.75 system-ui,sans-serif}main{max-width:1120px;margin:32px auto;padding:36px;background:#fff;border-radius:16px}h1{font-size:30px;color:#24144a}h2{margin-top:42px;font-size:23px;border-bottom:2px solid #ded7ed;padding-bottom:10px}a{color:#154ea8;text-decoration:underline;overflow-wrap:anywhere}p,li{overflow-wrap:anywhere}mark{background:#ffe6a6;color:#4b2864;font-weight:700;padding:2px 4px}code{background:#eef1f6;padding:2px 5px;overflow-wrap:anywhere}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{border:1px solid #d2d9e5;padding:12px;vertical-align:top}th{background:#eeebf8}pre{white-space:pre-wrap;background:#f0edf8;padding:18px;border-radius:8px}textarea{box-sizing:border-box;display:block;width:100%;padding:12px;margin:10px 0;font:inherit}button{background:#542c8c;color:white;padding:12px 22px;border:0;border-radius:8px;font:inherit;cursor:pointer}.highlight{background:#fff3d9;border:2px solid #bd8b2d;border-left:8px solid #7b3da4;padding:20px;margin-top:24px;border-radius:12px}label{font-weight:700}@media(max-width:650px){main{margin:0;padding:18px;border-radius:0}h1{font-size:24px}}
+/* Shared report, including the page opened from masking help. */
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6fa;color:#17253c;font:16px/1.75 system-ui,sans-serif}
+main{max-width:1192px;margin:32px auto;padding:36px;background:#fff;border-radius:16px;min-width:0}
+h1{font-size:30px;color:#24144a;overflow-wrap:anywhere}
+h2{margin-top:42px;font-size:23px;border-bottom:2px solid #ded7ed;padding-bottom:10px;overflow-wrap:anywhere}
+a{color:#154ea8;text-decoration:underline;overflow-wrap:anywhere}
+p,li,th,td{overflow-wrap:anywhere}
+mark{background:#ffe6a6;color:#4b2864;font-weight:700;padding:2px 4px}
+code{background:#eef1f6;padding:2px 5px;overflow-wrap:anywhere;white-space:normal}
+.table-wrap{max-width:100%;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
+th,td{border:1px solid #d2d9e5;padding:12px;vertical-align:top;text-align:left}
+th{background:#eeebf8}
+.implementation-table th:nth-child(1){width:17%}
+.implementation-table th:nth-child(2){width:20%}
+.implementation-table th:nth-child(3){width:33%}
+.implementation-table th:nth-child(4){width:30%}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0edf8;padding:18px;border-radius:8px}
+pre code{white-space:pre-wrap}
+textarea{display:block;width:100%;max-width:100%;padding:12px;margin:10px 0;font:inherit}
+button{max-width:100%;background:#542c8c;color:white;padding:12px 22px;border:0;border-radius:8px;font:inherit;cursor:pointer}
+.highlight{background:#fff3d9;border:2px solid #bd8b2d;border-left:8px solid #7b3da4;padding:20px;margin-top:24px;border-radius:12px}
+label{font-weight:700}
+@media(max-width:650px){
+ main{margin:0;padding:18px;border-radius:0}
+ h1{font-size:24px;line-height:1.45}
+ h2{font-size:20px;margin-top:32px}
+ ol,ul{padding-left:24px}
+ .highlight{padding:14px;border-left-width:5px}
+ /* Keep column headings available to assistive technology; repeat them visually per cell. */
+ table,tbody,tr,td{display:block;width:100%}
+ thead{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ tbody{display:grid;gap:14px}
+ tr{border:1px solid #d2d9e5;border-radius:8px;overflow:hidden}
+ td{border:0;border-bottom:1px solid #e3e7ef;padding:10px 12px}
+ td:last-child{border-bottom:0}
+ td:first-child{background:#f4f1fa}
+ td::before{content:attr(data-label);display:block;font:700 12px/1.6 system-ui,sans-serif;color:#5f4b7c;margin-bottom:4px}
+}

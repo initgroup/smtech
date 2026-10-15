@@ -156,13 +156,13 @@
     },
     {
       "path": "downloads/privacy/privacy-implementation.html",
-      "bytes": 22426,
-      "sha256": "c5ab6408d40094ca3bc127974ef32fac99e3cda515a521387c479f2ebb016f53"
+      "bytes": 28491,
+      "sha256": "8f182983e881a0d9b98bedfe1e01cfe472daa0555a4d0fefdb431c8c513022da"
     },
     {
       "path": "downloads/privacy/privacy-report.css",
-      "bytes": 1205,
-      "sha256": "b7b5d9a8bef5756d8156dd74f9f963cd4da4b34034fcb5eaede6e782f0d2ce0f"
+      "bytes": 2438,
+      "sha256": "a9d72e6ca18b112fcfd55bdc77712e097b6cf01d59d25ed5f19e5153cb19f11d"
     },
     {
       "path": "downloads/privacy/provenance.json",
@@ -321,8 +321,8 @@
     },
     {
       "path": "static/css/rms-qna.css",
-      "bytes": 5138,
-      "sha256": "8c3171707d50138889de758f01ed2c2d04d7b02a4eae8caf61810305f9b0deda"
+      "bytes": 5843,
+      "sha256": "f36cbba3e250f3cdd87938eceae40d0181edcacc511ed97bbdb8e3b7403bf566"
     },
     {
       "path": "static/css/rms-selected-design.css",

@@ -548,3 +548,7 @@
 .rms-enhance .rms-sfr-criterion-focused {outline:3px solid #bd7c12;outline-offset:3px;}
 @media(max-width:850px){.rms-enhance .rms-sfr-layer-grid {grid-template-columns:minmax(0,1fr);}}
 
+
+/* Long source paths must shrink inside recent evidence cards and layer columns. */
+.rms-enhance .rms-sfr-layer-grid>*,.rms-enhance .rms-sfr-criterion,.rms-enhance .rms-sfr-privacy-resources{min-width:0;overflow-wrap:anywhere}
+.rms-enhance .rms-sfr-detail-links a{min-width:0;overflow-wrap:anywhere}

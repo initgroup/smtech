@@ -1,5 +1,7 @@
 # RMS 퍼블리싱·내부 개발 협업 소스
 
+개인정보의 ‘구현·공식 근거 자세히 보기’ 보고서는 650px 이하에서 표를 열 제목이 붙은 세로 항목으로 표시합니다. 보고서 원본은 `reference/privacy/privacy-implementation.html`·`privacy-report.css`이며 배포 사본은 `prototype/region/rms/downloads/privacy/`입니다. 원본 변경 시 배포 사본을 함께 갱신하고 빌드하여 handoff에 반영합니다. Q&A 폼·마스킹 도움말의 모바일 스타일은 세 시안 공통 `static/css/rms-qna.css`에서 관리합니다.
+
 업무 HTML, 디자인 CSS, 화면 JS, 데이터 연결 어댑터를 나눠 관리합니다. 내부 개발자에게 전달하는 ZIP은 업무 소스만 포함합니다. 시연 도구와 SFR 전용 HTML·CSS·JS는 prototype/region/rms/demo/에 있으며 개발자 ZIP에서 파일 단위로 제외됩니다.
 
 ## 두 진입점

@@ -8,7 +8,7 @@
 
 /* Inline examples retain the preview layout; technical details are a floating layer. */
 .rms-enhance .rms-privacy-note{font-size:12px;color:#627389;line-height:1.6;margin:0}
-.rms-enhance .rms-masked-value{display:inline!important;width:auto!important;min-height:0!important;margin:0!important;padding:0 1px!important;border:0!important;border-radius:2px;background:#f4eaff!important;color:#712b9c!important;font:inherit!important;line-height:inherit!important;font-weight:700!important;text-decoration:underline!important;text-decoration-color:#a564c4!important;text-decoration-thickness:2px!important;text-underline-offset:3px;cursor:pointer;vertical-align:baseline;white-space:nowrap}
+.rms-enhance .rms-masked-value{display:inline!important;width:auto!important;min-height:0!important;margin:0!important;padding:0 1px!important;border:0!important;border-radius:2px;background:#f4eaff!important;color:#712b9c!important;font:inherit!important;line-height:inherit!important;font-weight:700!important;text-decoration:underline!important;text-decoration-color:#a564c4!important;text-decoration-thickness:2px!important;text-underline-offset:3px;cursor:pointer;vertical-align:baseline;white-space:normal;overflow-wrap:anywhere}
 .rms-enhance .rms-masked-value:hover,.rms-enhance .rms-masked-value[aria-expanded=true]{background:#e9d5fa!important;color:#4d166f!important}
 .rms-enhance .rms-masked-value:focus-visible,.rms-enhance [data-annotation-action]:focus-visible{outline:2px solid #743ba1;outline-offset:3px}
 .rms-enhance .rms-annotated-action{min-width:0;text-align:left}
@@ -20,3 +20,17 @@
 .rms-privacy-tooltip p{margin:9px 0}.rms-privacy-tooltip .rms-privacy-current{display:inline-block;font-size:16px;font-weight:700;color:#6b2e91;background:#f4eaff;padding:2px 7px;border-radius:3px}
 .rms-privacy-tooltip .rms-privacy-example{font-size:12px;color:#57697f;background:#f3f6fa;padding:8px;border-radius:4px}
 .rms-privacy-tooltip dl{margin:12px 0}.rms-privacy-tooltip dt{font-weight:700;color:#304764}.rms-privacy-tooltip dd{margin:2px 0 10px}.rms-privacy-tooltip a{color:#673290;text-decoration:underline;text-underline-offset:3px}.rms-privacy-tooltip footer{border-top:1px solid #e3d8eb;padding-top:10px}.rms-privacy-tooltip:focus{outline:none}
+
+/* Narrow forms and contextual help share the same limits in all designs. */
+.rms-qna-form,.rms-qna-form>*{min-width:0;overflow-wrap:anywhere}
+.rms-qna-form input,.rms-qna-form select,.rms-qna-form textarea{box-sizing:border-box;min-width:0;max-width:100%}
+.rms-qna-form .rms-qna-inline input{flex:none}
+.rms-qna-form .ql-toolbar{display:flex;flex-wrap:wrap;gap:4px}
+.rms-qna-form .ql-toolbar .ql-formats{margin-right:8px}
+@media(max-width:650px){
+ .rms-privacy-highlight{padding:12px}
+ .rms-qna-reply{padding:12px}
+ .rms-qna-home-filter{flex-wrap:wrap}
+ .rms-privacy-tooltip header button{width:44px;height:44px}
+ .rms-privacy-tooltip footer a{display:inline-block;padding:8px 0}
+}

@@ -3,6 +3,27 @@ window.RMSReleaseHistory = {
   "formatVersion": 1,
   "releases": [
     {
+      "version": "1.1.18",
+      "date": "2026-10-15",
+      "title": "개인정보 구현 근거 및 최근 Q&A 화면 모바일 최적화",
+      "changes": [
+        "공식 근거 보고서의 표를 모바일에서 열 제목이 있는 항목별 세로 배치로 전환",
+        "JavaScript 구성 표의 데스크톱 열 비율을 지정하고 긴 소스 경로의 줄바꿈 개선",
+        "긴 마스킹 값·Q&A 폼·편집기 도구·요구사항 근거 링크의 좁은 화면 넘침 개선",
+        "시안 1·2·3 공통 반영 및 최신 공통·시안별 ZIP 갱신"
+      ],
+      "migration": "reference/privacy/privacy-report.css·privacy-implementation.html과 공통 rms-qna.css를 갱신합니다. 시연 요구사항 레이어는 demo/css/sfr.css도 적용합니다. 보고서 표의 data-label 및 접근성 역할을 CSS와 함께 반영합니다.",
+      "download": "downloads/releases/rms-developer-v1.1.18.zip",
+      "changedPaths": [
+        "README.md",
+        "prototype/region/rms/demo/css/sfr.css",
+        "prototype/region/rms/static/css/rms-qna.css",
+        "reference/privacy/privacy-implementation.html",
+        "reference/privacy/privacy-report.css",
+        "releases/next.json"
+      ]
+    },
+    {
       "version": "1.1.17",
       "date": "2026-10-15",
       "title": "세 시안의 검색 라벨·입력·버튼 정렬 통일",
